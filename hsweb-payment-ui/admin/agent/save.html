@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+    <title>保存用户信息</title>
+    <script data-main="save.js" src="../boot.js" type="text/javascript"></script>
+    <style type="text/css">
+        .rate-title {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="mini-fit">
+    <div id="basic-info" class="mini-fit">
+
+    </div>
+    <div style="width: 100%;height: 50px;text-align: center">
+        <a class="mini-button save">保存商户信息</a>
+        <a class="mini-button close" plain="true">取消</a>
+    </div>
+</div>
+
+<div id="limitWindow" title="限额配置" allowResize="true" showFooter="true" class="mini-window" style="width: 800px;height: 600px">
+    <div id="limit-grid" showPager="false"
+         allowCellEdit="true" allowCellSelect="true" allowResize="false"
+         class="mini-datagrid" style="width:100%;height: 100%" allowResize="true"
+         idField="id">
+        <div property="columns">
+            <div type="indexcolumn" align="center" headerAlign="center">#</div>
+            <div name="interval" field="interval" width="50" align="center" headerAlign="center">时间
+                <input property="editor" minValue="1" maxValue="100000" class="mini-spinner"/>
+            </div>
+            <div name="timeUnit" field="timeUnit.value" width="50" align="center" headerAlign="center">时间单位
+                <input property="editor" class="mini-combobox" data="timeUnitData"/>
+            </div>
+            <div name="limit" field="limit" width="80" align="center" headerAlign="center">限额
+                <input property="editor" maxValue="100000000000" format="#,0.00元" class="mini-spinner"/>
+            </div>
+            <div name="action" width="50" align="center" headerAlign="center">
+                <span class="title-button" style="width: 30px">操作</span>
+                <span class="title-button icon-add" onclick="mini.get('limit-grid').addRow({limit:0})"></span>
+            </div>
+        </div>
+    </div>
+    <div property="footer" style="text-align: right;padding: 3px">
+        <a class="mini-button save-limit" iconCls="icon-ok">保存</a>
+    </div>
+</div>
+</body>
+</html>
+<script id="tabsTemplate" type="text/html">
+    <div id="config-tabs" class="mini-tabs" activeIndex="0" style="width:100%;" plain="false">
+        <!--<div name="basic-config" title="基础配置">-->
+            <!--<div class="mini-clearfix dynamic-form">-->
+                <!--<div class="form-component  mini-col-6" hs-id="25bc2e24591290fb1368720b5824df60">-->
+                    <!--<div class="form-item brick"><label class="form-label">商户API密钥</label>-->
+                        <!--<div class="input-block component-body">-->
+                            <!--<input name="SECRET_KEY.value" class="mini-textbox" style="width: 100%"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div style="width: 100%;height: 50px;text-align: center;margin-top: 20px">-->
+                <!--<a class="mini-button save-basic-config">保存此配置</a>-->
+                <!--<a class="mini-button" onclick="mini.get('config-tabs').activeTab(mini.get('config-tabs').getTab('channel-config'))" plain="true">下一步</a>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div name="settle-config" title="结算配置">-->
+            <!--<div style="width: 100%;height: 50px;text-align: center;margin-top: 20px">-->
+                <!--<a class="mini-button" onclick="mini.get('config-tabs').activeTab(mini.get('config-tabs').getTab('basic-config'))" plain="true">-->
+                    <!--上一步</a>-->
+                <!--<a class="mini-button save-channel-config">保存此配置</a>-->
+                <!--<a class="mini-button" onclick="mini.get('config-tabs').activeTab(mini.get('config-tabs').getTab('channel-config'))" plain="true">下一步</a>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div name="channel-config" title="渠道配置">
+            <div id="channel-grid" class="mini-datagrid" style="width: 100%; height: 500px"
+                 multiSelect="true" onlyCheckSelection="true" showpager="false">
+                <div property="columns">
+                    <div type="checkcolumn">#</div>
+                    <div field="transType" displayField="transTypeName" name="transType" width="50" align="center" headeralign="center">
+                        交易类型
+                    </div>
+                    <div field="channel" name="channel" width="50" align="center" headeralign="center">
+                        渠道标识
+                    </div>
+                    <div field="channelName" name="channelName" width="50" align="center" headeralign="center">
+                        渠道名称
+                    </div>
+                    <div field="channelProviderName" name="channelProviderName" width="50" align="center" headeralign="center">
+                        渠道服务商
+                    </div>
+                    <div name="limit" visible="false"  width="50" align="center" headeralign="center">
+                        限额配置
+                    </div>
+                    <!--<div name="selector" width="50" align="center" headeralign="center">-->
+                        <!--规则配置-->
+                    <!--</div>-->
+                </div>
+            </div>
+            <div style="width: 100%;height: 50px;text-align: center;margin-top: 20px">
+                <!--<a class="mini-button" onclick="mini.get('config-tabs').activeTab(mini.get('config-tabs').getTab('basic-config'))" plain="true">-->
+                    <!--上一步</a>-->
+                <a class="mini-button save-channel-config">保存此配置</a>
+                <a class="mini-button" onclick="mini.get('config-tabs').activeTab(mini.get('config-tabs').getTab('rate-config'))" plain="true">下一步</a>
+            </div>
+        </div>
+        <div name="rate-config" title="费率配置">
+            <div class="mini-splitter" style="width:100%;height:500px;">
+                <div size="30%" showCollapseButton="true" style="padding:5px;">
+                    <ul id="rate-channel-list" class="mini-tree" style="width:100%;height: 100%"
+                        showTreeIcon="true" textField="text" idField="id">
+                    </ul>
+                </div>
+                <div showCollapseButton="true">
+                    <div class="mini-clearfix dynamic-form">
+                        <div class="form-component mini-col-11">
+                            <div class="form-item brick">
+                                <label class="form-label rate-title"><input name="rate-fixed" class="mini-checkbox" data="[{id:'fixed'}]"/>固定收费</label>
+                                <div class="input-block component-body">
+                                    <input enabled="false" name="value-fixed" format="#,0.00元" maxValue="999999999999" class="mini-spinner" style="width: 100%"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-component  mini-col-11">
+                            <div class="form-item brick">
+                                <label class="form-label rate-title"><input name="rate-percent" class="mini-checkbox" data="[{id:'percent'}]"/>百分比<span style="margin-left: 1em"></span></label>
+                                <div class="input-block component-body">
+                                    <input enabled="false" name="value-percent" format="#,0.00" maxValue="100" increment="0.1" class="mini-spinner" style="width: 100%"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-component  mini-col-11">
+                            <div class="form-item brick">
+                                <label class="form-label rate-title"><input name="rate-ladder" class="mini-checkbox" data="[{id:'rate'}]"/>阶梯收费</label>
+                                <div class="input-block component-body" style="height: 300px">
+                                    <div class="form-item brick">
+                                        结算周期: <input name="chargeInterval" property="editor" minValue="1" maxValue="100000" class="mini-spinner"/>
+                                        结算类型: <input name="chargeTimeUnit" property="editor" class="mini-combobox" data="timeUnitData"/>
+                                    </div>
+                                    <br>
+                                    <div id="value-ladder" enabled="false"
+                                         allowCellEdit="true" allowCellSelect="true" allowResize="false"
+                                         class="mini-treegrid" style="width:100%;height: 100%" allowResize="true"
+                                         idField="id">
+                                        <div property="columns">
+                                            <div type="indexcolumn" align="center" headerAlign="center">#</div>
+                                            <div name="type" field="type" width="30" align="center" headerAlign="center">类型
+                                                <input property="editor" data="ladder_type_data" class="mini-combobox" style="width: 10%"/>
+                                            </div>
+                                            <div name="values" field="values" width="100" align="center" headerAlign="center">金额(元)
+                                                <input property="editor" class="mini-textbox" emptyText="多个值使用-分割" style="width: 10%"/>
+                                            </div>
+                                            <div name="rateType" field="rateType" align="center" width="50" headerAlign="center">费率类型
+                                                <input property="editor" data="rate_type_data" class="mini-combobox" style="width: 15%"/>
+                                            </div>
+                                            <div name="rate" field="rate" width="80" align="center" headerAlign="center">费率
+                                                <input property="editor" class="mini-textbox" style="width: 10%"/>
+                                            </div>
+                                            <div name="action" width="50" align="center" headerAlign="center">
+                                                <span class="title-button" style="width: 30px">操作</span>
+                                                <span class="title-button icon-add" onclick="mini.get('value-ladder').addNode({})"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 100%;height: 50px;text-align: center;margin-top: 20px">
+                <a class="mini-button" onclick="mini.get('config-tabs').activeTab(mini.get('config-tabs').getTab('channel-config'))" plain="true">
+                    上一步</a>
+                <a class="mini-button save-rate-config">保存此配置</a>
+            </div>
+        </div>
+
+    </div>
+
+
+</script>
+<script type="text/html" id="rate-template">
+    <div class="form-component  mini-col-11">
+        <input data="[{text:'范围',id:'range'},{text:'大于',id:'gt'}]" class="mini-combobox" style="width: 10%"/>
+        <span class="type-range" style="display: none">
+        <input name="rangeStart" format="#,0.00元"
+               maxValue="1000000000"
+               increment="0.1" class="mini-spinner" style="width: 20%"/>
+        至
+        <input name="rangeEnd" format="#,0.00元"
+               maxValue="1000000000"
+               increment="0.1" class="mini-spinner" style="width: 20%"/>
+        </span>
+
+        <input data="[{text:'固定收取',id:'FIXED'},{text:'百分比',id:'PERCENT'}]" class="mini-combobox" style="width: 15%"/>
+        <span class="type-fixed" style="display: none">
+             <input format="#,0.00元"
+                    maxValue="1000000000"
+                    increment="0.1" class="mini-spinner" style="width: 20%"/>
+        </span>
+
+        <span class="type-percent" style="display: none">
+             <input enabled="false" name="percent" format="#,0.00" maxValue="100" increment="0.1" class="mini-spinner" style="width: 100%"/>
+        </span>
+        <a class="mini-button"><i class="fa fa-plus"></i></a>
+        <a class="mini-button" style="color: red" plain="true"><i class="fa fa-close"></i></a>
+    </div>
+</script>

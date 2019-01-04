@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    url: jdbc:mysql://mysql:3306/hsweb_payment?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    username: root
+    password: hSweb-Pay-p@ssw0rd
+  resources:
+    static-locations: file:./data/upload/,file:./hsweb-payment-ui/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/, classpath:/public/
+
+hsweb:
+  message:
+    mails:
+      default:
+        host: smtp.mail.com
+        port: 587
+        username: hsweb@mail.com
+        password:
+  server:
+    location: http://pay.hsweb.pro/
+  pay:
+    notify:
+      location: http://pay.hsweb.pro/
+    merchant:
+      enable-two-factor: true # 开启双重验证
+      two-factor-email-notify: true # 开启双重验证邮件通知
+      two-factor-email-from: hsweb@mail.com #发件人
+    channel:
+      config-type: db #使用数据库中的配置
+hsweb:
+  web:
+    upload:
+      static-file-path: ./data/upload/static
+      static-location: http://pay.hsweb.pro/static/
+      file-path: ./data/upload/file

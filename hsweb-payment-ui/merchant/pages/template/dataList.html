@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>数据列表</title>
+    <link rel="stylesheet" href="../../plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../plugins/jquery-ui/jquery-ui.min.css" media="all">
+    <link rel="stylesheet" href="dataList.css" />
+</head>
+<body class="layui-layout-body">
+
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">基本配置</li>
+        <li>列表配置</li>
+        <li>操作按钮配置</li>
+        <li>自定义脚本</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+
+                </div>
+            </div>
+            <div class="layui-collapse">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">数据接口</h2>
+                    <div class="layui-colla-content layui-show">
+                        <input type="text" name="url" required  lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">
+                        <span>工具栏</span>
+                        <button class="layui-btn layui-btn-xs" data-select-id="addToolbar"><i class="layui-icon">&#xe654;</i></button>
+                    </h2>
+                    <div class="layui-colla-content layui-show">
+                        <ul class="layui-nav" lay-filter="toolbar"></ul>
+                    </div>
+                </div>
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">
+                        <span>查询条件</span>
+                        <button class="layui-btn layui-btn-xs" data-select-id="addCondition"><i class="layui-icon">&#xe654;</i></button>
+                    </h2>
+                    <div class="layui-colla-content layui-show layui-col-md12 layui-col-xs12">
+                        <form class="layui-form layui-col-md12 layui-col-xs12" lay-filter="condition"></form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <table lay-data="{id:'dataListColumnsTable'}" class="layui-table" lay-filter="dataListColumnsTable">
+                <thead>
+                    <tr>
+                        <th lay-data="{field:'field',edit:true}">字段</th>
+                        <th lay-data="{field:'displayField',edit:true}">显示字段</th>
+                        <th lay-data="{field:'header',edit:true}">标题</th>
+                        <th lay-data="{field:'width',edit:true}">宽度</th>
+                        <th lay-data="{field:'condition',event:'editCondition',templet:'#empty'}">显示条件</th>
+                        <th lay-data="{field:'renderer',event:'editRenderer',templet:'#empty'}">自定义渲染</th>
+                        <th lay-data="{toolbar:'#optool'}">操作</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="columns-btn-panel">
+                <button class="layui-btn layui-btn-normal" lay-event="addColumns"><i class="layui-icon">&#xe654;</i>添加</button>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <table lay-data="{id:'dataListBtnsTable'}" class="layui-table" lay-filter="dataListBtnsTable">
+                <thead>
+                <tr>
+                    <th lay-data="{field:'icon',edit:true}">图标</th>
+                    <th lay-data="{field:'text',edit:true}">标题</th>
+                    <th lay-data="{field:'condition',event:'editCondition',templet:'#empty'}">显示条件</th>
+                    <th lay-data="{field:'onclick',event:'editOnclick',templet:'#empty'}">点击事件</th>
+                    <th lay-data="{toolbar:'#optool'}">操作</th>
+                </tr>
+                </thead>
+            </table>
+            <div class="columns-btn-panel">
+                <button class="layui-btn layui-btn-normal" lay-event="addBtns"><i class="layui-icon">&#xe654;</i>添加</button>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <textarea name="script" class="layui-textarea script-text"></textarea>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="../../plugins/layui/layui.all.js"></script>
+<script src="../../plugins/jquery-ui/jquery.js"></script>
+<script src="../../plugins/jquery-ui/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/html" id="empty">
+    <span style="display: none">{{# JSON.stringify(d)}}</span>
+</script>
+<script type="text/html" id="optool">
+    <button class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">
+        <i class="layui-icon">&#xe640;</i>
+    </button>
+</script>
+<script type="text/javascript">
+
+    //列表配置JS对象
+    var ListOption = function (table,element) {
+
+        this.state = {
+            columns:[],
+            btns:[],
+            toolbar:[],
+            condition:[]
+        }
+
+        this.loadConfig = function (config) {
+            if(config){
+                if(config.table) {
+                    if(config.table.columns){
+                        this.state.columns = config.table.columns
+                        for(var i = 0; i < this.state.columns.length; i++){
+                            if(!this.state.columns[i].code){
+                                this.state.columns[i].code = new Date().getTime() + '' + Math.random()
+                            }
+                        }
+                        this.reloadColumnsTable()
+                    }
+
+                    if(config.table.actions){
+                        this.state.btns = config.table.actions
+                        for(var i = 0; i < this.state.btns.length; i++){
+                            if(!this.state.btns[i].code){
+                                this.state.btns[i].code = new Date().getTime() + '' + Math.random()
+                            }
+                        }
+                        this.reloadBtnsTable()
+                    }
+
+                    if(config.table.url){
+                        $('[name="url"]').val(config.table.url)
+                    }
+
+                    if(config.toolbar){
+                        this.state.toolbar = config.toolbar
+                        for(var i = 0; i < this.state.toolbar.length; i++){
+                            if(!this.state.toolbar[i].code){
+                                this.state.toolbar[i].code = new Date().getTime() + '' + Math.random()
+                            }
+                        }
+                        this.reloadToolBar()
+                    }
+
+                    if(config.condition){
+                        this.state.condition = config.condition
+                        for(var i = 0; i < this.state.condition.length; i++){
+                            if(!this.state.condition[i].code){
+                                this.state.condition[i].code = new Date().getTime() + '' + Math.random()
+                            }
+                        }
+                        this.reloadCondition()
+                    }
+
+                }
+            }
+        }
+
+        this.getConfig = function () {
+            return {
+                script: $('[name="script"]').val(),
+                table: {
+                    actions: this.getBtns(),
+                    columns: this.getColumns(),
+                    url: $('[name="url"]').val()
+                },
+                toolbar: this.state.toolbar,
+                condition: this.state.condition
+            }
+        }
+
+        /*获取自定义脚本*/
+        this.getScript = function () {
+            return $('[name="script"]').val()
+        }
+
+        //---------列表配置------开始-------
+        /*添加列*/
+        this.addColumnsLine = function(line){
+            for (var i = 0; i < this.state.columns.length;i++){
+                if(line.field == this.state.columns[i].field){
+                    return false
+                }
+            }
+            line.code = new Date().getTime() + '' + Math.random()
+            this.state.columns.push(line)
+            this.reloadColumnsTable()
+        }
+        /*删除列*/
+        this.deleteColumnsLine = function (code) {
+            var tmp = []
+            for (var i = 0; i < this.state.columns.length;i++){
+                if(code != this.state.columns[i].code){
+                    tmp.push(this.state.columns[i])
+                }
+            }
+            this.state.columns = tmp
+            this.reloadColumnsTable()
+        }
+        /*更新列*/
+        this.updateColumnsLine = function (line) {
+            for(var i = 0; i < this.state.columns.length; i++){
+                if(this.state.columns[i].code == line.code){
+                    this.state.columns[i] = line
+                    break
+                }
+            }
+            this.reloadColumnsTable()
+        }
+        /*重新加载列表表格*/
+        this.reloadColumnsTable = function(){
+            table.reload('dataListColumnsTable',{
+                data:this.state.columns
+            })
+        }
+        /*获取列表数据*/
+        this.getColumns = function () {
+            var tmp = []
+            for (var i = 0; i < this.state.columns.length;i++){
+                tmp[i] = this.state.columns[i]
+                var _line = {}
+                for (var name in tmp[i]){
+                    if(name != 'code'){
+                        _line[name] = tmp[i][name]
+                    }
+                }
+                tmp[i] = _line
+            }
+            return tmp
+        }
+        //---------列表配置------结束-------
+        
+
+        //--------按钮配置-------开始----------
+        /*添加按钮*/
+        this.addBtns = function (line) {
+            for (var i = 0; i < this.state.btns.length;i++){
+                if(line.text == this.state.btns[i].text){
+                    return false
+                }
+            }
+            line.code = new Date().getTime() + '' + Math.random()
+            this.state.btns.push(line)
+            this.reloadBtnsTable()
+        }
+        /*删除按钮*/
+        this.deleteBtnsLine = function (code) {
+            var tmp = []
+            for (var i = 0; i < this.state.btns.length;i++){
+                if(code != this.state.btns[i].code){
+                    tmp.push(this.state.btns[i])
+                }
+            }
+            this.state.btns = tmp
+            this.reloadBtnsTable()
+        }
+        /*更新按钮*/
+        this.updateBtnsLine = function (line) {
+            for(var i = 0; i < this.state.btns.length; i++){
+                if(this.state.btns[i].code == line.code){
+                    this.state.btns[i] = line
+                    break
+                }
+            }
+            this.reloadBtnsTable()
+        }
+        /*重新加载按钮表格*/
+        this.reloadBtnsTable = function () {
+            table.reload('dataListBtnsTable',{
+                data:this.state.btns
+            })
+        }
+        /*获取按钮*/
+        this.getBtns = function () {
+            var tmp = []
+            for (var i = 0; i < this.state.btns.length;i++){
+                tmp[i] = this.state.btns[i]
+                var _line = {}
+                for (var name in tmp[i]){
+                    if(name != 'code'){
+                        _line[name] = tmp[i][name]
+                    }
+                }
+                tmp[i] = _line
+            }
+            return tmp
+        }
+        //--------按钮配置-------结束----------
+
+
+        //-------工具栏--------开始-----------
+        this.reloadToolBar = function () {
+            var toolbar = $('[lay-filter="toolbar"]').empty()
+            for(var i = 0; i < this.state.toolbar.length; i++){
+                var line = this.state.toolbar[i]
+                var tmp = $('<li class="layui-nav-item" data-select-id="toolbar-show" data-code="'+line.code+'"></li>')
+                tmp.append('<a href="javascript:void(0);">'+((line.iconCls && line.iconCls != '') ? '<i class="layui-icon">'+line.iconCls+'</i>&nbsp;':'')+line.text+'</a>')
+                if(line.type == 'menuButton'){
+                    var dl = $('<dl class="layui-nav-child"></dl>')
+                    for(var j = 0; j < line.children.length; j++){
+                        dl.append('<dd><a href="javascript:void(0);">'+((line.children[j].iconCls && line.children[j].iconCls != '') ? '<i class="layui-icon">'+line.children[j].iconCls+'</i>&nbsp;':'')+line.children[j].text+'</a></dd>')
+                    }
+                    tmp.append(dl)
+                }
+                toolbar.append(tmp)
+            }
+            element.render('nav')
+        }
+
+        this.deleteToolBar = function (code) {
+            var tmp = []
+            for(var i = 0; i < this.state.toolbar.length; i++){
+                if(this.state.toolbar[i].code != code){
+                    tmp.push(this.state.toolbar[i])
+                }
+            }
+            this.state.toolbar = tmp
+            this.reloadToolBar()
+        }
+
+        this.updateToolBar = function (line) {
+            for(var i = 0; i < this.state.toolbar.length; i++){
+                if(this.state.toolbar[i].code == line.code){
+                    this.state.toolbar[i] = line
+                    this.reloadToolBar()
+                    return
+                }
+            }
+            this.addToolBar(data)
+        }
+        
+        this.addToolBar = function (line) {
+            line.code = new Date().getTime() + '' + Math.random()
+            this.state.toolbar.push(line)
+            this.reloadToolBar()
+        }
+
+        this.getToolBar = function (code) {
+            for(var i = 0; i < this.state.toolbar.length; i++){
+                if(this.state.toolbar[i].code == code){
+                    return this.state.toolbar[i]
+                }
+            }
+        }
+        //-------工具栏--------结束-----------
+
+
+        //--------查询条件--------开始----------
+        this.reloadCondition = function () {
+            var panel = $('[lay-filter="condition"]').empty()
+            for(var i = 0; i < this.state.condition.length; i++){
+                var html = '<div data-select-id="condition-show" data-code="'+this.state.condition[i].code+'" class="layui-col-md'+this.state.condition[i].size+' layui-col-xs'+this.state.condition[i].size+'"><div class="layui-form-item brick">\n' +
+                    '    <label class="layui-form-label">'+this.state.condition[i].text+'</label>\n' +
+                    '    <div class="layui-input-block">\n' +
+                    '      <input type="text" required  lay-verify="required" placeholder="'+this.state.condition[i].editor.emptyText+'" autocomplete="off" class="layui-input">\n' +
+                    '    </div>\n' +
+                    '  </div></div> '
+                panel.append(html)
+            }
+        }
+
+        this.addCondition = function (line) {
+            line.code = new Date().getTime() + '' + Math.random()
+            line.id = line.code
+            this.state.condition.push(line)
+            this.reloadCondition()
+        }
+
+        this.deleteCondition = function (code) {
+            var tmp = []
+            for(var i = 0; i < this.state.condition.length; i++){
+                if(this.state.condition[i].code != code){
+                    tmp.push(this.state.condition[i])
+                }
+            }
+            this.state.condition = tmp
+            this.reloadCondition()
+        }
+
+        this.updateCondition = function (line) {
+            for(var i = 0; i < this.state.condition.length; i++){
+                if(this.state.condition[i].code == line.code){
+                    this.state.condition[i] = line
+                    this.reloadCondition()
+                    return
+                }
+            }
+            this.addCondition(line)
+        }
+
+        this.getCondition = function (code) {
+            for(var i = 0; i < this.state.condition.length; i++){
+                if(this.state.condition[i].code = code){
+                    return this.state.condition[i]
+                }
+            }
+        }
+        //--------查询条件--------结束----------
+    };
+
+    var list;
+
+    layui.use(['table','layer','element'], function(table,layer,element){
+
+        list = new ListOption(table,element)
+
+        var columnsEventOption = {
+            delete: function (e) {
+                list.deleteColumnsLine(e.data.code)
+            },
+            add: function (e) {
+                list.addColumnsLine({field:''})
+            },
+            edit:function (e) {
+                list.updateColumnsLine(e.data)
+            },
+            editCondition:function (e) {
+                layer.prompt({
+                    formType: 2,
+                    value: e.data.condition,
+                    title: '编辑显示条件',
+                    area: ['800px', '350px']
+                }, function(value, index, elem){
+                    e.data.condition = value
+                    list.updateColumnsLine(e.data)
+                    layer.close(index);
+                });
+            },
+            editRenderer:function (e) {
+                layer.prompt({
+                    formType: 2,
+                    value: e.data.renderer,
+                    title: '编辑自定义渲染',
+                    area: ['800px', '350px']
+                }, function(value, index, elem){
+                    e.data.renderer = value
+                    list.updateColumnsLine(e.data)
+                    layer.close(index);
+                });
+            }
+        }
+
+        table.on('tool(dataListColumnsTable)',function (e) {
+            columnsEventOption[e.event](e)
+        })
+        table.on('edit(dataListColumnsTable)',function (e) {
+            columnsEventOption['edit'](e)
+        })
+        $('[lay-event="addColumns"]').click(function () {
+            columnsEventOption['add'](this)
+        })
+
+        var btnsEventOption = {
+            delete: function (e) {
+                list.deleteBtnsLine(e.data.code)
+            },
+            add: function () {
+                list.addBtns({text:''})
+            },
+            edit: function (e) {
+                list.updateBtnsLine(e.data)
+            },
+            editCondition:function (e) {
+                layer.prompt({
+                    formType: 2,
+                    value: e.data.condition,
+                    title: '编辑显示条件',
+                    area: ['800px', '350px']
+                }, function(value, index, elem){
+                    e.data.condition = value
+                    list.updateBtnsLine(e.data)
+                    layer.close(index);
+                });
+            },
+            editOnclick:function (e) {
+                layer.prompt({
+                    formType: 2,
+                    value: e.data.onclick,
+                    title: '编辑点击事件',
+                    area: ['800px', '350px']
+                }, function(value, index, elem){
+                    e.data.onclick = value
+                    list.updateBtnsLine(e.data)
+                    layer.close(index);
+                });
+            }
+        }
+
+        table.on('tool(dataListBtnsTable)',function (e) {
+            btnsEventOption[e.event](e)
+        })
+        table.on('edit(dataListBtnsTable)',function (e) {
+            btnsEventOption['edit'](e)
+        })
+        $('[lay-event="addBtns"]').click(function () {
+            btnsEventOption['add'](this)
+        })
+
+
+        $('[data-select-id="addToolbar"]').click(function () {
+            layer.open({
+                type:2,
+                title:'按钮设置',
+                area:['800px','500px'],
+                content: ['createToolBar.html','no'],
+                shadeClose: false,
+                success: function (el,index) {
+                    showToolBarWindow($(el).find('iframe')[0],index)
+                }
+            })
+            return false
+        })
+        $('[data-select-id="addCondition"]').click(function () {
+            layer.open({
+                type:2,
+                title:'按钮设置',
+                area:['800px','500px'],
+                content: ['createCondition.html','no'],
+                shadeClose: false,
+                success: function (el,index) {
+                    showConditionWindow($(el).find('iframe')[0],index)
+                }
+            })
+            return false
+        })
+
+        $('[lay-filter="toolbar"]').on('click','[data-select-id="toolbar-show"]',function () {
+            var code = $(this).attr('data-code')
+            layer.open({
+                type:2,
+                title:'按钮设置',
+                area:['800px','500px'],
+                content: ['createToolBar.html','no'],
+                shadeClose: false,
+                success: function (el,index) {
+                    showToolBarWindow($(el).find('iframe')[0],index,list.getToolBar(code))
+                }
+            })
+            return false
+        })
+
+        $('[lay-filter="condition"]').on('click','[data-select-id="condition-show"]',function () {
+            var code = $(this).attr('data-code')
+            layer.open({
+                type:2,
+                title:'按钮设置',
+                area:['800px','500px'],
+                content: ['createCondition.html','no'],
+                shadeClose: false,
+                success: function (el,index) {
+                    showConditionWindow($(el).find('iframe')[0],index,list.getCondition(code))
+                }
+            })
+            return false
+        })
+
+        function showConditionWindow(frame,index,data) {
+            var contentWindow = frame.contentWindow
+            contentWindow.ready = function (option) {
+                option.loadCondition(data)
+            }
+            contentWindow.close = function () {
+                layer.close(index)
+            }
+            contentWindow.submit = function (data) {
+                if(data.code){
+                    list.updateCondition(data)
+                }else{
+                    list.addCondition(data)
+                }
+            }
+            contentWindow.delete = function (code) {
+                list.deleteCondition(code)
+            }
+        }
+
+        function showToolBarWindow(frame,index,data) {
+            var contentWindow = frame.contentWindow
+            contentWindow.ready = function (option) {
+                option.loadToolBar(data)
+            }
+            contentWindow.close = function () {
+                layer.close(index)
+            }
+            contentWindow.submit = function (data) {
+                if(data.code){
+                    list.updateToolBar(data)
+                }else{
+                    list.addToolBar(data)
+                }
+            }
+            contentWindow.delete = function (code) {
+                list.deleteToolBar(code)
+            }
+        }
+
+        window.setTimeout(function () {
+            if(window.ready){
+                window.ready(list)
+            }
+        },100)
+
+
+        /**
+         {
+	"toolbar": [{
+		"id": "button_216580",
+		"type": "button",
+		"text": "新建按钮",
+		"autz": "has('user')",
+		"iconCls": "icon-group-gear",
+		"onclick": "//点击按钮时执行js\nalert(1)"
+	}],
+	"script": "this.on('beforeQuery',function(){\n\t//this.query.like('name','%测试%').or().is('status',1)\n});",
+	"condition": [{
+		"text": "名称",
+		"id": "cond_66909",
+		"editor": {
+			"type": "textbox",
+			"emptyText": "输入名称",
+			"format": ""
+		},
+		"size": 3,
+		"autz": "has('user')",
+		"field": "name",
+		"termType": "like"
+	}],
+	"table": {
+		"columns": [{
+			"show": true,
+			"_pid": -1,
+			"_id": 1,
+			"_uid": 1,
+			"_level": 0,
+			"_state": "added",
+			"field": "name",
+			"displayField": "name",
+			"header": "名称",
+			"width": "200",
+			"condition": "if(1 == 1) alert(1)",
+			"renderer": "alert(111111)"
+		}],
+		"actions": [{
+			"_pid": -1,
+			"_id": 2,
+			"_uid": 2,
+			"_level": 0,
+			"_state": "added",
+			"icon": "icon-cup-edit",
+			"text": "操作",
+			"condition": "btn-show",
+			"onclick": "click-btn"
+		}],
+		"url": "/test/form"
+	}
+}
+         */
+
+    });
+
+
+</script>

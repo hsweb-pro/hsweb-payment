@@ -1,0 +1,140 @@
+<div class="layui-row layui-col-space5">
+
+    <div class="layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-header">今日总订单数</div>
+            <div class="layui-card-body">
+                <h2 id="today-all-order">0</h2>
+                <br>
+                <span class="layui-badge" style="margin-left: 90%">单</span>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-header">今日成功订单数</div>
+            <div class="layui-card-body">
+                <h2 id="today-success-order">0</h2>
+                <br>
+                <span class="layui-badge" style="margin-left: 90%">单</span>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-header">今日失败订单数</div>
+            <div class="layui-card-body">
+                <h2 id="today-error-order">0</h2>
+                <br>
+                <span class="layui-badge" style="margin-left: 90%">单</span>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-header">今日订单总金额</div>
+            <div class="layui-card-body">
+                <h2 id="today-all-amount">0</h2>
+                <br>
+                <span class="layui-badge" style="margin-left: 90%">元</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-header">今日实付金额</div>
+            <div class="layui-card-body">
+                <h2 id="today-success-amount">0</h2>
+                <br>
+                <span class="layui-badge" style="margin-left: 90%">元</span>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-header">账户余额</div>
+            <div class="layui-card-body">
+                <h2 id="balance">0</h2>
+                <br>
+                <span class="layui-badge" style="margin-left: 90%">元</span>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-header">冻结资金/待解冻</div>
+            <div class="layui-card-body">
+                <h2 id="current-freeze-amount">0</h2>
+                <br>
+                <span class="layui-badge" style="margin-left: 90%">元</span>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-header">投诉保证金</div>
+            <div class="layui-card-body">
+                <h2>0</h2>
+                <br>
+                <span class="layui-badge" style="margin-left: 90%">元</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-col-md6" style="margin-top: 50px">
+        <div class="layui-card">
+            <div class="layui-card-header">交易金额统计</div>
+            <div class="layui-card-body">
+
+                <div id="trade" style="width: 100%;height:400px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-col-md6" style="margin-top: 50px">
+        <div class="layui-card">
+            <div class="layui-card-header">渠道交易统计</div>
+            <div class="layui-card-body">
+
+                <div id="channel" style="width: 100%;height:400px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-col-md6" style="margin-top: 50px">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                最新公告
+            <!--<span style="margin-left: 70%;color: #0b93d9">更多公告</span>-->
+            </div>
+            <div class="layui-card-body">
+                <div class="layui-collapse" id='agent-notice'>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-col-md6" style="margin-top: 50px">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                今日各渠道交易统计
+            </div>
+            <div class="layui-card-body">
+                <table class="layui-table">
+                    <thead>
+                    <tr>
+                        <th>渠道名称</th>
+                        <th>交易笔数(笔)</th>
+                        <th>交易金额(元)</th>
+                    </tr>
+                    </thead>
+                    <tbody class="channel-result">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+
+        <div class="layui-col-md8">
+            <div class="layui-card">
+                <div class="layui-card-header">提现信息</div>
+                <div class="layui-card-body">
+
+                    <form class="layui-form" action="" lay-filter="substitute-info">
+
+                        <div class="layui-form-item">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">银行编号</label>
+                                <div class="layui-input-block">
+                                    <select name="bankId" lay-filter="bankCode" id="selectBankCode">
+                                        <option value="" selected="selected"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">收款人姓名</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="accountName" lay-verify="title" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">身份证号</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="idNumber" lay-verify="title" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">银行卡号</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="accountNo" lay-verify="title" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+
+                        <!--<div class="layui-inline layui-form-item">-->
+                            <!--<label class="layui-form-label">交易类型</label>-->
+                            <!--<div class="layui-input-inline">-->
+                                <!--<select name="transType">-->
+                                    <!--<Option value=""></Option>-->
+                                    <!--<Option value="GATEWAY">网关支付</Option>-->
+                                    <!--<Option value="QUICK">快捷支付</Option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">账户类型</label>
+                            <div class="layui-input-block">
+                                <!--<input type="text" name="accountType" lay-verify="title" autocomplete="off"-->
+                                       <!--class="layui-input">-->
+
+                                <select name="accountType">
+                                    <Option value=""></Option>
+                                    <Option value="PERSON">个人</Option>
+                                    <Option value="">对公</Option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">开户行名称</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="branchName" lay-verify="title" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">银行省份</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="province" lay-verify="title" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">开卡城市</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="city" lay-verify="title" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="submit-substitute-info">立即提交
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

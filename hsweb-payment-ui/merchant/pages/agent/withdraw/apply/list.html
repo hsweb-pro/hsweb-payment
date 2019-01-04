@@ -1,0 +1,81 @@
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    提现申请
+                </div>
+                <div class="layui-card-body">
+
+
+                    <div class="layui-row layui-col-space5">
+                        <div class="layui-col-md12">
+                            <div class="apply_block apply_block_info" style="margin-top: 0px">
+                                <div class="fr">
+                                    <p>未到账:</p>
+                                    <strong>0/0</strong>
+                                </div>
+                            </div>
+
+                            <div class="apply_block apply_block_column" style="margin-top: 0px">
+                                <div class="fr">
+                                    <p>未到账投诉:</p>
+                                    <strong>0/0</strong>
+                                </div>
+                            </div>
+                            <div class="apply_block apply_block_info" style="margin-top: 0px">
+                                <div class="fr">
+                                    <p>总余额</p>
+                                    <strong class="all-balance">0</strong>
+                                </div>
+                            </div>
+                            <div class="apply_block apply_block_column" style="margin-top: 0px;margin-right: 15px">
+                                <div class="fr">
+                                    <p>到账投诉:</p>
+                                    <strong>0</strong>
+                                </div>
+                            </div>
+
+                            <div class="apply_block apply_block_visit" style="margin-top: 0px">
+                                <div class="fr">
+                                    <p>可提现:</p>
+                                    <strong class="available-balance">0</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-col-md3"></div>
+                        <div class="layui-col-md5" style="margin-top: 20px">
+                            <form class="layui-form" action="" lay-filter="apply-withdraw">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">提现金额(元)</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="transAmount" lay-verify="提现金额" class="layui-input" style="width: 150px">
+                                    </div>
+                                </div>
+
+                                <!--<div class="layui-form-item">-->
+                                    <!--<label class="layui-form-label">验证码</label>-->
+                                    <!--<div class="layui-input-block">-->
+                                        <!--<input type="text" name="verifyCode" lay-verify="验证码" class="layui-input">-->
+                                    <!--</div>-->
+
+                                <!--</div>-->
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button class="layui-btn" lay-submit="" lay-filter="apply-withdraw">立即提交
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="layui-col-md4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

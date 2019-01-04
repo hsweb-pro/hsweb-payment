@@ -1,0 +1,109 @@
+.layui-body {
+}
+
+.layui-tab {
+    margin: 0;
+}
+.login-wrap {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: #ffffff;
+    z-index: 999999;
+    display: none;
+}
+.login-wrap .layui-form {
+    width: 300px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.login-wrap .login-title {
+    font-size: 24px;
+    line-height: 2em;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.loading-wrap {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: #ffffff;
+    z-index: 9999999;
+}
+
+/*表格*/
+.custom-table-tool,
+.custom-table-tool .custom-form-item{
+    margin-bottom: 15px;
+}
+
+/*页面tab*/
+.main-tab {
+    height: 100%;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.main-tab .layui-tab-content {
+    position: absolute;
+    top: 42px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: scroll;
+}
+
+/*树选择*/
+.hs-tree-select {
+    position: relative;
+}
+.hs-tree-select .layui-input {
+    padding-right: 30px;
+    cursor: pointer;
+}
+.hs-tree-select .layui-edge {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -3px;
+    cursor: pointer;
+    border-width: 6px;
+    border-top-color: #c2c2c2;
+    border-top-style: solid;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+}
+.hs-tree-select .ztree {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 42px;
+    padding: 5px 0;
+    z-index: 999;
+    min-width: 100%;
+    border: 1px solid #d2d2d2;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.12);
+    box-sizing: border-box;
+}
+
+.expanded .ztree {
+    display: block;
+}
+.expanded .layui-edge {
+    margin-top: -9px;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    margin-top: -3px\9;
+}

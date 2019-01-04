@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>表单设计器</title>
+    <link rel="stylesheet" href="../../plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../plugins/jquery-ui/jquery-ui.min.css" media="all">
+    <link rel="stylesheet" href="designer.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout" style="height: 100%;position: relative;">
+    <div class="layui-header">
+        <button class="layui-btn export-html">导出HTML</button>
+        <button class="layui-btn export-config">导出完整配置</button>
+        <!--<button class="layui-btn">导入HTML</button>-->
+        <!--<button class="layui-btn fix-layout">修复布局</button>-->
+    </div>
+    <div class="layui-container" style="height: 90%;position: relative;">
+        <div class="layui-col-xs2" style="height: 100%;position: relative;">
+            <div class="layui-form layui-form-pane" style="height: 100%;position: relative;">
+                <div lay-accordion class="layui-collapse support-components" style="width: 100%; height: 100%;position: relative;overflow-y: auto"></div>
+            </div>
+        </div>
+        <div class="layui-col-xs8" style="height: 100%;position: relative;">
+            <div class="main-panel layui-container layui-form layui-form-pane" style="width: 100%; height: 100%;position: relative;">
+                <div class="layui-row components" style="width: 100%; height: 100%; overflow-y: auto;overflow-x: hidden">
+
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs2">
+            <div class="layui-form layui-form-pane" id="component-properties" style="width: 100%;text-align: center"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="../../plugins/layui/layui.all.js"></script>
+<script src="../../plugins/jquery-ui/jquery.js"></script>
+<script src="../../plugins/jquery-ui/jquery-ui.js"></script>
+<script src="designer.js"></script>
+<script src="designer-components.js"></script>
+<script src="designer-hsweb.js"></script>
+<script src="parser.js"></script>
+
+<script src="md5.js"></script>
+
+<script type="text/javascript">
+
+</script>

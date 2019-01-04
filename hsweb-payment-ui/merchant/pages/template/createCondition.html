@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>数据列表</title>
+    <link rel="stylesheet" href="../../plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../plugins/jquery-ui/jquery-ui.min.css" media="all">
+</head>
+<body class="layui-layout-body" style="padding: 16px">
+<form class="layui-form" onsubmit="return false">
+    <div class="layui-col-md6 layui-col-xs6">
+        <div class="layui-form-item brick"><label class="layui-form-label" style="">类型</label>
+            <div class="layui-input-block">
+                <select lay-verify="required" lay-filter="type">
+                    <option value="textbox">文本</option>
+                    <option value="date">日期</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md6 layui-col-xs6">
+        <div class="layui-form-item brick"><label class="layui-form-label" style="">权限</label>
+            <div class="layui-input-block"><input type="text" lay-verify="required" class="layui-input" name="autz" size="6"></div>
+        </div>
+    </div>
+    <div class="layui-col-md6 layui-col-xs6">
+        <div class="layui-form-item brick"><label class="layui-form-label" style="">标签</label>
+            <div class="layui-input-block"><input type="text" lay-verify="required" class="layui-input" name="text" size="6"></div>
+        </div>
+    </div>
+    <div class="layui-col-md6 layui-col-xs6">
+        <div class="layui-form-item brick"><label class="layui-form-label" style="">提示</label>
+            <div class="layui-input-block"><input type="text" lay-verify="required" class="layui-input" name="emptyText" size="6"></div>
+        </div>
+    </div>
+    <div class="layui-col-md6 layui-col-xs6">
+        <div class="layui-form-item brick"><label class="layui-form-label" style="">字段</label>
+            <div class="layui-input-block">
+                <div class="layui-col-md6 layui-col-xs12">
+                    <div class="layui-col-md5 layui-col-xs5">
+                        <input type="text" lay-verify="required" class="layui-input" name="field" size="6">
+                    </div>
+                    <div class="layui-col-md2 layui-col-xs2">
+                        条件
+                    </div>
+                    <div class="layui-col-md5 layui-col-xs5">
+                        <select lay-verify="required" lay-filter="termType">
+                            <option value="eq">等于</option>
+                            <option value="like">模糊查询</option>
+                            <option value="gt">大于</option>
+                            <option value="gte">大于等于</option>
+                            <option value="lt">小于</option>
+                            <option value="lte">小于等于</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md6 layui-col-xs6">
+        <div class="layui-form-item brick"><label class="layui-form-label" style="">宽度</label>
+            <div class="layui-input-block">
+                <select lay-verify="required" lay-filter="size">
+                    <option value="3">3</option>
+                    <option value="6">6</option>
+                    <option value="9">9</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md6 layui-col-xs6" lay-filter="format-panel" style="display: none">
+        <div class="layui-form-item brick"><label class="layui-form-label" style="">日期格式</label>
+            <div class="layui-input-block">
+                <select lay-verify="required" lay-filter="format">
+                    <option value="yyyy-MM-dd">yyyy-MM-dd</option>
+                    <option value="yyyy-MM-dd HH:mm:ss">yyyy-MM-dd HH:mm:ss</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div style="width: 100%;text-align: right">
+        <button class="layui-btn layui-btn-danger" data-select-id="delete" type="button" style="display: none">删除</button>
+        <button class="layui-btn layui-btn-normal" data-select-id="submit" type="button">提交</button>
+    </div>
+</form>
+<script src="../../plugins/layui/layui.all.js"></script>
+<script src="../../plugins/jquery-ui/jquery.js"></script>
+<script src="../../plugins/jquery-ui/jquery-ui.js"></script>
+<script>
+    layui.use(['form'],function (form) {
+        form.render()
+
+        var optionFunc = function () {
+
+            this.state = {
+                condition:{editor:{},size:"3"}
+            }
+
+            this.loadCondition = function (condition) {
+                if(condition){
+                    this.state.condition = condition
+                    this.render()
+                }
+            }
+
+            this.getCondition = function () {
+                var config = {editor:{}}
+                config.autz = $('[name="autz"]').val()
+                config.text = $('[name="text"]').val()
+                config.editor.emptyText = $('[name="emptyText"]').val()
+                config.field = $('[name="field"]').val()
+                config.size = this.state.condition.size
+                config.termType = this.state.condition.termType
+                config.editor.type = this.state.condition.editor.type ? this.state.condition.editor.type : 'textbox'
+                if(config.editor.type && config.editor.type == 'date'){
+                    config.editor.format = this.state.condition.editor.format ? this.state.condition.editor.format : 'yyyy-MM-dd'
+                }
+                config.code = this.state.condition.code
+
+                return config
+            }
+            
+            this.render = function () {
+                if(this.state.condition.autz){
+                    $('[name="autz"]').val(this.state.condition.autz)
+                }
+                if(this.state.condition.iconCls){
+                    $('[name="emptyText"]').val(this.state.condition.emptyText)
+                }
+                if(this.state.condition.text){
+                    $('[name="text"]').val(this.state.condition.text)
+                }
+                if(this.state.condition.text){
+                    $('[name="field"]').val(this.state.condition.field)
+                }
+                if(this.state.condition.size){
+                    $('[lay-filter="size"]').find('[value="'+this.state.condition.size+'"]').prop('selected',true)
+                }
+                if(this.state.condition.termType){
+                    $('[lay-filter="termType"]').find('[value="'+this.state.condition.termType+'"]').prop('selected',true)
+                }
+                if(this.state.condition.editor && this.state.condition.editor == 'date'){
+                    $('[lay-filter="type"]').find('[value="date"]').prop('selected',true)
+                }
+                form.render('select')
+            }
+
+        }
+
+        var option = new optionFunc()
+
+        form.on('select(type)',function (e) {
+            if(e.value == 'date'){
+                $('[lay-filter="format-panel"]').show()
+                option.state.condition.editor.type = 'date'
+            }else if(e.value == 'textbox'){
+                $('[lay-filter="format-panel"]').hide()
+                option.state.condition.editor.type = 'textbox'
+            }
+            option.render()
+        })
+        form.on('select(format)',function (e) {
+            option.state.condition.editor.format = e.value
+        })
+        form.on('select(termType)',function (e) {
+            option.state.condition.termType = e.value
+        })
+        form.on('select(size)',function (e) {
+            option.state.condition.size = e.value
+        })
+
+
+        $('[data-select-id="submit"]').click(function () {
+            window.submit(option.getCondition())
+            window.close()
+        })
+        $('[data-select-id="delete"]').click(function () {
+            window.delete(option.state.condition.code)
+            window.close()
+        })
+
+        window.setTimeout(function () {
+            if(window.ready){
+                window.ready(option)
+            }
+            if(option.state.condition.code && option.state.condition.code != ''){
+                $('[data-select-id="delete"]').show()
+            }
+        },100)
+    })
+</script>

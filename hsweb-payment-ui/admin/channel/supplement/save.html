@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>保存补登</title>
+    <script data-main="save.js" src="../../boot.js" type="text/javascript"></script>
+</head>
+<body style="display: none">
+    <div class="mini-fit mini-clearfix dynamic-form" id="form">
+        <div class="mini-col-6 form-component">
+            <div class="form-item">
+                <label class="form-label">借方账户：</label>
+                <div class="input-block component-body">
+                    <input name="sourceAccountNo" style="width: 100%" required class="mini-buttonedit"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="mini-col-5 form-component">
+            <div class="form-item">
+                <label class="form-label">借方金额：</label>
+                <div class="input-block component-body">
+                    <input name="sourceAmount" minValue="0.01" maxValue="999999999" required format="#,0.00元" style="width: 100%" class="mini-spinner"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="mini-col-6 form-component">
+            <div class="form-item">
+                <label class="form-label">贷方账户：</label>
+                <div class="input-block component-body">
+                    <input name="targetAccountNo"  style="width: 100%" required class="mini-buttonedit"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="mini-col-5 form-component">
+            <div class="form-item">
+                <label class="form-label">贷方金额：</label>
+                <div class="input-block component-body">
+                    <input name="targetAmount" minValue="0.01" maxValue="999999999" required format="#,0.00元" style="width: 100%" class="mini-spinner"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="mini-col-11 form-component">
+            <div class="form-item">
+                <label class="form-label">说明：</label>
+                <div class="input-block component-body">
+                    <input name="remark" class="mini-textarea" required style="width: 100%">
+                </div>
+            </div>
+        </div>
+
+        <div class="mini-col-12 form-component" style="text-align: center">
+             <a class="mini-button save-button" iconCls="icon-ok">提交</a>
+            &nbsp;
+            <a class="mini-button close" iconCls="icon-remove" plain="true">取消</a>
+
+        </div>
+    </div>
+</body>
+</html>

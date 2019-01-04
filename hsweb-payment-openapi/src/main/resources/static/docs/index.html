@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+    <title>API文档</title>
+    <link rel="stylesheet" href="js/default.css">
+
+    <link rel="stylesheet" href="js/github-markdown.css">
+
+    <style type="text/css">
+        body {
+            height: 100%;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu {
+            padding: 5px;
+            width: 20%;
+            float: left;
+            overflow-y: auto;
+            border-right: 1px solid #eaecef;
+        }
+
+        .menu ul {
+            list-style: none;
+        }
+
+        .doc-body {
+            padding: 5px;
+            float: left;
+            width: 78%;
+            position: relative;
+            height: 800px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="menu markdown-body">
+
+</div>
+<div class="doc-body markdown-body"></div>
+</body>
+</html>
+<script src="js/jquery-1.12.4.min.js"></script>
+<script src="js/highlight.js"></script>
+<script src="js/marked.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+    marked.setOptions({
+        renderer: new marked.Renderer(),
+        highlight: function (code) {
+            return hljs.highlightAuto(code).value;
+        },
+        gfm: true,
+        tables: true,
+        breaks: false,
+        pedantic: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: false
+    });
+    window.addEventListener('popstate', function (event) {
+        loadApiFromUrl();
+    });
+
+    function getParameter(name) {
+        var url = window.location.search;
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var result = url.substr(1).match(reg);
+        return result ? decodeURIComponent(result[2]) : null;
+    }
+
+    $(window).resize(resize);
+    resize();
+
+    function resize() {
+        $('.doc-body').css("height", ($(window).height() - 20) + "px");
+        $('.menu').css("height", ($(window).height() - 20) + "px")
+    }
+
+    loadMenu();
+    loadApiFromUrl();
+
+    function loadApiFromUrl() {
+        var hash = window.location.hash;
+        if (hash) {
+            var id = hash.substr(1, hash.length);
+            loadApi(id)
+        }
+    }
+
+    function loadMenu() {
+        readMarkdown("api-menu", function (text) {
+            var markdownHtml = marked(text);
+            $(".menu").html(markdownHtml);
+        });
+    }
+
+    function loadApi(id) {
+        readMarkdown(id, function (text) {
+            var markdownHtml = marked(text);
+            $(".doc-body").html(markdownHtml);
+        });
+    }
+
+    function readMarkdown(id, call) {
+        var basePath = getParameter("path") || "";
+        $.ajax({
+            url: basePath + id + ".md",
+            success: call,
+            error: function (e) {
+                if (e.status === 200) {
+                    call(e.responseText);
+                }
+            },
+            dataType: "text/plain"
+        });
+
+    }
+</script>

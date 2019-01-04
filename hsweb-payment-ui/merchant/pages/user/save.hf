@@ -1,0 +1,260 @@
+{
+  "html": "<div class=\"layui-col-md12\" hs-id=\"97759cddbf5851b23f9b4d315e712087\"><fieldset class=\"brick layui-elem-field layui-field-title site-title\"><legend style=\"\">基本信息</legend></fieldset></div><div class=\"layui-col-md6\" hs-id=\"6217e3805e96d4c0e86f5e8247b10065\"><div class=\"layui-form-item brick\"><label class=\"layui-form-label\" style=\"\">用户名</label><div class=\"layui-input-block\"><input type=\"text\" class=\"layui-input\" name=\"username\" placeholder=\"请输入用户\" required=\"required\"></div></div></div><div class=\"layui-col-md6\" hs-id=\"f106ebb1505987bf0b28ab3530d7696a\"><div class=\"layui-form-item brick\"><label class=\"layui-form-label\" style=\"\">密码</label><div class=\"layui-input-block\"><input type=\"password\" class=\"layui-input\" name=\"password\" placeholder=\"请输入密码\" required=\"required\"></div></div></div><div class=\"layui-col-md6\" hs-id=\"a5f944e6fc8b2e0b1eca359b8ecc73f2\"><div class=\"layui-form-item brick\"><label class=\"layui-form-label\" style=\"\">姓名</label><div class=\"layui-input-block\"><input type=\"text\" class=\"layui-input\" name=\"name\" placeholder=\"请输入用户姓名\" required=\"required\"></div></div></div><div class=\"layui-col-md12\" hs-id=\"b20d0073d4b5f1c09797151a7d86ed0a\" style=\"position: relative; left: 0px; top: 0px;\"><fieldset class=\"brick layui-elem-field layui-field-title site-title\"><legend style=\"\">角色信息</legend></fieldset></div>",
+  "components": [
+    {
+      "config": {},
+      "properties": [
+        {
+          "id": "comment",
+          "editor": "textbox",
+          "text": "描述",
+          "value": "基本信息"
+        },
+        {
+          "id": "size",
+          "text": "控件大小",
+          "value": "12"
+        },
+        {
+          "id": "mdSize",
+          "editor": "radio",
+          "text": "移动端大小",
+          "value": "12"
+        }
+      ],
+      "id": "97759cddbf5851b23f9b4d315e712087",
+      "type": "fieldset"
+    },
+    {
+      "config": {},
+      "properties": [
+        {
+          "id": "name",
+          "editor": "textbox",
+          "text": "名称",
+          "value": "username"
+        },
+        {
+          "id": "comment",
+          "editor": "textbox",
+          "text": "描述",
+          "value": "用户名"
+        },
+        {
+          "id": "placeholder",
+          "editor": "textbox",
+          "text": "提示",
+          "value": "请输入用户"
+        },
+        {
+          "id": "size",
+          "text": "控件大小",
+          "value": "6"
+        },
+        {
+          "id": "mdSize",
+          "editor": "radio",
+          "text": "移动端大小",
+          "value": "12"
+        },
+        {
+          "id": "required",
+          "editor": "radio",
+          "text": "是否必填",
+          "value": true,
+          "data": [
+            {
+              "text": "是",
+              "value": true
+            },
+            {
+              "text": "否",
+              "value": false
+            }
+          ]
+        }
+      ],
+      "id": "6217e3805e96d4c0e86f5e8247b10065",
+      "type": "textbox"
+    },
+    {
+      "config": {},
+      "properties": [
+        {
+          "id": "name",
+          "editor": "textbox",
+          "text": "名称",
+          "value": "password"
+        },
+        {
+          "id": "comment",
+          "editor": "textbox",
+          "text": "描述",
+          "value": "密码"
+        },
+        {
+          "id": "placeholder",
+          "editor": "textbox",
+          "text": "提示",
+          "value": "请输入密码"
+        },
+        {
+          "id": "size",
+          "text": "控件大小",
+          "value": "6"
+        },
+        {
+          "id": "mdSize",
+          "editor": "radio",
+          "text": "移动端大小",
+          "value": "12"
+        },
+        {
+          "id": "required",
+          "editor": "radio",
+          "text": "是否必填",
+          "value": true,
+          "data": [
+            {
+              "text": "是",
+              "value": true
+            },
+            {
+              "text": "否",
+              "value": false
+            }
+          ]
+        }
+      ],
+      "id": "f106ebb1505987bf0b28ab3530d7696a",
+      "type": "password"
+    },
+    {
+      "config": {},
+      "properties": [
+        {
+          "id": "name",
+          "editor": "textbox",
+          "text": "名称",
+          "value": "name"
+        },
+        {
+          "id": "comment",
+          "editor": "textbox",
+          "text": "描述",
+          "value": "姓名"
+        },
+        {
+          "id": "placeholder",
+          "editor": "textbox",
+          "text": "提示",
+          "value": "请输入用户姓名"
+        },
+        {
+          "id": "size",
+          "text": "控件大小",
+          "value": "6"
+        },
+        {
+          "id": "mdSize",
+          "editor": "radio",
+          "text": "移动端大小",
+          "value": "12"
+        },
+        {
+          "id": "required",
+          "editor": "radio",
+          "text": "是否必填",
+          "value": true,
+          "data": [
+            {
+              "text": "是",
+              "value": true
+            },
+            {
+              "text": "否",
+              "value": false
+            }
+          ]
+        }
+      ],
+      "id": "a5f944e6fc8b2e0b1eca359b8ecc73f2",
+      "type": "textbox"
+    },
+    {
+      "config": {},
+      "properties": [
+        {
+          "id": "name",
+          "editor": "textbox",
+          "text": "名称",
+          "value": "status"
+        },
+        {
+          "id": "comment",
+          "editor": "textbox",
+          "text": "描述",
+          "value": "是否启用"
+        },
+        {
+          "id": "size",
+          "text": "控件大小",
+          "value": "6"
+        },
+        {
+          "id": "mdSize",
+          "editor": "radio",
+          "text": "移动端大小",
+          "value": "12"
+        },
+        {
+          "id": "required",
+          "editor": "radio",
+          "text": "是否必填",
+          "value": "false",
+          "data": [
+            {
+              "text": "是",
+              "value": true
+            },
+            {
+              "text": "否",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": "data",
+          "text": "选项",
+          "value": "是:1,否:0"
+        }
+      ],
+      "id": "62d04f8174986704fe19d601eafd97b4",
+      "type": "radio"
+    },
+    {
+      "config": {},
+      "properties": [
+        {
+          "id": "comment",
+          "editor": "textbox",
+          "text": "描述",
+          "value": "角色信息"
+        },
+        {
+          "id": "size",
+          "text": "控件大小",
+          "value": "12"
+        },
+        {
+          "id": "mdSize",
+          "editor": "radio",
+          "text": "移动端大小",
+          "value": "12"
+        }
+      ],
+      "id": "b20d0073d4b5f1c09797151a7d86ed0a",
+      "type": "fieldset"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">基本信息</li>
+        <li>字段设置</li>
+        <li>表关联设置</li>
+        <li>触发器设置</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <div class="layui-col-md6 layui-col-xs12">
+                <div class="layui-form-item brick"><label class="layui-form-label" style="">表单ID</label>
+                    <div class="layui-input-block"><input type="text" class="layui-input" lay-verify="required" name="id" size="6"></div>
+                </div>
+            </div>
+            <div class="layui-col-md6 layui-col-xs12">
+                <div class="layui-form-item brick"><label class="layui-form-label" style="">绑定数据源</label>
+                    <div class="layui-input-block">
+                        <select name="dataSourceId">
+                            <option value="">默认数据源</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md6 layui-col-xs12">
+                <div class="layui-form-item brick"><label class="layui-form-label" style="">表单名称</label>
+                    <div class="layui-input-block"><input type="text" lay-verify="required" class="layui-input" name="name" size="6"></div>
+                </div>
+            </div>
+            <div class="layui-col-md6 layui-col-xs12">
+                <div class="layui-form-item brick"><label class="layui-form-label" style="">表单类型</label>
+                    <div class="layui-input-block"><input type="text" lay-verify="required" class="layui-input" name="type" size="6"></div>
+                </div>
+            </div>
+            <div class="layui-col-md6 layui-col-xs12">
+                <div class="layui-form-item brick"><label class="layui-form-label" style="">物理表名</label>
+                    <div class="layui-input-block"><input type="text" lay-verify="required" class="layui-input" name="databaseTableName" size="6"></div>
+                </div>
+            </div>
+            <div class="layui-col-md6 layui-col-xs12">
+                <div class="layui-form-item brick"><label class="layui-form-label" style="">别名</label>
+                    <div class="layui-input-block"><input type="text" lay-verify="required" class="layui-input" name="alias" size="6"></div>
+                </div>
+            </div>
+            <div class="layui-col-md12">
+                <div class="layui-form-text layui-form-item brick"><label class="layui-form-label" style="">备注</label>
+                    <div class="layui-input-block"><input  class="layui-input" name="describe"> </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <table class="layui-table" lay-filter="field-table">
+                <thead>
+                <tr>
+                    <th colspan="4">基本信息</th>
+                    <th colspan="3">数据类型</th>
+                    <th rowspan="2">
+                        <span>操作</span>
+                        <button class="layui-btn layui-btn-xs layui-btn-radiuss" data-select-id="add-column-btn">
+                            <i class="layui-icon">&#xe654;</i>
+                        </button>
+                    </th>
+                </tr>
+                <tr>
+                    <th lay-data="{field:'name'}">名称</th>
+                    <th lay-data="{field:'columnName'}">物理列名</th>
+                    <th lay-data="{field:'alias'}">别名</th>
+                    <th lay-data="{field:'describe'}">备注</th>
+                    <th lay-data="{field:'jdbcType'}">JDBCType</th>
+                    <th lay-data="{field:'javaType'}">JavaType</th>
+                    <th lay-data="{field:'length'}">长度/精度</th>
+                </tr>
+                </thead>
+                <tbody data-select-id="field-table-body">
+
+                </tbody>
+            </table>
+            <input type="hidden" name="columns" value="{}"/>
+        </div>
+        <div class="layui-tab-item"></div>
+        <div class="layui-tab-item"></div>
+    </div>
+</div>

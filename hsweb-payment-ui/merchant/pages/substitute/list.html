@@ -1,0 +1,60 @@
+<script type="text/html" id="detailAction">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="detail">查看</a>
+    <!--<a class="layui-btn layui-btn-xs" lay-event="del">删除</a>-->
+</script>
+
+<form class="search-substitute layui-form" id="substitute-search">
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">交易号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="transNo" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-inline layui-form-item">
+        <label class="layui-form-label">订单状态</label>
+        <div class="layui-input-inline">
+            <select name="status" lay-verify="required">
+                <Option value=""></Option>
+                <Option value="PROCESSING">处理中</Option>
+                <Option value="SUCCESS">成功</Option>
+                <Option value="FAIL">失败</Option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">交易金额</label>
+        <div class="layui-input-inline" style="width: 100px;">
+            <input type="text" name="totalAmountGTE" placeholder="￥" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid">-</div>
+        <div class="layui-input-inline" style="width: 100px;">
+            <input type="text" name="totalAmountLT" placeholder="￥" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">申请时间</label>
+        <div class="layui-input-inline" style="width: 300px">
+            <input type="text" class="layui-input" id="createTime" name="createTime" placeholder=" - ">
+        </div>
+        <div class="layui-inline" style="margin-top: 8px">
+            <a class="layui-btn layui-btn-primary layui-btn-xs yesterday-data" lay-event="detail">昨日</a>
+            <a class="layui-btn layui-btn-primary layui-btn-xs seven-days-data" lay-event="detail">七天</a>
+            <a class="layui-btn layui-btn-primary layui-btn-xs month-data" lay-event="detail">30天</a>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item layui-inline " style="margin-left: 50px">
+        <button class="layui-btn search-btn" data-type="reload" type="button">搜索</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+
+</form>
+
+
+<table class="layui-hide" id="substitute" lay-filter="substitute"></table>
+
+
+<table class="layui-hide" id="details" lay-filter="details"></table>

@@ -1,0 +1,1840 @@
+<div class="content-box content-big">
+    <div class="layui-tab layui-tab-card">
+
+        <ul class="layui-tab-title" lay-filter="api">
+            <li class="layui-this">接口标准</li>
+            <li>请求支付</li>
+            <li>同步回调</li>
+            <li>异步回调</li>
+            <li>订单查询</li>
+            <li>手动代付</li>
+            <li>自动代付</li>
+            <li>代付回调</li>
+            <li lay-id="channel" class="channel-tab">渠道标志</li>
+            <li>错误码</li>
+            <li>银行编码</li>
+            <li>Demo下载</li>
+        </ul>
+
+        <div class="layui-tab-content typora-export" style="margin-top: 20px">
+
+            <div class="layui-tab-item layui-show">
+                <iframe src="pages/api/sign.html" style="width: 100%;height: 800px;border: none"></iframe>
+            </div>
+
+            <div class="layui-tab-item">
+                <div class="layui-collapse">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">接口信息</h2>
+                        <div class="layui-colla-content layui-show">
+
+                            <table class="layui-table mb-15">
+                                <thead>
+                                <tr>
+                                    <th style="width: 100px">属性</th>
+                                    <th>内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="cen">
+                                    <td>版本</td>
+                                    <td class="lt">1.00</td>
+                                </tr>
+                                <tr class="cen">
+                                    <td>网关</td>
+                                    <td class="lt"><span class="api-url"></span>/open-api/payment/gateway</td>
+                                </tr>
+                                <tr class="cen">
+                                    <td>请求方式</td>
+                                    <td class="lt">POST</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">请求参数</h2>
+                        <div class="layui-colla-content">
+                            <table class="layui-table">
+                                <thead>
+                                <tr>
+                                    <th align="center" width="100px">请求参数</th>
+                                    <th align="center">属性名</th>
+                                    <th align="center" width="50">必填</th>
+                                    <th align="center">说明</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td align="center">请求ID</td>
+                                    <td align="center">requestId</td>
+                                    <td align="center">是</td>
+                                    <td align="left">请求ID由商户生成16位随机数。</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">商户ID</td>
+                                    <td align="center">merchantId</td>
+                                    <td align="center">是</td>
+                                    <td align="left">系统给定的商户号</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">订单号</td>
+                                    <td align="center">orderId</td>
+                                    <td align="center">是</td>
+                                    <td align="left">商户自己的订单号</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">交易金额</td>
+                                    <td align="center">amount</td>
+                                    <td align="center">是</td>
+                                    <td align="left">交易金额，单位：分</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">产品唯一标识</td>
+                                    <td align="center">productId</td>
+                                    <td align="center">是</td>
+                                    <td align="left">产品唯一标识（商户自己的产品ID）</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">产品名称</td>
+                                    <td align="center">productName</td>
+                                    <td align="center">是</td>
+                                    <td align="left">产品名称,例:话费充值</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">异步通知地址</td>
+                                    <td align="center">notifyUrl</td>
+                                    <td align="center">否</td>
+                                    <td align="left">异步通知地址,不能有参数，接口返回：success则通知成功，否则将阶梯性重试。</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">跳转地址</td>
+                                    <td align="center">returnUrl</td>
+                                    <td align="center">否</td>
+                                    <td align="left">用户支付完成后跳转地址，只有部分渠道有效。</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">支付渠道</td>
+                                    <td align="center">channel</td>
+                                    <td align="center">是</td>
+                                    <td align="left">支付渠道。例:alipay（参考<span class="channel-sign" style="color: #0b93d9">【渠道标志】</span>）</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">渠道特殊参数</td>
+                                    <td align="center">extraParam</td>
+                                    <td align="center">否</td>
+                                    <td align="left">无可不填写，例：{"type","WEB"},如果是微信支付，则需要传IP地址,例如：{"spbillCreateIp":"192.168.1.1"}</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">签名</td>
+                                    <td align="center">sign</td>
+                                    <td align="center">是</td>
+                                    <td align="left">签名算法看文档</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">响应参数</h2>
+                        <div class="layui-colla-content">
+
+                            <button class="layui-btn layui-btn-primary layui-btn-lg view-error">错误响应</button>
+                            <button class="layui-btn layui-btn-primary layui-btn-lg view-wx-native">微信扫码支付</button>
+                            <button class="layui-btn layui-btn-primary layui-btn-lg view-wx-h5">微信H5支付</button>
+                            <button class="layui-btn layui-btn-primary layui-btn-lg view-ali-web">支付宝电脑网页支付</button>
+                            <button class="layui-btn layui-btn-primary layui-btn-lg view-ali-h5">支付宝H5支付</button>
+
+                            <div class="response">
+                                <div hidden="hidden" class="pay-error-response">
+                                    <table class="layui-table mb-15">
+                                        <thead>
+                                        <tr>
+                                            <th style="width:100px;">属性</th>
+                                            <th>字段</th>
+                                            <th>说明</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="cen">
+                                            <td>错误码</td>
+                                            <td class="lt">code</td>
+                                            <td>error_code</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>商户ID</td>
+                                            <td class="lt">merchantId</td>
+                                            <td>1111111</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>请求ID</td>
+                                            <td class="lt">requestId</td>
+                                            <td>3bb432e8402dc54438e15ab98fab95ea</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>请求结果</td>
+                                            <td class="lt">success</td>
+                                            <td>false</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>时间戳</td>
+                                            <td class="lt">timestamp</td>
+                                            <td>1543758715125</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>示例</td>
+                                            <td colspan="2">
+                                                <pre>
+{
+    "code":"erro_code",
+    "merchantId":"·11111",
+    "requestId":"3bb432e8402dc54438e15ab98fab95ea",
+    "success":false,
+    "message":"错误原因",
+    "timestamp":"1543758715125"
+}
+                                                </pre>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div hidden="hidden" class="pay-wx-native">
+
+                                    <table class="layui-table mb-15">
+                                        <thead>
+                                        <tr>
+                                            <th style="width:100px;">属性</th>
+                                            <th>字段</th>
+                                            <th>说明</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="cen">
+                                            <td>二维码</td>
+                                            <td class="lt">qrCode</td>
+                                            <td>用这个字符串生成二维码</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>商户ID</td>
+                                            <td class="lt">merchantId</td>
+                                            <td>1073055130872942593</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>订单ID</td>
+                                            <td class="lt">orderId</td>
+                                            <td>1321c26227444bdf2dfea27415d9af56</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>支付ID</td>
+                                            <td class="lt">paymentId</td>
+                                            <td>1077500462299172864</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>请求ID</td>
+                                            <td class="lt">requestId</td>
+                                            <td>20a955b7efa6ddd69bf1126c6abcda1b</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>请求结果</td>
+                                            <td class="lt">success</td>
+                                            <td>false</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>渠道标志</td>
+                                            <td class="lt">channel</td>
+                                            <td>weixin-native</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>渠道ID</td>
+                                            <td class="lt">channelId</td>
+                                            <td>1066878260548186112</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>时间戳</td>
+                                            <td class="lt">timestamp</td>
+                                            <td>1543758715125</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>示例</td>
+                                            <td colspan="2">
+                                                <pre>
+{
+    "qrCode":"weixin://wxpay/bizpayurl?pr=sUxHmjd",
+    "merchantId":"1073055130872942593",
+    "orderId":"1321c26227444bdf2dfea27415d9af56",
+    "paymentId":"1077500462299172864",
+    "requestId":"20a955b7efa6ddd69bf1126c6abcda1b",
+    "success":true,
+    "channel":"weixin-native",
+    "channelId":"1066878260548186112",
+    "timestamp":"1545731104256"
+}
+                                                </pre>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div hidden="hidden" class="pay-wx-h5">
+                                    <table class="layui-table mb-15">
+                                        <thead>
+                                        <tr>
+                                            <th style="width:100px;">属性</th>
+                                            <th>字段</th>
+                                            <th>说明</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr class="cen">
+                                            <td>商户ID</td>
+                                            <td class="lt">merchantId</td>
+                                            <td>1073055130872942593</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>订单ID</td>
+                                            <td class="lt">orderId</td>
+                                            <td>1321c26227444bdf2dfea27415d9af56</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>支付ID</td>
+                                            <td class="lt">paymentId</td>
+                                            <td>1077500462299172864</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>请求ID</td>
+                                            <td class="lt">requestId</td>
+                                            <td>20a955b7efa6ddd69bf1126c6abcda1b</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>请求结果</td>
+                                            <td class="lt">success</td>
+                                            <td>true</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>渠道标志</td>
+                                            <td class="lt">channel</td>
+                                            <td>weixin-native</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>渠道ID</td>
+                                            <td class="lt">channelId</td>
+                                            <td>1066878260548186112</td>
+                                        </tr>
+
+                                        <tr class="cen">
+                                            <td>支付地址</td>
+                                            <td class="lt">payUrl</td>
+                                            <td>返回支付地址，只能用手机打开</td>
+                                        </tr>
+
+                                        <tr class="cen">
+                                            <td>时间戳</td>
+                                            <td class="lt">timestamp</td>
+                                            <td>1543758715125</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>示例</td>
+                                            <td colspan="2">
+                                                <pre>
+{
+    "merchantId":"1073055130872942593",
+    "orderId":"4815ba15bde12cc64f20e7f068ee0b20",
+    "paymentId":"1077769211799490560",
+    "requestId":"10cbd07c3a2ec88385d9912566f4bac6",
+    "success":true,
+    "channel":"weixin-h5",
+    "payUrl":"http://pay.hsweb.pro/payment/weixin/redirect?
+                  url=https%3A%2F%2Fwx.tenpay.com%2Fcgi-bin%2Fmmpayweb.....",
+    "channelId":"1066898133349597184",
+    "timestamp":"1545795179062"
+}
+                                                </pre>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>通知</td>
+                                            <td colspan="2">
+                                                <pre>
+{
+    "paymentId":"1077769211799490560",
+    "merchantId":"1073055130872942593",
+    "orderId":"4815ba15bde12cc64f20e7f068ee0b20",
+    "productId":"e60203fe0ae3162d99b58265464e6b9f",
+    "amount":"1",
+    "status":"success",
+    "statusText":"支付成功",
+    "completeTime":"1545795201049",
+    "settleAmount":"1",
+    "spbillCreateIp":"101.206.167.169"
+}
+
+                                                </pre>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div hidden="hidden" class="pay-ali-web">
+                                    <table class="layui-table mb-15">
+                                        <thead>
+                                        <tr>
+                                            <th style="width:100px;">属性</th>
+                                            <th>字段</th>
+                                            <th>说明</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr class="cen">
+                                            <td>商户ID</td>
+                                            <td class="lt">merchantId</td>
+                                            <td>1073055130872942593</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>订单ID</td>
+                                            <td class="lt">orderId</td>
+                                            <td>1321c26227444bdf2dfea27415d9af56</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>支付ID</td>
+                                            <td class="lt">paymentId</td>
+                                            <td>1077500462299172864</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>请求ID</td>
+                                            <td class="lt">requestId</td>
+                                            <td>20a955b7efa6ddd69bf1126c6abcda1b</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>请求结果</td>
+                                            <td class="lt">success</td>
+                                            <td>true</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>渠道标志</td>
+                                            <td class="lt">channel</td>
+                                            <td>weixin-native</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>渠道ID</td>
+                                            <td class="lt">channelId</td>
+                                            <td>1066878260548186112</td>
+                                        </tr>
+
+                                        <tr class="cen">
+                                            <td>支付地址</td>
+                                            <td class="lt">payUrl</td>
+                                            <td>跳转到支付地址</td>
+                                        </tr>
+
+                                        <tr class="cen">
+                                            <td>时间戳</td>
+                                            <td class="lt">timestamp</td>
+                                            <td>1543758715125</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>示例</td>
+                                            <td colspan="2">
+                                                <pre>
+{
+    "merchantId":"1073055130872942593",
+    "orderId":"8cd881344a3ab6d7a0148ae61ab3fd31",
+    "paymentId":"1077801152410112000",
+    "requestId":"386580ca7fbac9fdc6f32612aa83b713",
+    "success":true,
+    "channel":"alipay-web",
+    "payUrl":"https://openapi.alipay.com/gateway.do?alipay_sdk=alipay-sdk-java-3.4.49.ALL&app_id=201812266...%3A54&version=1.0",
+    "channelId":"1077774047081222144",
+    "timestamp":"1545802794070"
+}
+                                                </pre>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>通知</td>
+                                            <td colspan="2">
+                                                <pre>
+{
+    "paymentId":"1077801152410112000",
+    "merchantId":"1073055130872942593",
+    "orderId":"8cd881344a3ab6d7a0148ae61ab3fd31",
+    "productId":"553abe3cfacc4ed6317823a5bf582fe4",
+    "amount":"1",
+    "status":"success",
+    "statusText":"支付成功",
+    "completeTime":"1545802860164",
+    "settleAmount":"1"
+}
+                                                </pre>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <div hidden="hidden" class="pay-ali-h5">
+                                    <table class="layui-table mb-15">
+                                        <thead>
+                                        <tr>
+                                            <th style="width:100px;">属性</th>
+                                            <th>字段</th>
+                                            <th>说明</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr class="cen">
+                                            <td>商户ID</td>
+                                            <td class="lt">merchantId</td>
+                                            <td>1073055130872942593</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>订单ID</td>
+                                            <td class="lt">orderId</td>
+                                            <td>1321c26227444bdf2dfea27415d9af56</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>支付ID</td>
+                                            <td class="lt">paymentId</td>
+                                            <td>1077500462299172864</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>请求ID</td>
+                                            <td class="lt">requestId</td>
+                                            <td>20a955b7efa6ddd69bf1126c6abcda1b</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>请求结果</td>
+                                            <td class="lt">success</td>
+                                            <td>true</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>渠道标志</td>
+                                            <td class="lt">channel</td>
+                                            <td>weixin-native</td>
+                                        </tr>
+                                        <tr class="cen">
+                                            <td>渠道ID</td>
+                                            <td class="lt">channelId</td>
+                                            <td>1066878260548186112</td>
+                                        </tr>
+
+                                        <tr class="cen">
+                                            <td>支付地址</td>
+                                            <td class="lt">payUrl</td>
+                                            <td>跳转到支付地址</td>
+                                        </tr>
+
+                                        <tr class="cen">
+                                            <td>时间戳</td>
+                                            <td class="lt">timestamp</td>
+                                            <td>1543758715125</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>示例</td>
+                                            <td colspan="2">
+                                                <pre>
+{
+"merchantId":"1073055130872942593",
+"orderId":"19071d7bf97b70bb5dc16c1d68ddf680",
+"paymentId":"1077803553221332992",
+"requestId":"0f91fe3c339fb2578bb21b722cd710a8",
+"success":true,
+"channel":"alipay-h5",
+"payUrl":"https://openapi.alipay.com/gateway.do?alipay_sdk=alipay-sdk-java-3.4.49.ALL&app_id=20151221...8-12-26+13%3A49%3A26&version=1.0",
+"channelId":"1068059535864889341",
+"timestamp":"1545803366422"
+}
+                                                </pre>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>通知</td>
+                                            <td colspan="2">
+                                                <pre>
+{
+"paymentId":"1077803553221332992",
+"merchantId":"1073055130872942593",
+"orderId":"19071d7bf97b70bb5dc16c1d68ddf680",
+"productId":"db9d30c62e1375243653d88d911cddca",
+"amount":"1",
+"status":"success",
+"statusText":"支付成功",
+"completeTime":"1545803377387",
+"settleAmount":"1"
+}
+                                                </pre>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="layui-tab-item">
+                <div class="layui-collapse">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">接口信息</h2>
+                        <div class="layui-colla-content layui-show">
+                            <table class="layui-table mb-15">
+                                <thead>
+                                <tr>
+                                    <th style="width:100px;">属性</th>
+                                    <th>内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="cen">
+                                    <td>版本</td>
+                                    <td class="lt">1.0</td>
+                                </tr>
+                                <tr class="cen">
+                                    <td>网关</td>
+                                    <td class="lt">此回调不需要网关，根据你传递同步回调地址传参,不管交易是否成功都将跳转到该地址。</td>
+                                </tr>
+                                <tr class="cen">
+                                    <td>请求方式</td>
+                                    <td class="lt">GET</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">响应参数</h2>
+                        <div class="layui-colla-content">
+                            <table class="layui-table">
+                                <thead>
+                                <tr>
+                                    <th align="center">请求参数</th>
+                                    <th align="center">属性名</th>
+                                    <th align="center">说明</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr>
+                                    <td align="center">交易订单号</td>
+                                    <td align="center">order</td>
+                                    <td align="left">订单号</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">交易金额</td>
+                                    <td align="center">amount</td>
+                                    <td align="left">...</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">结算金额</td>
+                                    <td align="center">settleAmount</td>
+                                    <td align="left">...</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">支付ID</td>
+                                    <td align="center">paymentId</td>
+                                    <td align="left">...</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">订单状态</td>
+                                    <td align="center">status</td>
+                                    <td align="left">....</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">状态说明</td>
+                                    <td align="center">statusText</td>
+                                    <td align="left">....</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--<div class="layui-colla-item">-->
+                        <!--<h2 class="layui-colla-title">请求示例</h2>-->
+                        <!--<div class="layui-colla-content">-->
+                            <!--<div class="layui-elem-quote" style="margin-top: 20px;">-->
+                                <!--<p>无需返回数据<br> 可通过订单查询接口，查询订单是否交易成功！</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+
+            <div class="layui-tab-item">
+                <div class="layui-collapse">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">接口信息</h2>
+                        <div class="layui-colla-content layui-show">
+                            <table class="layui-table mb-15">
+                                <thead>
+                                <tr>
+                                    <th style="width:100px;">属性</th>
+                                    <th>内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="cen">
+                                    <td>版本</td>
+                                    <td class="lt">1.0</td>
+                                </tr>
+                                <tr class="cen">
+                                    <td>网关</td>
+                                    <td class="lt">此回调不需要网关，根据你传递异步回调地址传参,只回调交易成功的订单信息。</td>
+                                </tr>
+                                <tr class="cen">
+                                    <td>请求方式</td>
+                                    <td class="lt">GET</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">回调参数</h2>
+                        <div class="layui-colla-content">
+                            <table class="layui-table">
+                                <thead>
+                                <tr>
+                                    <th align="center">参数名</th>
+                                    <th align="center">字段</th>
+                                    <th align="center">说明</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr>
+                                    <td align="center">支付ID</td>
+                                    <td align="center">paymentId</td>
+                                    <td align="left">...</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">商户Id</td>
+                                    <td align="center">merchantId</td>
+                                    <td align="left">系统给定的商户号</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">交易订单号</td>
+                                    <td align="center">orderId</td>
+                                    <td align="left">订单号</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">产品ID</td>
+                                    <td align="center">productId</td>
+                                    <td align="left">产品唯一标志</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">订单金额</td>
+                                    <td align="center">amount</td>
+                                    <td align="left">....
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">交易状态</td>
+                                    <td align="center">status</td>
+                                    <td align="left">
+                                        prepare("发起支付请求"),
+                                        paying("支付中"),
+                                        success("支付成功"),
+                                        fail("支付失败"),
+                                        timeout("支付超时"),
+                                        requestFail("发起支付申请失败");
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">状态描述</td>
+                                    <td align="center">statusText</td>
+                                    <td align="left">
+                                        prepare("发起支付请求"),
+                                        paying("支付中"),
+                                        success("支付成功"),
+                                        fail("支付失败"),
+                                        timeout("支付超时"),
+                                        requestFail("发起支付申请失败");</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">完成时间</td>
+                                    <td align="center">completeTime</td>
+                                    <td align="left">...</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">签名方式</td>
+                                    <td align="center">signType</td>
+                                    <td align="left">目前只支持MD5</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-tab-item">
+                <div class="layui-collapse">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">接口信息</h2>
+                        <div class="layui-colla-content layui-show">
+                            <table class="layui-table mb-15">
+                                <thead>
+                                <tr>
+                                    <th style="width:100px;">属性</th>
+                                    <th>内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="cen">
+                                    <td>版本</td>
+                                    <td class="lt">1.0</td>
+                                </tr>
+                                <tr class="cen">
+                                    <td>网关</td>
+                                    <td class="lt">http://localhost:8080/open-api/payment/query</td>
+                                </tr>
+                                <tr class="cen">
+                                    <td>请求方式</td>
+                                    <td class="lt">GET</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">请求参数</h2>
+                        <div class="layui-colla-content">
+                            <table class="layui-table">
+                                <thead>
+                                <tr>
+                                    <th align="center">请求参数</th>
+                                    <th align="center">属性名</th>
+                                    <th align="center">最大长度</th>
+                                    <th align="center">必填</th>
+                                    <th align="center">说明</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td align="center">请求ID</td>
+                                    <td align="center">requestId</td>
+                                    <td align="center">16位</td>
+                                    <td align="center">是</td>
+                                    <td align="left">请求ID由商户生成16位随机数。</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">商户ID</td>
+                                    <td align="center">merchantId</td>
+                                    <td align="center">无</td>
+                                    <td align="center">是</td>
+                                    <td align="left">系统给定的商户号</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">支付订单ID</td>
+                                    <td align="center">paymentId</td>
+                                    <td align="center">40</td>
+                                    <td align="center">是</td>
+                                    <td align="left">支付订单ID,,不能和orderID同时为空</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">商户订单ID</td>
+                                    <td align="center">orderId</td>
+                                    <td align="center">40</td>
+                                    <td align="center">否</td>
+                                    <td align="left">商户自己的订单号,不能和paymentID同时为空</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">签名</td>
+                                    <td align="center">sign</td>
+                                    <td align="center">无</td>
+                                    <td align="center">是</td>
+                                    <td align="left">签名算法看文档</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">响应参数</h2>
+                        <div class="layui-colla-content">
+                            <table class="layui-table">
+                                <thead>
+                                <tr>
+                                    <th align="center">响应参数</th>
+                                    <th align="center">属性名</th>
+                                    <th align="center">类型</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td align="center">请求ID</td>
+                                    <td align="center">requestId</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">订单号</td>
+                                    <td align="center">orderId</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">商户ID</td>
+                                    <td align="center">merchantId</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">支付订单号</td>
+                                    <td align="center">paymentId</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">交易金额</td>
+                                    <td align="center">amount</td>
+                                    <td align="center">Long</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">交易渠道</td>
+                                    <td align="center">channel</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">完成时间</td>
+                                    <td align="center">completeTime</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">状态</td>
+                                    <td align="center">status</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">时间戳</td>
+                                    <td align="center">timestamp</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">错误码</td>
+                                    <td align="center">code</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">错误消息</td>
+                                    <td align="center">message</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">请求示例</h2>
+                        <div class="layui-colla-content">
+                            <div class="layui-elem-quote" style="margin-top: 20px;">
+                                <p>
+                                    返回数据：JSON<br/>
+                                <hr/>
+                                成功返回:<br/>
+                                {<br/>
+                                "amount":1,<br/>
+                                "merchantId":"1064831713916805121",<br/>
+                                "orderId":"813e7a1ca7eb2767191a0e8030cf2986",<br/>
+                                "paymentId":"1068418317722030080",<br/>
+                                "requestId":"e084cfaf0b9ca4ff2e491262c456742b",<br/>
+                                "success":true,<br/>
+                                "channel":"alipay",<br/>
+                                "completeTime":"2018-11-30 16:16:52",<br/>
+                                "status":"success",<br/>
+                                "timestamp":"1543758968340"<br/>
+                                }<br/>
+
+                                <hr>
+                                失败返回：<br/>
+                                {<br/>
+                                "code":"order_not_exists",<br/>
+                                "merchantId":"1064831713916805121",<br/>
+                                "requestId":"490877a30a6d80c6715498d55395fe68",<br/>
+                                "success":false,<br/>
+                                "message":"订单不存在",<br/>
+                                "timestamp":"1543759144043"<br/>
+                                }<br/>
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-tab-item">
+                <div class="layui-collapse">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">接口信息</h2>
+                        <div class="layui-colla-content layui-show">
+                            <table class="layui-table mb-15">
+                                <thead>
+                                <tr>
+                                    <th style="width:100px;">属性</th>
+                                    <th>内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="cen">
+                                    <td>版本</td>
+                                    <td class="lt">1.0</td>
+                                </tr>
+                                <tr class="cen">
+                                    <td>网关</td>
+                                    <td class="lt"><span class="api-url"></span>/open-api/payment/apply-withdraw</td>
+                                </tr>
+                                <tr class="cen">
+                                    <td>请求方式</td>
+                                    <td class="lt">POST</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">请求参数</h2>
+                        <div class="layui-colla-content">
+                            <table class="layui-table">
+                                <thead>
+                                <tr>
+                                    <th align="center">请求参数</th>
+                                    <th align="center">属性名</th>
+                                    <th align="center">最大长度</th>
+                                    <th align="center">必填</th>
+                                    <th align="center">说明</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td align="center">请求ID</td>
+                                    <td align="center">requestId</td>
+                                    <td align="center">16位</td>
+                                    <td align="center">是</td>
+                                    <td align="left">请求ID由商户生成16位随机数。</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">商户ID</td>
+                                    <td align="center">merchantId</td>
+                                    <td align="center">无</td>
+                                    <td align="center">是</td>
+                                    <td align="left">系统给定的商户号</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">提现金额</td>
+                                    <td align="center">amount</td>
+                                    <td align="center">无</td>
+                                    <td align="center">是</td>
+                                    <td align="left">申请提现的金额</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">客户IP</td>
+                                    <td align="center">ip</td>
+                                    <td align="center">无</td>
+                                    <td align="center">否</td>
+                                    <td align="left">客户IP，发起提现申请需传入IP地址。</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">签名</td>
+                                    <td align="center">sign</td>
+                                    <td align="center">无</td>
+                                    <td align="center">是</td>
+                                    <td align="left">签名算法看文档</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">响应参数</h2>
+                        <div class="layui-colla-content">
+                            <table class="layui-table">
+                                <thead>
+                                <tr>
+                                    <th align="center">响应参数</th>
+                                    <th align="center">属性名</th>
+                                    <th align="center">类型</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td align="center">请求ID</td>
+                                    <td align="center">requestId</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+
+                                <tr>
+                                    <td align="center">商户ID</td>
+                                    <td align="center">merchantId</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">支付订单号</td>
+                                    <td align="center">paymentId</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+
+                                <tr>
+                                    <td align="center">结果</td>
+                                    <td align="center">success</td>
+                                    <td align="center">boolean</td>
+                                </tr>
+
+
+                                <tr>
+                                    <td align="center">申请结果</td>
+                                    <td align="center">withdrawStatus</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">时间戳</td>
+                                    <td align="center">timestamp</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                </tr>
+                                <td align="center">错误码</td>
+                                <td align="center">code</td>
+                                <td align="center">String</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">错误消息</td>
+                                    <td align="center">message</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">请求示例</h2>
+                        <div class="layui-colla-content">
+                            <div class="layui-elem-quote" style="margin-top: 20px;">
+                                <p>返回数据：JSON
+                                <hr>
+                                成功返回:
+                                <br>
+                                {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                "withdrawStatus":"HANDING",
+                                <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                "success":"true"
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                "requestId":"d4844b023d78b735198346a73eb359af"
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                "merchantId":"1064831713916805121"
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                "timestamp":"1543762883014"
+                                <br>
+
+                                }
+                                <hr>
+                                失败返回:
+                                <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                "success":"false"
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                "requestId":"d4844b023d78b735198346a73eb359af"
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                "merchantId":"1064831713916805121"
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                "timestamp":"1543762883014"
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                "message":"申请失败，余额不足"
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                "code":"INSUFFICIENT_BALANCE"
+                                <br>
+                                }
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-tab-item">
+                <div class="layui-collapse">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">接口信息</h2>
+                        <div class="layui-colla-content layui-show">
+                            <table class="layui-table mb-15">
+                                <thead>
+                                <tr>
+                                    <th style="width:100px;">属性</th>
+                                    <th>内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="cen">
+                                    <td>版本</td>
+                                    <td class="lt">1.0</td>
+                                </tr>
+                                <tr class="cen">
+                                    <td>网关</td>
+                                    <td class="lt"><span class="api-url"></span>/open-api/payment/request-substitute</td>
+                                </tr>
+                                <tr class="cen">
+                                    <td>请求方式</td>
+                                    <td class="lt">POST</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">请求参数</h2>
+                        <div class="layui-colla-content">
+                            <table class="layui-table">
+                                <thead>
+                                <tr>
+                                    <th align="center">请求参数</th>
+                                    <th align="center">属性名</th>
+                                    <th align="center">必填</th>
+                                    <th align="center">说明</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td align="center">批量代付详情</td>
+                                    <td align="center">details</td>
+                                    <td align="center">是</td>
+                                    <td align="left">代付详情集合，JSON格式，<span class="substitute-details" style="color: #0b93d9">详情</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">备注</td>
+                                    <td align="center">remark</td>
+                                    <td align="center">是</td>
+                                    <td align="left">代付备注</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">响应参数</h2>
+                        <div class="layui-colla-content">
+
+                            <table class="layui-table">
+                                <thead>
+                                <tr>
+                                    <th align="center">响应参数</th>
+                                    <th align="center">属性名</th>
+                                    <th align="center">类型</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td align="center">请求ID</td>
+                                    <td align="center">requestId</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+
+                                <tr>
+                                    <td align="center">商户ID</td>
+                                    <td align="center">merchantId</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">交易ID</td>
+                                    <td align="center">transferId</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+
+                                <tr>
+                                    <td align="center">结果</td>
+                                    <td align="center">success</td>
+                                    <td align="center">boolean</td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">时间戳</td>
+                                    <td align="center">timestamp</td>
+                                    <td align="center">String</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">请求示例</h2>
+                        <div class="layui-colla-content">
+                            <div class="layui-elem-quote" style="margin-top: 20px;">
+                                <p>返回数据：JSON
+                                <hr>
+                                成功返回:
+                                <br>
+<pre>
+{
+    "merchantId":"1073110179126550529",
+    "requestId":"e6f15458fca708bef8faf25719dbb173",
+    "success":true,
+    "transferId":"1081035328637820930",
+    "timestamp":"1546573883634"
+}
+</pre>
+                                <hr>
+                                失败返回:
+                                <br>
+<pre>
+{
+    "merchantId":"1073110179126550529",
+    "requestId":"e6f15458fca708bef8faf25719dbb173",
+    "success":false,
+    "message":"错误原因",
+    "code":"ERROR_CODE",
+    "transferId":"1081035328637820930",
+    "timestamp":"1546573883634"
+}
+</pre>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-tab-item">
+                <div class="layui-collapse">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">接口信息</h2>
+                        <div class="layui-colla-content layui-show">
+                            <table class="layui-table mb-15">
+                                <thead>
+                                <tr>
+                                    <th style="width:100px;">属性</th>
+                                    <th>内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="cen">
+                                    <td>版本</td>
+                                    <td class="lt">1.0</td>
+                                </tr>
+                                <tr class="cen">
+                                    <td>网关</td>
+                                    <td class="lt">此回调不需要网关，根据你传递异步回调地址传参,提现成功失败都会返回。</td>
+                                </tr>
+                                <tr class="cen">
+                                    <td>请求方式</td>
+                                    <td class="lt">GET</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">响应参数</h2>
+                        <div class="layui-colla-content">
+                            <table class="layui-table">
+                                <thead>
+                                <tr>
+                                    <th align="center">报文域</th>
+                                    <th align="center">属性名</th>
+                                    <th align="center">最大长度</th>
+                                    <th align="center">必填</th>
+                                    <th align="center">说明</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr>
+                                    <td align="center">提现状态</td>
+                                    <td align="center">status</td>
+                                    <td align="center">1</td>
+                                    <td align="center">否</td>
+                                    <td align="left">1为支付成功<br>0为支付失败</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">提现订单号</td>
+                                    <td align="center">order</td>
+                                    <td align="center">40</td>
+                                    <td align="center">是</td>
+                                    <td align="left">提现订单号</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">平台订单号</td>
+                                    <td align="center">orders</td>
+                                    <td align="center">40</td>
+                                    <td align="center">是</td>
+                                    <td align="left">提现平台订单号</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">提现金额</td>
+                                    <td align="center">money</td>
+                                    <td align="center">12</td>
+                                    <td align="center">是</td>
+                                    <td align="left">0.01单位：元</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">提现消息</td>
+                                    <td align="center">msg</td>
+                                    <td align="center">20</td>
+                                    <td align="center">否</td>
+                                    <td align="left">成功返回ok,失败返回错误</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">签名</td>
+                                    <td align="center">sign</td>
+                                    <td align="center">32</td>
+                                    <td align="center">是</td>
+                                    <td align="left">签名算法看文档</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">请求示例</h2>
+                        <div class="layui-colla-content">
+                            <div class="layui-elem-quote" style="margin-top: 20px;">
+                                <p>返回数据：string<br>返回文本均为小写不能有任何其它字符。<br>成功返回:success <br>失败返回:fail</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-tab-item channel-content">
+                <div class="layui-collapse">
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th align="center">渠道名称</th>
+                            <th align="center">渠道标志</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <td align="center">微信H5支付</td>
+                            <td align="center">weixin-h5</td>
+                        </tr>
+                        <tr>
+                            <td align="center">微信扫码支付</td>
+                            <td align="center">weixin-native</td>
+                        </tr>
+                        <tr>
+                            <td align="center">支付宝电脑网页支付</td>
+                            <td align="center">alipay-web</td>
+                        </tr>
+                        <tr>
+                            <td align="center">支付宝H5支付</td>
+                            <td align="center">alipay-h5</td>
+                        </tr>
+                        <tr>
+                            <td align="center">快捷支付</td>
+                            <td align="center">quick</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="layui-tab-item error-content">
+                <div class="layui-collapse">
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th align="center">错误代码</th>
+                            <th align="center">错误信息</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <td align="center">ILLEGAL_PARAMETERS</td>
+                            <td align="center">参数不合法</td>
+                        </tr>
+                        <tr>
+                            <td align="center">DUPLICATE_REQUEST</td>
+                            <td align="center">重复的请求</td>
+                        </tr>
+                        <tr>
+                            <td align="center">VERIFY_CODE_ERROR</td>
+                            <td align="center">验证码错误</td>
+                        </tr>
+                        <tr>
+                            <td align="center">SIGN_ERROR</td>
+                            <td align="center">签名错误</td>
+                        </tr>
+                        <tr>
+                            <td align="center">UNSUPPORTED_SIGN_TYPE</td>
+                            <td align="center">不支持的签名类型</td>
+                        </tr>
+
+                        <tr>
+                            <td align="center">ACCESS_DENIED</td>
+                            <td align="center">无此接口的访问权限</td>
+                        </tr>
+                        <tr>
+                            <td align="center">BUSINESS_FAILED</td>
+                            <td align="center">业务异常</td>
+                        </tr>
+                        <tr>
+                            <td align="center">SERVICE_ERROR</td>
+                            <td align="center">服务异常</td>
+                        </tr>
+                        <tr>
+                            <td align="center">CHANNEL_UNSUPPORTED</td>
+                            <td align="center">不支持的支付渠道</td>
+                        </tr>
+                        <tr>
+                            <td align="center">CHANNEL_RETURN_ERROR</td>
+                            <td align="center">渠道返回错误</td>
+                        </tr>
+                        <tr>
+                            <td align="center">CHANNEL_CONFIG_ERROR</td>
+                            <td align="center">渠道配置错误</td>
+                        </tr>
+                        <tr>
+                            <td align="center">DUPLICATE_PAYMENT</td>
+                            <td align="center">重复的支付请求</td>
+                        </tr>
+                        <tr>
+                            <td align="center">BIND_CARD_NOT_EXISTS</td>
+                            <td align="center">绑卡信息不存在</td>
+                        </tr>
+                        <tr>
+                            <td align="center">ORDER_NOT_EXISTS</td>
+                            <td align="center">订单不存在</td>
+                        </tr>
+                        <tr>
+                            <td align="center">BIND_CARD_ALREADY_BIND</td>
+                            <td align="center">已经完成绑卡</td>
+                        </tr>
+                        <tr>
+                            <td align="center">CHANEL_OUT_OF_LIMIT</td>
+                            <td align="center">渠道已超过限额</td>
+                        </tr>
+                        <tr>
+                            <td align="center">MERCHANT_CONFIG_ERROR</td>
+                            <td align="center">商户配置错误</td>
+                        </tr>
+                        <tr>
+                            <td align="center">MERCHANT_FREEZE</td>
+                            <td align="center">商户已被冻结</td>
+                        </tr>
+                        <tr>
+                            <td align="center">MERCHANT_NOT_ACTIVE</td>
+                            <td align="center">商户未激活</td>
+                        </tr>
+                        <tr>
+                            <td align="center">MERCHANT_NOT_EXISTS</td>
+                            <td align="center">商户未注册</td>
+                        </tr>
+                        <tr>
+                            <td align="center">USERNAME_ALREADY_EXISTS</td>
+                            <td align="center">用户名已被占用</td>
+                        </tr>
+                        <tr>
+                            <td align="center">WITHDRAW_ALREADY_EXISTS</td>
+                            <td align="center">已存在未处理的提现申请</td>
+                        </tr>
+                        <tr>
+                            <td align="center">ACCOUNT_NOT_FOUND</td>
+                            <td align="center">资金账户不存在</td>
+                        </tr>
+                        <tr>
+                            <td align="center">INSUFFICIENT_BALANCE</td>
+                            <td align="center">余额不足</td>
+                        </tr>
+                        <tr>
+                            <td align="center">FREEZE_ERROR</td>
+                            <td align="center">冻结/解冻失败</td>
+                        </tr>
+                        <tr>
+                            <td align="center">DUPLICATE_FREEZE</td>
+                            <td align="center">重复解冻</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="layui-tab-item bank-code">
+                <div class="layui-collapse" style="width: 350px">
+                    <table class="layui-table" >
+                        <thead>
+                        <tr>
+                            <th align="center">银行名称</th>
+                            <th align="center">银行编码</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <td align="center">中国农业银行</td>
+                            <td align="center">ABC</td>
+                        </tr>
+
+                        <tr>
+                            <td align="center">中国银行</td>
+                            <td align="center">BOC</td>
+                        </tr>
+
+                        <tr>
+                            <td align="center">交通银行</td>
+                            <td align="center">COMM</td>
+                        </tr>
+                        <tr>
+                            <td align="center">中国建设银行</td>
+                            <td align="center">CCB</td>
+                        </tr>
+                        <tr>
+                            <td align="center">中国光大银行</td>
+                            <td align="center">CEB</td>
+                        </tr>
+                        <tr>
+                            <td align="center">兴业银行</td>
+                            <td align="center">CIB</td>
+                        </tr>
+                        <tr>
+                            <td align="center">招商银行</td>
+                            <td align="center">CMB</td>
+                        </tr>
+                        <tr>
+                            <td align="center">民生银行</td>
+                            <td align="center">CMBC</td>
+                        </tr>
+                        <tr>
+                            <td align="center">中信银行</td>
+                            <td align="center">CITIC</td>
+                        </tr>
+                        <tr>
+                            <td align="center">重庆农村商业银行</td>
+                            <td align="center">CQRCB</td>
+                        </tr>
+                        <tr>
+                            <td align="center">中国工商银行</td>
+                            <td align="center">ICBC</td>
+                        </tr>
+                        <tr>
+                            <td align="center">中国邮政储蓄银行</td>
+                            <td align="center">PSBC</td>
+                        </tr>
+                        <tr>
+                            <td align="center">浦发银行</td>
+                            <td align="center">SPDB</td>
+                        </tr>
+                        <tr>
+                            <td align="center">中国银联</td>
+                            <td align="center">UNION</td>
+                        </tr>
+                        <tr>
+                            <td align="center">重庆银行</td>
+                            <td align="center">CQCB</td>
+                        </tr>
+                        <tr>
+                            <td align="center">广东发展银行</td>
+                            <td align="center">CGB</td>
+                        </tr>
+                        <tr>
+                            <td align="center">深圳发展银行</td>
+                            <td align="center">SDB</td>
+                        </tr>
+                        <tr>
+                            <td align="center">华夏银行</td>
+                            <td align="center">HXB</td>
+                        </tr>
+                        <tr>
+                            <td align="center">重庆三峡银行</td>
+                            <td align="center">CQTGB</td>
+                        </tr>
+                        <tr>
+                            <td align="center">平安银行</td>
+                            <td align="center">PINGANBK</td>
+                        </tr>
+                        <tr>
+                            <td align="center">上海银行</td>
+                            <td align="center">SHBANK</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="layui-tab-item demo">
+                <div class="layui-collapse">
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th align="center">开发语言</th>
+                            <th align="center">下载地址</th>
+                            <th align="center">环境要求</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <td align="center">JAVA</td>
+                            <td align="center">demo1.0</td>
+                            <td align="center">适用于java语言、jdk1.8</td>
+                        </tr>
+
+                        <tr>
+                            <td align="center">PHP</td>
+                            <td align="center"><a style="color: #0b93d9" href="#">开发中</a></td>
+                            <td align="center">....</td>
+                        </tr>
+
+                        <tr>
+                            <td align="center">.NET</td>
+                            <td align="center"><a style="color: #0b93d9" href="#">开发中</a></td>
+                            <td align="center">....</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="layui-colla-content details" hidden="hidden">
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th align="center">请求参数</th>
+            <th align="center">属性名</th>
+            <th align="center">必填</th>
+            <th align="center">说明</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td align="center">银行卡编号</td>
+            <td align="center">bankId</td>
+            <td align="center">是</td>
+            <td align="left">参考银行编码模块</td>
+        </tr>
+
+        <tr>
+            <td align="center">银行卡号</td>
+            <td align="center">accountNo</td>
+            <td align="center">是</td>
+            <td align="left">...</td>
+        </tr>
+
+        <tr>
+            <td align="center">银行卡户名</td>
+            <td align="center">accountName</td>
+            <td align="center">是</td>
+            <td align="left">...</td>
+        </tr>
+
+        <tr>
+            <td align="center">账户类型</td>
+            <td align="center">accountType</td>
+            <td align="center">是</td>
+            <td align="left">个人（PERSON）/对公（PUBLIC）</td>
+        </tr>
+
+        <tr>
+            <td align="center">身份证号</td>
+            <td align="center">idNumber</td>
+            <td align="center">是</td>
+            <td align="left">...</td>
+        </tr>
+
+        <tr>
+            <td align="center">支行名称</td>
+            <td align="center">branchName</td>
+            <td align="center">是</td>
+            <td align="left">...</td>
+        </tr>
+
+        <tr>
+            <td align="center">省份</td>
+            <td align="center">province</td>
+            <td align="center">是</td>
+            <td align="left">...</td>
+        </tr>
+
+        <tr>
+            <td align="center">城市</td>
+            <td align="center">city</td>
+            <td align="center">是</td>
+            <td align="left">...</td>
+        </tr>
+
+        <tr>
+            <td align="center">金额</td>
+            <td align="center">amount</td>
+            <td align="center">是</td>
+            <td align="left">...</td>
+        </tr>
+
+        <tr>
+            <td align="center">备注</td>
+            <td align="center">remark</td>
+            <td align="center">是</td>
+            <td align="left">...</td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>

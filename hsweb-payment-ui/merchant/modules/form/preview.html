@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <title>预览</title>
+    <link rel="stylesheet" href="../../plugins/layui/css/layui.css">
+
+</head>
+<body>
+<div class="main-panel layui-container layui-form layui-form-pane">
+    <div class="layui-row components ui-sortable">
+
+        <div class="layui-col-md6" hs-id="e0ab5db8663e09f53507a4a7e057c88a">
+            <div class="layui-form-item brick"><label class="layui-form-label" style="">单行文本</label>
+                <div class="layui-input-block"><input type="text" class="layui-input"></div>
+            </div>
+        </div>
+        <div class="layui-col-xs4 layui-col-md4" hs-id="e11dc89c4507197892e41b312f2d9f72">
+            <div class="layui-form-item brick"><label class="layui-form-label" style="">单选</label>
+                <div class="layui-input-block"><input type="radio" name="e11dc89c4507197892e41b312f2d9f72" title="选项1">
+                    <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i>
+                        <div>选项1</div>
+                    </div>
+                    <input type="radio" name="e11dc89c4507197892e41b312f2d9f72" title="选项2">
+                    <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
+                        <div>选项2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs6" hs-id="afe5b8572d0013d2cfa8b9dce069715a">
+            <div class="layui-form-item brick"><label class="layui-form-label" style="">日期输入</label>
+                <div class="layui-input-block"><input type="text" class="layui-input date-picker" lay-key="2"></div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-md12 brick" hs-id="6958a502e7dfe2e59bd2cb6c529399da">
+            <fieldset class="layui-elem-field">
+                <legend style="">子页面</legend>
+                <iframe frameborder="0" class="layui-tab" style="width: 100%; height: 200px;" src="http://www.baidu.com" url="http://www.baidu.com"></iframe>
+            </fieldset>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="../../plugins/layui/layui.all.js"></script>
+<script src="parser.js"></script>
+<script type="text/javascript">
+    window.$ = layui.jquery;
+    lay(".date-picker").each(function () {
+        var fmt = $(this).attr("format");
+        fmt = fmt || 'yyyy-MM-dd';
+        layui.laydate.render({
+            elem: this,
+            format: fmt
+        });
+    });
+    layui.form.render();
+    //监听提交
+    layui.form.on('submit(demo1)', function (data) {
+        layer.alert(JSON.stringify(data.field), {
+            title: '最终的提交信息'
+        });
+        return false;
+    });
+    var parser = new FormParser();
+    parser.config.elem = '.main-panel';
+    parser.render();
+</script>

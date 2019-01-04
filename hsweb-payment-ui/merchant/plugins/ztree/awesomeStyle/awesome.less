@@ -1,0 +1,146 @@
+/*-------------------------------------
+zTree Style using fontawesome instead of images
+
+version:    1.1
+author:     Mike King
+email:      mikkelking @ hotmail . com
+website:    http://code.google.com/p/jquerytree/
+
+-------------------------------------*/
+
+/* Definitions ----------------------*/
+@font-size: 14px;
+@icon-size: 16px;
+// Regular icon and text color is white, which suits any medium -> dark background 
+@color-normal: #333;
+// Background color
+@color-bg: transparent;
+// Highlight color
+@color-highlight: #333;
+// Partially selected (checkboxes, radio buttons)
+@color-partial: #aaaaaa;
+// Partially selected and focused (checkboxes, radio buttons)
+@color-partfocus: #cad96c;
+// Disabled altogether
+@color-disabled: #808080;
+// Editing color
+@color-edit: yellow;
+@w: 25px;
+@h: 25px;
+@pad-left: 0;
+@pad-top: 0;
+/* End of Definitions ---------------*/
+
+/* Imports  -------------------------*/
+@import "fa.less";
+/* End of Imports  ------------------*/
+
+.ztree * {padding:0; margin:0; font-size:@font-size; font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif; background-color: @color-bg;}
+.ztree {
+    margin:0; padding:5px; color:@color-normal; background-color: @color-bg;
+    li {
+        padding:4px 0; margin:0; list-style:none; line-height:17px; text-align:left; white-space:nowrap; outline:0;
+        ul { 
+            margin: 0px; padding:0 0 0 18px;
+        }
+        ul.line { }
+        a {width: calc(100% - 40px);padding-right:3px; margin:0; cursor:pointer; height:@h; color:@color-normal; background-color: transparent;
+            text-decoration:none; vertical-align:top; display: inline-block;
+            input.rename {height:14px; width:80px; padding:0; margin:0;
+                          color: @color-bg; background-color: @color-normal;
+                        font-size:@font-size; border:1px #585956 solid; *border:0px}
+        }
+        a:hover {text-decoration:none;background-color:#e6f7ff;}
+        a.curSelectedNode {padding-top:0px; background-color:#bae7ff; color:@color-normal; height:@h;}
+        a.curSelectedNode_Edit {padding-top:0px; background-color:transparent; color:@color-highlight; height:@h; border:1px #666 solid;}
+        a.tmpTargetNode_inner {padding-top:0px; background-color:#aaa; color:@color-highlight; height:@h; border:1px #666 solid;}
+        a.tmpTargetNode_prev {}
+        a.tmpTargetNode_next {}
+        span {line-height:@h; margin-right:2px; background-color:transparent;}
+        span.button { margin:0; padding: 0; width:@w; height:@h; display: inline-block; vertical-align:top;font-size:@icon-size;
+          border:0px solid; cursor: pointer;outline:none;text-align:center;
+          background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;
+ 
+            &::before{color: @color-normal; font-family: FontAwesome;box-sizing: border-box;}
+            &.chk { margin:0px; cursor: auto;
+                display: inline-block;padding-top:@pad-top;padding-left:@pad-left;
+                
+                &.checkbox_false_full::before {content: @fa-square-o;}
+                &.checkbox_false_full_focus::before {content: @fa-square-o; color:@color-highlight;}
+                &.checkbox_false_part::before {content: @fa-square-o;color: @color-partial;}
+                &.checkbox_false_part_focus::before {content: @fa-square-o; color:@color-partfocus;}
+                &.checkbox_false_disable::before {content: @fa-square-o; color:@color-disabled;}
+                &.checkbox_true_full::before {content: @fa-check-square-o;}
+                &.checkbox_true_full_focus::before {content: @fa-check-square-o;}
+                &.checkbox_true_part::before {content: @fa-check-square;}
+                &.checkbox_true_part_focus::before {content: @fa-check-square; color: @color-highlight}
+                &.checkbox_true_full_focus::before {content: @fa-check-square-o; color: @color-highlight}
+                &.checkbox_true_part::before {content: @fa-check-square-o;color: @color-partial}
+                &.checkbox_true_part_focus::before {content: @fa-check-square-o;color: @color-partfocus;}
+                &.checkbox_true_disable::before {content: @fa-check-square-o;color: @color-disabled}
+                 
+                &.radio_false_full::before {content: @fa-circle-o;}
+                &.radio_false_full_focus::before {content: @fa-circle-o;color: @color-highlight}
+                &.radio_false_part::before {content: @fa-circle-o;color: @color-partial}
+                &.radio_false_part_focus::before {content: @fa-circle-o;color: @color-highlight}
+                &.radio_false_disable::before {content: @fa-circle-thin;color: @color-disabled}
+                &.radio_true_full::before {content: @fa-dot-circle-o;}
+                &.radio_true_full_focus::before {content: @fa-dot-circle-o;color: @color-highlight}
+                &.radio_true_part::before {content: @fa-dot-circle-o;color: @color-partial}
+                &.radio_true_part_focus::before {content: @fa-dot-circle-o;color: @color-partial;}
+                &.radio_true_disable::before {content: @fa-circle-thin;color: @color-disabled}
+                
+            }
+            &.switch  {width:@w; height:@h}
+            &.root_open::before{content: @fa-caret-down;}
+            &.root_close::before{content: @fa-caret-right;}
+            &.roots_open::before{content: @fa-caret-down;}
+            &.roots_close::before{content: @fa-caret-right;}
+            &.center_open::before{content: @fa-caret-down;}
+            &.center_close::before{content: @fa-caret-right;}
+            &.bottom_open::before{content: @fa-caret-down;}
+            &.bottom_close::before{content: @fa-caret-right;}
+            &.noline_open{}
+            &.noline_close{}
+            &.root_docu{ background:none;}
+            &.roots_docu::before{content: @fa-list-alt;color:@color-normal;}
+            &.center_docu::before{padding-top:@pad-top;color:@color-normal;}
+            &.bottom_docu::before{padding-top:@pad-top;color:@color-normal;}
+            &.noline_docu{ background:none;}
+    
+            &.ico_open::before {content: @fa-folder-open-o;font-family: FontAwesome;color:@color-normal;}
+            &.ico_close::before {content: @fa-folder-o;font-family: FontAwesome;color:@color-normal;}
+            &.ico_docu::before{content: @fa-list-alt;font-family: FontAwesome;color:@color-normal;}
+            
+            &.edit {margin-left:4px; margin-right: -1px;  vertical-align:top; *vertical-align:middle;padding-top:@pad-top;}
+            &.edit::before{content: @fa-pencil-square-o;font-family: FontAwesome;}
+    
+            &.remove {margin-left:4px; margin-right: -1px;  vertical-align:top; *vertical-align:middle;padding-top:@pad-top;}
+            &.remove::before{content: @fa-trash;font-family: FontAwesome;}
+
+    
+            &.add {margin-left:4px; margin-right: -1px; vertical-align:top; *vertical-align:middle;padding-top:@pad-top;}
+            &.add::before{content: @fa-plus;font-family: FontAwesome;}
+
+            &.ico_loading{margin-right:2px; background:url(./img/loading.gif) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+        }
+
+    }
+}
+
+
+ul.tmpTargetzTree {background-color:#FFE6B0;}
+
+// this is the arrow that moves 
+span.tmpzTreeMove_arrow{width:16px; height:@h; display: inline-block; 
+                                padding:0; margin:2px 0 0 1px; border:0 none; position:absolute;
+                                background-color:transparent;  background-attachment: scroll;
+                                 }
+span.tmpzTreeMove_arrow::before{content: @fa-play;font-family: FontAwesome;color: @color-highlight;
+                                 }
+// outline
+
+ul.ztree.zTreeDragUL {margin:0; padding:0; position:absolute; width:auto; height:auto;overflow:hidden; 
+             background-color:#cfcfcf; border:1px @color-highlight dotted; }
+.ztreeMask {z-index:10000; background-color:#cfcfcf; position:absolute}
+

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+    <title>渠道配置管理</title>
+    <script data-main="index.js" src="../../boot.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="mini-splitter" style="width:100%;height:100%;">
+    <div size="20%" showCollapseButton="true" style="padding:5px;">
+        <ul id="all-channel-list" expandOnLoad="1" class="mini-tree" style="width:100%;height: 100%"
+            showTreeIcon="true" textField="text" idField="id">
+        </ul>
+    </div>
+    <div showCollapseButton="true">
+        <div id="config-grid"
+             allowCellEdit="true" allowCellSelect="true" allowResize="false"
+             class="mini-treegrid" style="width:100%;height: 100%"
+             idField="id">
+            <div property="columns">
+                <div type="indexcolumn" align="center" headerAlign="center">#</div>
+                <div name="channelName" field="channelName" width="80" align="center" headerAlign="center">渠道
+                </div>
+                <div name="channelProviderName" field="channelProviderName" width="80" align="center" headerAlign="center">服务提供商
+                </div>
+                <div name="name" field="name" width="80" align="center" headerAlign="center">配置名称
+                    <input property="editor" class="mini-textbox"/>
+                </div>
+                <div name="accountNo" field="accountNo" width="100" align="center" headerAlign="center">结算账户号
+
+                </div>
+                <div name="config" width="30" align="center" headerAlign="center">渠道配置
+                </div>
+                <div name="rateConfig" width="30" align="center" headerAlign="center">渠道费率
+                </div>
+                <div name="limitConfig" align="center" width="30" headerAlign="center">限额配置
+                </div>
+                <div name="status" field="status" align="center" width="30" headerAlign="center">配置状态
+                </div>
+                <div name="action" width="80" align="center" headerAlign="center">
+                    <span class="title-button" style="width: 30px">操作</span>
+                    <span class="title-button icon-add" onclick="actionClick()"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="propertiesWindow" title="渠道配置" allowResize="true" showFooter="true" class="mini-window" style="width: 800px;height: 600px">
+    <div id="properties-grid" showPager="false"
+         allowCellEdit="true" allowCellSelect="true" allowResize="false"
+         class="mini-datagrid" style="width:100%;height: 100%" allowResize="true"
+         idField="id">
+        <div property="columns">
+            <div type="indexcolumn" align="center" headerAlign="center">#</div>
+            <div name="property" field="property" width="50" align="center" headerAlign="center">配置名
+                <input property="editor" class="mini-textbox"/>
+            </div>
+            <div name="value" field="value" width="80" align="center" headerAlign="center">配置值
+                <input property="editor" style="height: 200px" class="mini-textarea"/>
+            </div>
+            <div name="name" field="name" align="center" width="50" headerAlign="center">说明
+            </div>
+        </div>
+    </div>
+    <div property="footer" style="text-align: right;padding: 3px">
+        <a class="mini-button save-properties" iconCls="icon-ok">保存</a>
+    </div>
+</div>
+
+
+<div id="rateWindow" title="渠道费率配置" allowResize="true" showFooter="true" class="mini-window" style="width: 800px;height: 500px">
+    <div class="mini-clearfix dynamic-form">
+        <div class="form-component mini-col-11" style="font-size: 16px">
+            产生交易时,渠道收取的服务费率. 如:支付宝收取0.6%. 平台的利润=平台服务费-渠道服务费
+        </div>
+        <div class="form-component mini-col-11">
+            <div class="form-item brick">
+                <label class="form-label rate-title"><input name="rate-fixed" class="mini-checkbox" data="[{id:'fixed'}]"/>固定收费</label>
+                <div class="input-block component-body">
+                    <input enabled="false" name="value-fixed" format="#,0.00元" maxValue="999999999999" class="mini-spinner" style="width: 100%"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-component  mini-col-11">
+            <div class="form-item brick">
+                <label class="form-label rate-title"><input name="rate-percent" class="mini-checkbox" data="[{id:'percent'}]"/>百分比<span style="margin-left: 1em"></span></label>
+                <div class="input-block component-body">
+                    <input enabled="false" name="value-percent" format="#,0.00" maxValue="100" increment="0.1" class="mini-spinner" style="width: 100%"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-component  mini-col-11">
+            <div class="form-item brick">
+                <label class="form-label rate-title"><input name="rate-ladder" class="mini-checkbox" data="[{id:'rate'}]"/>阶梯收费</label>
+                <div class="input-block component-body" style="height: 200px">
+                    <div id="value-ladder" enabled="false"
+                         allowCellEdit="true" allowCellSelect="true" allowResize="false"
+                         class="mini-treegrid" style="width:100%;height: 100%" allowResize="true"
+                         idField="id">
+                        <div property="columns">
+                            <div type="indexcolumn" align="center" headerAlign="center">#</div>
+                            <div name="type" field="type" width="30" align="center" headerAlign="center">类型
+                                <input property="editor" data="ladder_type_data" class="mini-combobox" style="width: 10%"/>
+                            </div>
+                            <div name="values" field="values" width="100" align="center" headerAlign="center">金额(元)
+                                <input property="editor" class="mini-textbox" emptyText="多个值使用-分割" style="width: 10%"/>
+                            </div>
+                            <div name="rateType" field="rateType" align="center" width="50" headerAlign="center">费率类型
+                                <input property="editor" data="rate_type_data" class="mini-combobox" style="width: 15%"/>
+                            </div>
+                            <div name="rate" field="rate" width="80" align="center" headerAlign="center">费率
+                                <input property="editor" class="mini-textbox" style="width: 10%"/>
+                            </div>
+                            <div name="action" width="50" align="center" headerAlign="center">
+                                <span class="title-button" style="width: 30px">操作</span>
+                                <span class="title-button icon-add" onclick="mini.get('value-ladder').addNode({})"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div property="footer" style="text-align: right;padding: 3px">
+        <a class="mini-button save-rate" iconCls="icon-ok">保存</a>
+    </div>
+</div>
+
+<div id="limitWindow" title="限额配置" allowResize="true" showFooter="true" class="mini-window" style="width: 800px;height: 600px">
+    <div id="limit-grid" showPager="false"
+         allowCellEdit="true" allowCellSelect="true" allowResize="false"
+         class="mini-datagrid" style="width:100%;height: 100%" allowResize="true"
+         idField="id">
+        <div property="columns">
+            <div type="indexcolumn" align="center" headerAlign="center">#</div>
+            <div name="interval" field="interval" width="50" align="center" headerAlign="center">数量
+                <input property="editor" maxValue="100000" class="mini-spinner"/>
+            </div>
+            <div name="timeUnit" field="timeUnit.value" width="50" align="center" headerAlign="center">单位
+                <input property="editor" class="mini-combobox" data="timeUnitData"/>
+            </div>
+            <div name="limit" field="limit" width="80" align="center" headerAlign="center">限额
+                <input property="editor" maxValue="100000000000" format="#,0.00元" class="mini-spinner"/>
+            </div>
+            <div name="warnLimit" field="warnLimit" width="80" align="center" headerAlign="center">限额警告阈值
+                <input property="editor" maxValue="100000000000" format="#,0.00元" class="mini-spinner"/>
+            </div>
+            <div name="action" width="50" align="center" headerAlign="center">
+                <span class="title-button" style="width: 30px">操作</span>
+                <span class="title-button icon-add" onclick="mini.get('limit-grid').addRow({limit:0})"></span>
+            </div>
+        </div>
+    </div>
+    <div property="footer" style="text-align: right;padding: 3px">
+        <a class="mini-button save-limit" iconCls="icon-ok">保存</a>
+    </div>
+</div>
+
+<div id="bindWindow" title="商户独占配置" allowResize="true" showFooter="true" class="mini-window" style="width: 800px;height: 600px">
+    <div id="bind-grid" showPager="false"
+         allowCellEdit="true" allowCellSelect="true" allowResize="false"
+         class="mini-datagrid" style="width:100%;height: 100%" allowResize="true"
+         idField="id">
+        <div property="columns">
+            <div type="indexcolumn" align="center" headerAlign="center">#</div>
+            <div field="merchantId" width="50" align="center" headerAlign="center">商户ID
+            </div>
+            <div field="merchantName" width="50" align="center" headerAlign="center">商户名
+            </div>
+            <div name="action" width="50" align="center" headerAlign="center">
+                <span class="title-button" style="width: 30px">操作</span>
+                <span class="title-button icon-add add-merchant-bind" onclick="window.onDoBindMerchant()"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

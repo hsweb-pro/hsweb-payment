@@ -1,0 +1,61 @@
+server:
+  port: 8080
+spring:
+  aop:
+    auto: true
+    proxy-target-class: true
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:h2:file:./data/hsweb-payment
+    username: sa
+    password:
+    max-active: 1000
+    initial-size: 5
+    min-idle: 5
+    max-wait: 50000
+    min-evictable-idle-time-millis: 300000
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    pool-prepared-statements: false
+    validation-query: select 1
+    time-between-eviction-runs-millis: 60000
+    max-open-prepared-statements: 2000
+  application:
+    name: hsweb-pay
+  profiles:
+    active: dev
+  resources:
+    static-locations: file:./ui,file:./hsweb-payment-ui/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/, classpath:/public/
+  http:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 130MB
+
+hsweb:
+  app:
+    name: hsweb-payment
+    version: 1.0.0
+  authorize:
+    auto-parse: true
+    sync: true
+    two-factor: #开启2步验证
+      enable: true
+      totp:
+        enable: true
+        domain: hsweb.pro
+  web:
+    upload:
+      static-file-path: ./ui/upload
+      static-location: http://localhost:8080/upload/
+      file-path: ./upload/file
+
+mybatis:
+  mapper-locations: classpath*:org/hswebframework/payment/**/*Mapper.xml
+  type-handlers-package: org.hswebframework.payment.api.enums,org.hswebframework.payment.merchant.enums,org.hswebframework.payment.account.enums
+
+logging:
+  level:
+    business: TRACE
+    system: TRACE
+  file: ./data/log-%i.log

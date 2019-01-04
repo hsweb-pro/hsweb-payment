@@ -1,0 +1,45 @@
+
+
+.index_block {
+  width: calc((100% + 16px)/4 - 16px);
+  height: 100px;
+  border-radius: 5px;
+  background: #000;
+  float: left;
+  margin: 27px 16px 0 0;
+  color: #fff;
+  overflow: hidden; }
+  .index_block:nth-of-type(4n) {
+    margin-right: 0; }
+  .index_block.index_block_info {
+    background: #03a9f4; }
+  .index_block.index_block_column {
+    background: #8bc34a; }
+  .index_block.index_block_admin {
+    background: #e84e40; }
+  .index_block.index_block_visit {
+    background: #9c27b0; }
+  .index_block .fr {
+    text-align: right;
+    padding-right: 20px; }
+    .index_block .fr p {
+      padding-top: 20px; }
+    .index_block .fr strong {
+      padding-top: 23px;
+      display: block;
+      font-size: 13px; }
+  .index_block i {
+    font-size: 62px;
+    padding: 19px 30px;
+    float: left; }
+
+.index_box {
+  border: 1px solid #ddd;
+  margin-top: 27px; }
+  .index_box .index_box_tit {
+    height: 38px;
+    line-height: 37px;
+    border-bottom: 1px solid #ddd;
+    text-indent: 15px; }
+  .index_box .index_box_content {
+    min-height: 260px; }

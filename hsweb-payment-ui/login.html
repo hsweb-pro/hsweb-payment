@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登录</title>
+    <link href="logo.png" rel="shortcut icon" type="image/png">
+    <link rel="stylesheet" href="./login_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./login_files/page.css">
+    <style type="text/css">
+        #login-button:hover {
+            background-color: #039f9d;
+        }
+        #login-button{
+            background-color:#009688
+        }
+    </style>
+</head>
+<body>
+<!--<div id="alert" class="alert alert-warning" style="position: absolute;width: 100%;text-align: center">-->
+<!--<a href="javascript:void(0)" class="close" data-dismiss="alert">-->
+<!--&times;-->
+<!--</a>-->
+<!--<strong>警告！</strong>您的网络连接有问题。-->
+<!--</div>-->
+<div class="container theme-default">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4 main">
+            <h1 class="text-center login-title">Payment 用户登录</h1>
+            <div class="account-wall">
+                <img class="profile-img" src="./login-logo.png" alt="">
+                <div class="form-signin">
+                    <div class="item">
+                        <input type="text" id="username" class="form-control" placeholder="用户名">
+                    </div>
+                    <div class="item">
+                        <input type="password" id="password" class="form-control" placeholder="密码">
+                    </div>
+                    <div class="item">
+                        <!--请修改此key-->
+                        <div class="l-captcha" data-site-key="94224c0c332131b3ef46e8f7c8e8dedd" data-callback="getResponse"
+                             data-theme="default"
+                             style="width: 100%; height: 44px;"></div>
+                    </div>
+                    <div class="item">
+                        <a id="login-button"  class="btn btn-lg btn-primary btn-block"
+                           onclick="doLogin()">立即登录</a>
+                        <a class="btn btn-default btn-lg btn-block" onclick="reset()">重
+                            <span style="margin-left: 2em"></span>
+                            置</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="//captcha.luosimao.com/static/dist/api.js"></script>
+<script src="./login_files/jquery.min.js"></script>
+<!--<script src="//cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<script src="./login_files/login.js"></script>
+
+</body>
+</html>

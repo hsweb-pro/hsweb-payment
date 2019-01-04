@@ -1,0 +1,86 @@
+<script type="text/html" id="orderAction">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="detail">查看</a>
+    <!--<a class="layui-btn layui-btn-xs" lay-event="del">删除</a>-->
+</script>
+
+
+
+<form class="search-order layui-form">
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">订单号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="id" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-inline layui-form-item">
+        <label class="layui-form-label">订单状态</label>
+        <div class="layui-input-inline">
+            <select name="status" lay-verify="required">
+                <Option value=""></Option>
+                <Option value="prepare">发起支付请求</Option>
+                <Option value="paying">支付中</Option>
+                <Option value="success">支付成功</Option>
+                <Option value="fail">支付失败</Option>
+                <Option value="timeout">支付超时</Option>
+                <Option value="requestFail">发起支付申请失败</Option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-inline layui-form-item">
+        <label class="layui-form-label">交易类型</label>
+        <div class="layui-input-inline">
+            <select name="transType">
+                <Option value=""></Option>
+                <Option value="GATEWAY">网关支付</Option>
+                <Option value="QUICK">快捷支付</Option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">交易金额</label>
+        <div class="layui-input-inline" style="width: 100px;">
+            <input type="text" name="amountGT" placeholder="￥" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid">-</div>
+        <div class="layui-input-inline" style="width: 100px;">
+            <input type="text" name="amountLT" placeholder="￥" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">交易时间</label>
+        <div class="layui-input-inline" style="width: 300px" >
+            <input type="text" class="layui-input" id="orderDate" name="createTime" placeholder=" - ">
+        </div>
+        <div class="layui-inline" style="margin-top: 8px">
+            <a class="layui-btn layui-btn-primary layui-btn-xs yesterday-order">昨日</a>
+            <a class="layui-btn layui-btn-primary layui-btn-xs seven-days-order" lay-event="detail">七天</a>
+            <a class="layui-btn layui-btn-primary layui-btn-xs month-order" lay-event="detail">30天</a>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item layui-inline" style="margin-left: 60px">
+        <button class="layui-btn" data-type="reload" lay-filter="search-order" type="button">搜索</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        <button type="button" class="layui-btn layui-btn-primary download-order">导出</button>
+    </div>
+
+</form>
+<table class="layui-hide" id="order" lay-filter="order"></table>
+
+
+<table id="order-detail" class="layui-table" hidden="hidden">
+        <thead>
+            <tr>
+                <th style="width: 100px">属性</th>
+                <th>内容</th>
+            </tr>
+        </thead>
+        <tbody class="order-detail-data">
+
+        </tbody>
+</table>

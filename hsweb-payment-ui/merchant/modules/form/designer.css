@@ -1,0 +1,57 @@
+
+html, body {
+    position: relative;
+    height: 100%;
+}
+
+.main-panel {
+    width: 100%;
+    border: 1px solid #d4d4d4;
+    margin: auto;
+}
+
+.brick {
+    width: 100%;
+}
+
+.brick.dragging {
+    opacity: 0.8;
+}
+
+.brick.mini {
+    /*width: 30%;*/
+    border: 1px red;
+    /*background-color: green;*/
+}
+
+.brick.small {
+    /*width: 46%;*/
+    border: 1px red;
+    /*background-color: green;*/
+}
+
+.brick.large {
+    /*width: 94%;*/
+    /*background-color: black;*/
+}
+
+.brick *:active {
+    cursor: move;
+}
+
+.component label:active {
+    cursor: move;
+}
+
+.layui-form-label:hover {
+    border: 1px solid red;
+}
+
+.layui-container {
+    width: 100%;
+}
+
+.layui-header button, a {
+    margin-top: 10px;
+    margin-left: 20px;
+}

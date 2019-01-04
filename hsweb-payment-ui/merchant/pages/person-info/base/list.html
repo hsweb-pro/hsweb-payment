@@ -1,0 +1,100 @@
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+
+        <div class="layui-col-md8">
+            <div class="layui-card">
+                <div class="layui-card-header">备案信息</div>
+                <div class="layui-card-body">
+
+                    <form class="layui-form" id="merchant-base-info" lay-filter="merchant-info">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">产品名称 <span class="layui-badge-dot"></span> </label>
+                            <div class="layui-input-block">
+                                <input type="text" name="productName" required lay-verify="title" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">法人姓名</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="legalPersonName" lay-verify="title" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">身份证号</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="legalPersonIdCard" lay-verify="title" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">公司名称</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="companyName" lay-verify="title" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">公司地址</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="companyAddress" lay-verify="title" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">身份证正面</label>
+                            <div class="layui-input-block layui-upload" id="idCardFrontDiv">
+                                <div class="layui-upload-list" id="idCardFront">
+                                    <!--预览图片-->
+                                    <img class="layui-upload-img" id="idCardFrontView"
+                                         src="pages/person-info/base/default.png" style="width: 400px;height: 300px">
+                                    <!--提示上传信息-->
+                                    <p id="demoText"></p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">身份证反面</label>
+                            <div class="layui-input-block layui-upload">
+
+                                <div class="layui-upload-list" id="idCardBack">
+                                    <img class="layui-upload-img" id="idCardBackView"
+                                         src="pages/person-info/base/default.png" style="width: 400px;height: 300px">
+                                    <!--提示上传信息-->
+                                    <!--<p id="demoText"></p>-->
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">营业执照</label>
+                            <div class="layui-input-block layui-upload">
+
+                                <div class="layui-upload-list" id="businessLicense">
+                                    <!--预览图片-->
+                                    <img class="layui-upload-img" id="businessLicenseView"
+                                         src="pages/person-info/base/default.png" style="width: 400px;height: 300px">
+                                    <!--提示上传信息-->
+                                    <!--<p id="demoText"></p>-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" id="base-info-btn" lay-submit=""
+                                        lay-filter="submit-merchant-info" type="button">立即提交
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

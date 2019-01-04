@@ -1,0 +1,91 @@
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">基本资料</li>
+        <li>修改密码</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <div class="layui-card">
+                <div class="layui-card-body" style="height: 250px">
+
+                    <form class="layui-form" action="" lay-filter="merchant-contact">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">QQ</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="qq" lay-verify="title" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">微信</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="weChat" lay-verify="title" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">邮箱 <span class="layui-badge-dot"></span> </label>
+                            <div class="layui-input-block">
+                                <input type="text" name="email" lay-verify="title" required autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">手机号码</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="phone" lay-verify="title" required autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="submit-merchant-contact">立即提交
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-card">
+                <div class="layui-card-body" style="height: 250px">
+
+                    <form class="layui-form" action="" lay-filter="updatePassword">
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">原密码</label>
+                            <div class="layui-input-block">
+                                <input type="password" name="oldPassword" placeholder="请输入密码" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">新密码</label>
+                            <div class="layui-input-block">
+                                <input type="password" name="newPassword" placeholder="请输入密码" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">再输一次</label>
+                            <div class="layui-input-block">
+                                <input type="password" name="againPassword" placeholder="请输入密码" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="update-password-btn">确认修改</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

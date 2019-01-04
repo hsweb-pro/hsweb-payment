@@ -1,0 +1,61 @@
+
+<script type="text/html" id="withdraw-action">
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="close-withdraw">关闭</a>-->
+    <!--<a class="layui-btn layui-btn-xs" lay-event="del">删除</a>-->
+</script>
+
+<form class="search-withdraw layui-form" id="withdraw-search">
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">订单号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="id" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-inline layui-form-item">
+        <label class="layui-form-label">订单状态</label>
+        <div class="layui-input-inline">
+            <select name="status" lay-verify="required">
+                <Option value=""></Option>
+                <Option value="APPLYING">申请中</Option>
+                <Option value="HANDING">处理中</Option>
+                <Option value="FAILURE">处理失败</Option>
+                <Option value="CLOSE">已关闭</Option>
+                <Option value="SUCCESS">处理成功</Option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">交易金额</label>
+        <div class="layui-input-inline" style="width: 100px;">
+            <input type="text" name="transAmountGTE" placeholder="￥" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid">-</div>
+        <div class="layui-input-inline" style="width: 100px;">
+            <input type="text" name="transAmountLT" placeholder="￥" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">申请时间</label>
+        <div class="layui-input-inline" style="width: 300px">
+            <input type="text" class="layui-input" id="applyTime" name="applyTime" placeholder=" - ">
+        </div>
+        <div class="layui-inline" style="margin-top: 8px">
+            <a class="layui-btn layui-btn-primary layui-btn-xs yesterday-order">昨日</a>
+            <a class="layui-btn layui-btn-primary layui-btn-xs seven-days-order" lay-event="detail">七天</a>
+            <a class="layui-btn layui-btn-primary layui-btn-xs month-order" lay-event="detail">30天</a>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item layui-inline " style="margin-left: 50px">
+        <button class="layui-btn search-btn" data-type="reload" type="button">搜索</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        <button class="layui-btn layui-btn-radius apply-btn" data-method="applySubstitute" type="button">申请提现</button>
+    </div>
+
+</form>
+
+
+<table class="layui-hide" id="withdraw"></table>

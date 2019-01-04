@@ -1,0 +1,35 @@
+
+<div class="layui-tab" lay-filter="permission_tabs">
+    <ul class="layui-tab-title">
+        <li class="layui-this">菜单设置</li>
+        <li>权限设置</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show" >
+            <div class="layui-col-xs12">
+                <ul id="menuTree" class="ztree layui-anim layui-anim-upbit"></ul>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-col-xs3">
+                <ul id="permissionTree" style="max-height: 600px;overflow-y: auto;overflow-x:hidden;position: relative" class="ztree layui-anim layui-anim-upbit"></ul>
+            </div>
+            <div class="layui-col-xs9 layui-form">
+                <fieldset class="layui-elem-field layui-field-title" style="display: none">
+                    <legend>可操作字段</legend>
+                    <!--数据权限，列级-->
+                    <div class="dataAccessFieldFilter"></div>
+                </fieldset>
+                <fieldset class="layui-elem-field layui-field-title" style="display: none">
+                    <legend>数据权限</legend>
+                    <!--数据权限，行级-->
+                    <div class="dataAccess">
+                        <input type="radio" name="sex" value="nan" title="仅限本人"><br>
+                        <input type="radio" name="sex" value="nan" title="仅限本人及下属">
+
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>

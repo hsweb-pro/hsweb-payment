@@ -1,0 +1,13 @@
+
+
+.content_box {
+    margin-left: 180px;
+    padding: 5px 22px;
+    min-height: -moz-calc(100% - 10px);
+    min-height: -webkit-calc(100% - 10px);
+    min-height:calc(100% - 10px);
+    transition: margin-left .2s;
+    background: #fff; }
+
+.content_box.content_big {
+    margin-left: 0; }

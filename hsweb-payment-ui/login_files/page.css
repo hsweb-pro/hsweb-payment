@@ -1,0 +1,127 @@
+.form-signin {
+    max-width: 330px;
+    padding:0 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-control {
+    height: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size:12px;
+    border-radius:2px;
+}
+
+.account-wall {
+    padding: 40px 0 20px;
+    background-color: #F9F9F9;
+    border: 1px solid #D5D5D5;
+    box-shadow: 0 0 3px #EEE;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;;
+}
+
+.theme-default .account-wall{
+    background: #F9F9F9;
+}
+
+.theme-light .account-wall{
+    background: #FFF;
+}
+
+.theme-dark .account-wall{
+    background: #FFF;
+}
+
+.theme-transparent .account-wall{
+    background: #444;
+    border:1px solid #FFF;
+}
+
+.account-wall .item{
+    padding-bottom:20px;
+}
+
+.login-title {
+    color: #555;
+    font-size: 23px;
+    font-weight: 400;
+    display: block;
+    padding:40px 0;
+}
+
+.profile-img {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 40px;
+    display: block;
+    border-radius:50%;
+}
+
+.des{
+    padding-top:50px;
+    padding-bottom:50px;
+}
+
+.des h4{
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.theme{
+    padding-top: 40px;
+    text-align: center;
+}
+
+.theme-list{
+    padding-top:20px;
+}
+
+.theme-list .item{
+    border:1px solid #EEE;
+    height:50px;
+    width:50px;
+    display: inline-block;
+    border-radius: 50%;
+    padding:5px;
+    position: relative;
+    cursor: pointer;
+
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.theme-list .item i{
+    display: block;
+    height:40px;
+    width:40px;
+    margin-right:20px;
+    border-radius: 50%;
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-left:-20px;
+    margin-top:-20px;
+
+}
+
+.theme-list .active{
+    border:1px solid #999;
+}
+
+.theme-list .default i{
+    background: #999;
+}
+
+.theme-list .light i{
+    background: #F1F1F1;
+}
+
+.theme-list .dark i{
+    background: #414653;
+}
+
+.theme-list .transparent i{
+    background: url(transparent.png) repeat;
+}

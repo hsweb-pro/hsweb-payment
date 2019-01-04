@@ -1,0 +1,113 @@
+<script type="text/html" id="merchantAction">
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="merchant-detail">详情</a>
+    <!--<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="setting-channel">渠道</a>-->
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="setting-charge">费率</a>
+</script>
+<style>
+    #merchantDetailForm input {
+        border: none;
+    }
+</style>
+<div class="layui-form-item layui-inline">
+    <button class="layui-btn add-merchant" data-type="reload" lay-filter="add-merchant" type="button">新增商户</button>
+    <!--<button type="reset" class="layui-btn layui-btn-primary">重置</button>-->
+    <!--<button type="button" class="layui-btn layui-btn-primary download-order">导出</button>-->
+</div>
+
+<table class="layui-hide" id="myMerchant" lay-filter="myMerchant"></table>
+<div class="layui-form" id="merchantChannel" lay-filter="merchant-channel" hidden="hidden" style="padding: 20px 20px">
+</div>
+
+<form class="layui-form " id="merchantDetailForm" lay-filter="merchant-detail-form" hidden="hidden"
+      style="margin: 20px 20px">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">商户名称:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">手机号码:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="phone" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">用户名:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="username" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">状态:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="status" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <!--<div class="layui-inline">-->
+            <!--<label class="layui-form-label">资金账号:</label>-->
+            <!--<div class="layui-input-inline">-->
+                <!--<input type="text" name="accountNo" autocomplete="off" class="layui-input">-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+
+    <!--<div class="layui-form-item">-->
+
+
+        <!--<div class="layui-inline">-->
+            <!--<label class="layui-form-label">创建时间:</label>-->
+            <!--<div class="layui-input-inline">-->
+                <!--<input type="text" name="accountNo" autocomplete="off" class="layui-input">-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">身份证正面:</label>
+            <div class="layui-input-inline">
+                <img id="merchantCardFrontImg"
+                     src="pages/agent/merchant/default.png"
+                     style="width: 400px;height: 300px"
+                >
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">身份证反面:</label>
+            <div class="layui-input-inline">
+
+                <img id="merchantCardBackImg"
+                     src="pages/agent/merchant/default.png"
+                     style="width: 400px;height: 300px"
+                >
+
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">营业执照:</label>
+            <div class="layui-input-inline">
+                <img id="businessLicenseImg"
+                     src="pages/agent/merchant/default.png"
+                     style="width: 400px;height: 300px"
+                >
+            </div>
+        </div>
+    </div>
+    </div>
+</form>
+
+
+<form class="layui-form" id="chargeForm" style="margin-top: 20px" lay-filter="chargeForm">
+
+</form>

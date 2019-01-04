@@ -1,0 +1,30 @@
+version: '2'
+services:
+  #  redis:
+  #    image: redis
+  #    ports:
+  #      - "6379:6379"
+  mysql:
+    image: mysql:5.7
+    volumes:
+    - "database:/var/lib/mysql"
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+    environment:
+      MYSQL_ROOT_PASSWORD: hSweb-Pay-p@ssw0rd
+      MYSQL_DATABASE: hsweb_payment
+  payment:
+    image: hsweb/hsweb-payment
+    links:
+    - "mysql:mysql"
+    volumes:
+    - "data:/data"
+    environment:
+      spring.profiles.active: prod
+    ports:
+    - "8080:8080"
+    depends_on:
+    - mysql
+volumes:
+  database:
+  data:

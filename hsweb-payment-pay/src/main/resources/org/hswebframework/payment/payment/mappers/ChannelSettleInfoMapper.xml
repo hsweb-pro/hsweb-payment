@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hswebframework.payment.payment.dao.ChannelSettleInfoDao">
+    <resultMap id="ChannelSettleInfoEntityResultMap" type="org.hswebframework.payment.payment.entity.ChannelSettleInfoEntity">
+        <id property="id" column="id" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--用于动态生成sql所需的配置-->
+    <sql id="config">
+        <bind name="resultMapId" value="'ChannelSettleInfoEntityResultMap'"/>
+        <bind name="tableName" value="'pay_channel_settle'"/>
+    </sql>
+
+    <insert id="insert" parameterType="org.hswebframework.payment.payment.entity.ChannelSettleInfoEntity">
+        <include refid="config"/>
+        <include refid="BasicMapper.buildInsertSql"/>
+    </insert>
+
+    <update id="update" parameterType="org.hswebframework.web.commons.entity.Entity">
+        <include refid="config"/>
+        <include refid="BasicMapper.buildUpdateSql"/>
+    </update>
+
+    <select id="query" parameterType="org.hswebframework.web.commons.entity.Entity"
+            resultMap="ChannelSettleInfoEntityResultMap">
+        <include refid="config"/>
+        <include refid="BasicMapper.buildSelectSql"/>
+    </select>
+
+    <select id="count" parameterType="org.hswebframework.web.commons.entity.Entity" resultType="int">
+        <include refid="config"/>
+        <include refid="BasicMapper.buildTotalSql"/>
+    </select>
+
+    <update id="incrementAmount">
+        update pay_channel_settle set balance=balance+#{amount} where account_no=#{accountNo}
+    </update>
+</mapper>
