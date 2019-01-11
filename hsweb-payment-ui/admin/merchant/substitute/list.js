@@ -113,7 +113,7 @@ require(["authorize"], function (authorize) {
 
                 html.push(
                     tools.createActionButton("查看明细", "icon-find", function () {
-                        tools.openWindow("admin/merchant/substitute/detail.html?substituteId=" + row.id, "代付明细", "80%", "80%", grid.reload, function () {
+                        tools.openWindow("admin/merchant/substitute/detail.html?substituteId=" + row.id+"&payeeType="+row.payeeType.value, "代付明细", "80%", "80%", grid.reload, function () {
                         });
                     })
                 );

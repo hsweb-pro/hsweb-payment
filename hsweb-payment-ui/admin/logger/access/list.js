@@ -23,7 +23,10 @@ importMiniui(function () {
             search();
 
             function search() {
-                tools.searchGrid("#search-box", grid, {}, {requestId: requestIdParam});
+                tools.searchGrid("#search-box", grid, {}, {
+                    requestId: requestIdParam
+                    , sessionId: request.getParameter("sessionId")
+                });
             }
 
             function showDetail(data) {

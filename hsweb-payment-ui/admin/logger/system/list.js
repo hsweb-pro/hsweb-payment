@@ -25,7 +25,9 @@ importMiniui(function () {
             function search() {
                 tools.searchGrid("#search-box", grid, {}, {
                     "requestId": requestIdParam,
-                    "businessId": request.getParameter("businessId")
+                    "businessId": request.getParameter("businessId"),
+                    "sessionId": request.getParameter("sessionId")
+
                 });
             }
 
@@ -57,10 +59,18 @@ importMiniui(function () {
                 html.push(tools.createActionButton("查看", "icon-find", function () {
                     showDetail(row);
                 }));
-                if (row.requestId) {
+                if (row.requestId !== 'none') {
                     html.push(tools.createActionButton("访问日志", "icon-search", function () {
                         openAccessLogger(row.requestId);
                     }));
+                }
+                if (row.businessId !== 'none') {
+                    html.push(tools.createActionButton("关联日志", "icon-page-white-magnify", function () {
+                        tools.openWindow("admin/logger/system/list.html?businessId=" + row.businessId, "查看关联日志", "1000", "600", function () {
+                            grid.reload();
+                        });
+                    }));
+
                 }
                 return html.join("");
             };
@@ -70,6 +80,7 @@ importMiniui(function () {
                     grid.reload();
                 });
             }
+
 
         });
 });

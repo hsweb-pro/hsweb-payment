@@ -241,8 +241,8 @@ public class OpenApiRequestResponseResolver
                     OpenApiRequest apiRequest = FastBeanCopier.copy(parameters, OpenApiRequest::new);
                     BeanValidator.tryValidate(apiRequest);
 
-                    validatorManager.getValidator("request")
-                            .tryPut(apiRequest.getRequestId(), "重复的OpenApi请求,请检查参数:requestId");
+//                    validatorManager.getValidator("request")
+//                            .tryPut(apiRequest.getRequestId(), "重复的OpenApi请求,请检查参数:requestId");
 
                     Merchant merchant = merchantService.getMerchantById(apiRequest.getMerchantId());
                     if (merchant == null) {

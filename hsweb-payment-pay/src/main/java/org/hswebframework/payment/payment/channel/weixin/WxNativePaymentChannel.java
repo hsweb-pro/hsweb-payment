@@ -114,7 +114,7 @@ public class WxNativePaymentChannel extends
             if (request.getExtraParam() != null) {
                 FastBeanCopier.copy(request.getExtraParam(), order);
             }
-            order.setBody(request.getProductName());
+            order.setBody(getOrderComment(config,request));
             order.setOutTradeNo(request.getPaymentId());
             order.setTotalFee(Long.valueOf(request.getAmount()).intValue());
             order.setNotifyUrl(getNotifyLocation(config) + "notify/wx-native/" + config.getId());

@@ -452,6 +452,15 @@ importMiniui(function () {
                     setConfig: function (e) {
                         var conf = JSON.parse(e);
                         $(conf).each(function () {
+                            if (this.rateType.value) {
+                                this.rateType = this.rateType.value;
+                            }
+                            if (this.chargeTimeUnit && this.chargeTimeUnit.value) {
+                                this.chargeTimeUnit = this.chargeTimeUnit.value;
+                            }
+                            if (this.transType.value) {
+                                this.transType = this.transType.value;
+                            }
                             channelRateConfig[this.transType + "-" + (this.channel || '')] = this;
                         });
                     },

@@ -210,6 +210,7 @@ importMiniui(function () {
                 .where("channel", node.channel)
                 .and("transType", node.transType)
                 .and("channelProvider", node.channelProvider)
+                .orderByAsc("sortIndex")
                 .exec(function (response) {
                     configGrid.unmask();
                     if (response.status === 200) {
@@ -418,7 +419,10 @@ importMiniui(function () {
             var row = e.record;
             return tools.createActionButton("编辑", "icon-edit", function () {
                 var win = mini.get('rateWindow');
-                loadRate({rateType: row.rateType ? row.rateType.value ? row.rateType.value : row.rateType : null, rate: row.rate});
+                loadRate({
+                    rateType: row.rateType ? row.rateType.value ? row.rateType.value : row.rateType : null,
+                    rate: row.rate
+                });
                 win.show();
                 $(".save-rate").unbind("click")
                     .on("click", function () {
@@ -472,13 +476,13 @@ importMiniui(function () {
         };
         limitGrid.getColumn("limit").renderer =
             limitGrid.getColumn("warnLimit").renderer = function (e) {
-                return mini.formatNumber(parseFloat(e.value||0), "#,0.00元");
+                return mini.formatNumber(parseFloat(e.value || 0), "#,0.00元");
             };
 
         limitGrid.getColumn("action").renderer = function (e) {
             var html = [];
             return tools.createActionButton("删除", "icon-remove", function () {
-                e.sender.removeRow(e.record);
+                e.sender.removeNode(e.record);
             })
         };
 
@@ -487,6 +491,7 @@ importMiniui(function () {
 
             $(limits).each(function () {
                 this.limit = (this.limit / 100).toFixed(2);
+                this.warnLimit = ((this.warnLimit || 0) / 100).toFixed(2);
             });
             limitGrid.setData(limits);
             $('.save-limit')
@@ -495,6 +500,7 @@ importMiniui(function () {
                     var list = mini.clone(limitGrid.getData());
                     $(list).each(function () {
                         this.limit = (this.limit * 100).toFixed(0);
+                        this.warnLimit = ((this.warnLimit||0) * 100).toFixed(0);
                     });
                     row.tradingLimits = list;
                     limitGrid.updateRow(row, row);

@@ -3,6 +3,7 @@ package org.hswebframework.payment.api.selector.supports;
 import org.hswebframework.payment.api.selector.SelectorOption;
 
 import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 
 
 /**
@@ -24,6 +25,11 @@ public class RangeSelectorRule<O extends SelectorOption> extends AbstractConfigS
         super.setLimitFilter(limitFilter);
     }
 
+    @Override
+    public void onSelected(Consumer<O> selectedConsumer) {
+        super.onSelected(selectedConsumer);
+        roundRule.onSelected(selectedConsumer);
+    }
     @Override
     public O select(long amount) {
         return roundRule.select(amount);

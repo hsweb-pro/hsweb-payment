@@ -6,10 +6,7 @@ import org.hswebframework.payment.api.selector.SelectorRuleConfig;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.function.BiPredicate;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 /**
  * @author zhouhao
@@ -22,11 +19,13 @@ public abstract class AbstractConfigSelectorRule<C extends SelectorRuleConfig, O
 
     protected Supplier<List<O>> allOptionSupplier;
 
-    @Setter
-    protected BiPredicate<O,Long> filter = (o,a) -> true;
+    protected Consumer<O> selectedConsumer;
 
     @Setter
-    protected BiPredicate<O,Long> limitFilter = (o,a) -> true;
+    protected BiPredicate<O, Long> filter = (o, a) -> true;
+
+    @Setter
+    protected BiPredicate<O, Long> limitFilter = (o, a) -> true;
 
     protected List<O> getAllOption() {
         return allOptionSupplier.get();
@@ -36,9 +35,6 @@ public abstract class AbstractConfigSelectorRule<C extends SelectorRuleConfig, O
         return config;
     }
 
-    public void doOnPresent(){
-
-    }
     @Override
     public void setConfig(C config) {
         this.config = config;
@@ -49,4 +45,19 @@ public abstract class AbstractConfigSelectorRule<C extends SelectorRuleConfig, O
         this.allOptionSupplier = optionSupplier;
     }
 
+    @Override
+    public void onSelected(Consumer<O> selectedConsumer) {
+        if (this.selectedConsumer == null) {
+            this.selectedConsumer = selectedConsumer;
+        } else {
+            this.selectedConsumer = this.selectedConsumer.andThen(selectedConsumer);
+        }
+    }
+
+    protected O doOnSelected(O selected) {
+        if (selected != null && this.selectedConsumer != null) {
+            this.selectedConsumer.accept(selected);
+        }
+        return selected;
+    }
 }

@@ -38,24 +38,33 @@
              idField="id" pageSize="20"
               treeColumn="index">
             <div property="columns">
-                <div name="action" width="80" headerAlign="center" align="center">
+                <div name="action" width="120" headerAlign="center" align="center">
                     操作
                 </div>
                 <div field="id" headerAlign="center" align="center" width="150">代理ID
                 </div>
                 <div field="name" headerAlign="center" align="center" width="150">代理名称
                 </div>
-                <div field="username" width="150" headerAlign="center" align="center">管理帐号
+                <div field="username" width="90" headerAlign="center" align="center">管理帐号
                 </div>
-                <div field="email" width="150" headerAlign="center" align="center">邮箱
+                <div field="email" width="120" headerAlign="center" align="center">邮箱
                 </div>
-                <div field="phone" width="150" headerAlign="center" align="center">联系电话
+                <div field="phone" width="90" headerAlign="center" align="center">联系电话
                 </div>
-                <div field="status" displayField="status.text" headerAlign="center" align="center" width="50">状态
+                <div name="balance" field="balance" width="80" headerAlign="center" align="center">余额
+                </div>
+
+                <div name="freezeBalance" field="freezeBalance" width="80" headerAlign="center" align="center">冻结金额
+                </div>
+
+                <div  name='status' field="status" displayField="status.text" headerAlign="center" align="center" width="50">状态
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div id="totpImageWindow" style="width: 320px;height: 380px" class="mini-window" title="双重验证码">
+    <img width="300" height="300" id="totpImage" />
 </div>
 </body>
 </html>

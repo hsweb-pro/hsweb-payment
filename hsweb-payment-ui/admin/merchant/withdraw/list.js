@@ -96,14 +96,21 @@ require(["authorize"], function (authorize) {
 
             grid.getColumn('payeeInfo').renderer = function (e) {
                 var row = e.record;
+
+                window["showPayeeInfo_"+row.id]=function () {
+                    require(['pages/merchant/payee.show'],function (payeeShow) {
+                        payeeShow.show(row.payeeType.value,row.payeeInfo)
+                    })
+                };
                 if (row.payeeInfo) {
                     var str = [
                         "收款方式:",
                         row.payeeType.text,
-                        "<br>收款人:",
+                        "<br>收款人:<a href='javascript:void(0)' onclick='window.showPayeeInfo_"+row.id+"()'>",
                         row.payeeInfo.payeeName,
                         " ",
-                        row.payeeInfo.payee
+                        row.payeeInfo.payee,
+                        "</a>"
                     ];
                     return str.join("");
                 }

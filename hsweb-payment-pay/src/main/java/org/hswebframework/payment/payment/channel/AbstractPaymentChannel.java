@@ -111,6 +111,14 @@ public abstract class AbstractPaymentChannel<
         return configurator.getPaymentConfigById(res.getChannelId());
     }
 
+    protected String getOrderComment(C config, REQ req) {
+        if (StringUtils.hasText(config.getOrderComment())) {
+            return config.getOrderComment();
+        }
+
+        return req.getProductName();
+    }
+
     protected String getServerLocation(C config) {
         String location = config.getServerLocation();
         if (StringUtils.isEmpty(location)) {

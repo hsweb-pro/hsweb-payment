@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+    <meta name="renderer" content="webkit"/>
+    <title>商户提现管理</title>
+    <script data-main="list.js" src="../../boot.js" type="text/javascript"></script>
+</head>
+<body style="display: none">
+<div class="mini-fit">
+    <div class="mini-toolbar" style="border-bottom:0;">
+        <div id="search-box" class="mini-clearfix search-box">
+            <div class="mini-col-4 form-component">
+                <div class="form-item">
+                    <label class="form-label">商户：</label>
+                    <div class="input-block component-body">
+                        <input name="merchantId@or@merchantName$LIKE" style="width: 100%" class="mini-textbox"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mini-col-4 form-component">
+                <div class="form-item">
+                    <label class="form-label">投诉时间：</label>
+                    <div class="input-block component-body">
+                        <input name="complainTime$gte" format="yyyy-MM-dd HH:mm:ss" style="width: 45%"
+                               class="mini-datepicker"/>
+                        -
+                        <input name="complainTime$lt" format="yyyy-MM-dd HH:mm:ss" style="width: 45%"
+                               class="mini-datepicker"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mini-col-4 form-component">
+                <div class="form-item">
+                    <label class="form-label">金额：</label>
+                    <div class="input-block component-body">
+                        <input name="amount$gte" allowNull="true" format="#,0.00" value="null" style="width: 45%"
+                               maxValue="100000000000" class="mini-spinner"/>
+                        -
+                        <input name="amount$lt" allowNull="true" format="#,0.00" value="null" style="width: 45%"
+                               maxValue="100000000000" class="mini-spinner"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mini-col-4 form-component">
+                <div class="form-item">
+                    <label class="form-label">赔付金额：</label>
+                    <div class="input-block component-body">
+                        <input name="compensateAmount$gte" allowNull="true" format="#,0.00" value="null"
+                               style="width: 45%" maxValue="100000000000" class="mini-spinner"/>
+                        -
+                        <input name="compensateAmount$lt" allowNull="true" format="#,0.00" value="null"
+                               style="width: 45%" maxValue="100000000000" class="mini-spinner"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mini-col-4 form-component">
+                <div class="form-item">
+                    <label class="form-label">完成时间：</label>
+                    <div class="input-block component-body">
+                        <input name="handleTime$gte" format="yyyy-MM-dd HH:mm:ss" style="width: 45%"
+                               class="mini-datepicker"/>
+                        -
+                        <input name="handleTime$lt" format="yyyy-MM-dd HH:mm:ss" style="width: 45%"
+                               class="mini-datepicker"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="operate-button">
+            <a class="mini-button add-button"><i class="fa fa-plus"></i> 新建投诉</a>
+        </div>
+    </div>
+    <div class="mini-fit">
+        <div id="data-grid" class="mini-datagrid" style="width:100%;height:100%;margin: auto;"
+             idField="id" pageSize="20" sortField="applyTime" sortOrder="desc"
+             treeColumn="index">
+            <div property="columns">
+                <div field="merchantName" headerAlign="center" align="center" width="150">商户名称
+                </div>
+                <div name="paymentId" field="paymentId" allowSort="true" width="150" headerAlign="center"
+                     align="center">支付订单号
+                </div>
+                <div name="amount" allowSort="true" field="amount" width="50" headerAlign="center" align="center">订单金额
+                </div>
+                <div name="merchantCompensateAmount" allowSort="true" field="merchantCompensateAmount" width="50" headerAlign="center" align="center">商户赔付金额
+                </div>
+                <div name="complainTime" field="complainTime" headerAlign="center" allowSort="true" align="center"
+                     width="80">投诉时间
+                </div>
+                <div name="reason" field="reason" headerAlign="center" allowSort="true" align="center" width="150">投诉原因
+                </div>
+                <div name="status" field="status" displayField="status.text" headerAlign="center" allowSort="true"
+                     align="center" width="50">状态
+                </div>
+                <div name="action" width="80" headerAlign="center" align="center">
+                    操作
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="complain-window" style="width: 500px;height: 420px" title="发起提现" class="mini-window">
+    <div class="mini-clearfix dynamic-form" id="applyForm">
+        <div class="mini-col-11 form-component">
+            <div class="form-item">
+                <label class="form-label">订单号：</label>
+                <div class="input-block component-body">
+                    <input name="paymentId" required allowInput="false" style="width: 100%" class="mini-buttonedit"/>
+                </div>
+            </div>
+        </div>
+        <div class="mini-col-11 form-component">
+            <div class="form-item">
+                <label class="form-label">投诉时间：</label>
+                <div class="input-block component-body">
+                    <input property="editor" required style="width: 100%" format="yyyy-MM-dd HH:mm:ss"
+                           name="complainTime" class="mini-datepicker"/>
+                </div>
+            </div>
+        </div>
+        <div class="mini-col-11 form-component">
+            <div class="form-item">
+                <label class="form-label">投诉原因：</label>
+                <div class="input-block component-body">
+                    <input name="reason" required style="width: 100%" class="mini-textarea"/>
+                </div>
+            </div>
+        </div>
+        <div class="mini-col-11 form-component">
+            <div class="form-item">
+                <label class="form-label">备注：</label>
+                <div class="input-block component-body">
+                    <input name="remark" style="width: 100%" class="mini-textarea"/>
+                </div>
+            </div>
+        </div>
+        <div class="mini-col-11 form-component" style="text-align: center;margin-top: 20px">
+            <div class="form-item">
+                <a class="mini-button save-button">确定</a>
+                <a class="mini-button cancel-button" onclick="mini.get('complain-window').hide()">取消</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="compensate-window" style="width: 400px;height: 220px" title="完成赔付" class="mini-window">
+    <div class="mini-clearfix dynamic-form">
+        <div class="mini-col-11 form-component">
+            <div class="form-item">
+                <label class="form-label">商户赔付金额:</label>
+                <div class="input-block component-body">
+                    <input property="editor" style="width: 100%" name="merchantCompensateAmount" maxValue="10000"
+                           format="#,0.00元" class="mini-spinner"/>
+                </div>
+            </div>
+            <div class="form-item" style="text-align: center;">
+                <a class="mini-button compensate-button">提交</a>
+                <a class="mini-button" onclick="mini.get('compensate-window').hide()">取消</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+</body>
+</html>

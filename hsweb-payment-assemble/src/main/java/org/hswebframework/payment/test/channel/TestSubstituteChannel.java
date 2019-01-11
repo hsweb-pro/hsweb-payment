@@ -53,7 +53,7 @@ public class TestSubstituteChannel extends AbstractPaymentChannel<TestChannelCon
                     .success(totalAmount > 0)
                     .amount(totalAmount)
                     .build());
-        }, 50, TimeUnit.SECONDS); //10秒后自动完成
+        }, 10, TimeUnit.SECONDS); //10秒后自动完成
 
         SubstituteResponse response = new SubstituteResponse();
         response.setSuccess(true);
@@ -68,21 +68,21 @@ public class TestSubstituteChannel extends AbstractPaymentChannel<TestChannelCon
 
     @Override
     public String getChannel() {
-        return "test-substitute";
+        return "substitute";
     }
 
     @Override
     public String getChannelName() {
-        return "测试代付";
+        return "网银代付";
     }
 
     @Override
     public String getChannelProvider() {
-        return "default-test";
+        return "test";
     }
 
     @Override
     public String getChannelProviderName() {
-        return "默认测试代付";
+        return "测试环境";
     }
 }

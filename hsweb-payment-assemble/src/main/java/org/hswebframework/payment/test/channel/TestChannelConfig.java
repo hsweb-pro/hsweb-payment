@@ -1,9 +1,9 @@
 package org.hswebframework.payment.test.channel;
 
-import org.hswebframework.payment.api.payment.ChannelConfig;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.hswebframework.payment.api.payment.ChannelConfig;
 
 /**
  * @author zhouhao

@@ -19,7 +19,10 @@
              class="mini-treegrid" style="width:100%;height: 100%"
              idField="id">
             <div property="columns">
-                <div type="indexcolumn" align="center" headerAlign="center">#</div>
+                <!--<div type="indexcolumn" align="center" headerAlign="center">#</div>-->
+                <div name="sortIndex" field="sortIndex" align="center" width="30" headerAlign="center">排序序号
+                    <input property="editor" format="#0" minValue="0" maxValue="999999999999999" class="mini-spinner"/>
+                </div>
                 <div name="channelName" field="channelName" width="80" align="center" headerAlign="center">渠道
                 </div>
                 <div name="channelProviderName" field="channelProviderName" width="80" align="center" headerAlign="center">服务提供商
@@ -133,10 +136,11 @@
 <div id="limitWindow" title="限额配置" allowResize="true" showFooter="true" class="mini-window" style="width: 800px;height: 600px">
     <div id="limit-grid" showPager="false"
          allowCellEdit="true" allowCellSelect="true" allowResize="false"
-         class="mini-datagrid" style="width:100%;height: 100%" allowResize="true"
+         class="mini-treegrid" style="width:100%;height: 100%" allowResize="true"
+         allowDrag="true" allowDrop="true" treeColumn="sort"
          idField="id">
         <div property="columns">
-            <div type="indexcolumn" align="center" headerAlign="center">#</div>
+            <div type="indexcolumn" name="sort" align="center" headerAlign="center">拖动排序</div>
             <div name="interval" field="interval" width="50" align="center" headerAlign="center">数量
                 <input property="editor" maxValue="100000" class="mini-spinner"/>
             </div>
@@ -151,7 +155,7 @@
             </div>
             <div name="action" width="50" align="center" headerAlign="center">
                 <span class="title-button" style="width: 30px">操作</span>
-                <span class="title-button icon-add" onclick="mini.get('limit-grid').addRow({limit:0})"></span>
+                <span class="title-button icon-add" onclick="mini.get('limit-grid').addNode({limit:0,warnLimit:0,interval:1})"></span>
             </div>
         </div>
     </div>

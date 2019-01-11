@@ -39,7 +39,6 @@ public class TestGatewayPayChannel extends AbstractPaymentChannel<TestChannelCon
         return response;
     }
 
-
     @Override
     public TransType getTransType() {
         return TransType.GATEWAY;
@@ -57,11 +56,11 @@ public class TestGatewayPayChannel extends AbstractPaymentChannel<TestChannelCon
 
     @Override
     public String getChannelProvider() {
-        return "default-test-gateway";
+        return "test";
     }
 
     @Override
     public String getChannelProviderName() {
-        return "测试支付宝支付";
+        return "测试环境";
     }
 }

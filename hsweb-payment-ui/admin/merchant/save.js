@@ -166,7 +166,6 @@ importMiniui(function () {
             tabs.setEnabled(false);
             var channelRateList = mini.get("rate-channel-list");
 
-
             var limitGrid = mini.get("limit-grid");
             limitGrid.getColumn("timeUnit").renderer = function (e) {
                 if (!e.value) {
@@ -176,7 +175,7 @@ importMiniui(function () {
             };
             limitGrid.getColumn("limit").renderer =
                 limitGrid.getColumn("warnLimit").renderer = function (e) {
-                    return mini.formatNumber(parseFloat(e.value||0), "#,0.00元");
+                    return mini.formatNumber(parseFloat(e.value || 0), "#,0.00元");
                 };
 
             limitGrid.getColumn("action").renderer = function (e) {
@@ -230,7 +229,7 @@ importMiniui(function () {
 
             function initConfigLimitEditor(row, id) {
                 var exactTradingLimits = row.exactTradingLimits || {};
-                var limits = mini.clone(exactTradingLimits[id]||[]);
+                var limits = mini.clone(exactTradingLimits[id] || []);
                 $(limits).each(function () {
                     this.limit = (this.limit / 100).toFixed(2);
                 });
@@ -499,6 +498,14 @@ importMiniui(function () {
                     }(rate))
             });
 
+            channelGrid.getColumn("channelProviderName").renderer = function (e) {
+                var row = e.record;
+                // console.log(row.enabled)
+                if (row.enabled === false) {
+                    e.cellStyle = 'color:red';
+                }
+                return e.value;
+            };
 
             var password = Math.round(Math.random() * 100000) + "";
 
@@ -588,12 +595,14 @@ importMiniui(function () {
                                     // console.log(row)
                                     if (row.channel === conf.channel
                                         && row.channelProvider === conf.channelProvider
-                                        && row.transType === conf.transType) {
+                                        && (row.transType === conf.transType || row.transType === conf.transType.value)) {
                                         row.tradingLimits = conf.tradingLimits;
-                                        row.selectorRule = conf.selectorRule;
+                                        row.selectorRule =conf.selectorRule? (conf.selectorRule.value || conf.selectorRule):'RANDOM';
                                         row.ruleConfig = conf.ruleConfig;
-                                        row.exactTradingLimits=conf.exactTradingLimits;
+                                        row.exactTradingLimits = conf.exactTradingLimits;
+                                        row.enabled = typeof (conf.enabled) === 'undefined' ? true : conf.enabled;
                                         channelGrid.updateRow(row, row);
+
                                         channelGrid.select(row);
                                     }
                                 })
@@ -611,8 +620,9 @@ importMiniui(function () {
                                 selectorRule: this.selectorRule,
                                 ruleConfig: this.ruleConfig,
                                 channel: this.channel,
-                                exactTradingLimits:this.exactTradingLimits,
-                                channelProvider: this.channelProvider
+                                exactTradingLimits: this.exactTradingLimits,
+                                channelProvider: this.channelProvider,
+                                enabled: typeof (this.enabled) === 'undefined' ? true : this.enabled
                             })
                         });
                         return JSON.stringify(list);
@@ -621,9 +631,23 @@ importMiniui(function () {
                 "RATE_CONFIG": {
                     setConfig: function (e) {
                         var conf = JSON.parse(e);
+
                         $(conf).each(function () {
+                            if (this.rateType.value) {
+                                this.rateType = this.rateType.value;
+                            }
+                            if (this.chargeTimeUnit && this.chargeTimeUnit.value) {
+                                this.chargeTimeUnit = this.chargeTimeUnit.value;
+                            }
+                            if (this.transType.value) {
+                                this.transType = this.transType.value;
+                            }
+                            if (this.channel === 'undefined') {
+                                delete this.channel;
+                            }
                             channelRateConfig[this.transType + "-" + (this.channel || '')] = this;
                         });
+
                     },
                     getConfig: function () {
                         saveRate();

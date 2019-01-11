@@ -41,6 +41,6 @@ public class RandomConfigSelectorRule<O extends SelectorOption> extends Abstract
         } else {
             config = allConfig.get(random.nextInt(allConfig.size()));
         }
-        return config;
+        return doOnSelected(config);
     }
 }

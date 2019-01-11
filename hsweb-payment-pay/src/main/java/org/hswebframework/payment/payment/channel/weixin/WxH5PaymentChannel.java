@@ -139,7 +139,7 @@ public class WxH5PaymentChannel extends AbstractPaymentChannel<WxPayChannelConfi
             if (request.getExtraParam() != null) {
                 FastBeanCopier.copy(request.getExtraParam(), order);
             }
-            order.setBody(request.getProductName());
+            order.setBody(getOrderComment(config,request));
             order.setOutTradeNo(request.getPaymentId());
             order.setTotalFee(Long.valueOf(request.getAmount()).intValue());
             order.setNotifyUrl(getNotifyLocation(config) + "notify/wx-h5/" + config.getId());

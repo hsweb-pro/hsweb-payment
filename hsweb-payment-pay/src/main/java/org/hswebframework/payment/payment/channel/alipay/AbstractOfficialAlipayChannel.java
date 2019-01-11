@@ -47,10 +47,10 @@ public abstract class AbstractOfficialAlipayChannel extends AbstractPaymentChann
             RequestType productCode = getType();
             AlipayRequest aliRequest = productCode.createRequest(request,
                     getNotifyLocation(config)
-                            + "notify/alipay/" + config.getId());
+                            + "notify/alipay/" + config.getId(), getOrderComment(config, request));
 
             PaymentResponse response = FastBeanCopier.copy(request, productCode.execute(client, aliRequest));
-            
+
             response.setSuccess(true);
 
             return response;

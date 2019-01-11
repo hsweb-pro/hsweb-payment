@@ -2,6 +2,7 @@ package org.hswebframework.payment.api.selector;
 
 import java.util.List;
 import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -20,4 +21,7 @@ public interface ConfigSelectorRule<C extends SelectorRuleConfig, O extends Sele
     void setFilter(BiPredicate<O,Long> filter);
 
     O select(long amount);
+
+    void onSelected(Consumer<O> selected);
+
 }

@@ -40,21 +40,26 @@ require(["authorize"], function (authorize) {
                 return mini.formatNumber(parseFloat((amount / 100).toFixed(2)), "#,0.00");
             }
 
-            // grid.getColumn('payeeInfo').renderer = function (e) {
-            //     var row = e.record;
-            //     if (row.payeeInfo) {
-            //         var str = [
-            //             "收款方式:",
-            //             row.payeeType.text,
-            //             "<br>收款人:",
-            //             row.payeeInfo.payeeName,
-            //             " ",
-            //             row.payeeInfo.payee
-            //         ];
-            //         return str.join("");
-            //     }
-            //     return "/";
-            // };
+            grid.getColumn('payee').renderer = function (e) {
+                var row = e.record;
+
+                window["showPayeeInfo_" + row.id] = function () {
+                    require(['pages/merchant/payee.show'], function (payeeShow) {
+                        payeeShow.show(request.getParameter("payeeType"), JSON.parse(row.payeeInfoJson))
+                    })
+                };
+                // console.log(row)
+                if (row.payeeInfoJson) {
+                    var str = [
+                        "<a href='javascript:void(0)' onclick='window.showPayeeInfo_" + row.id + "()'>",
+                        e.value,
+                        "</a>"
+                    ];
+                    return str.join("");
+                }
+                return e.value;
+            };
+
             grid.getColumn('amount').renderer = renderAmount;
 
             grid.getColumn("action").renderer = function (e) {

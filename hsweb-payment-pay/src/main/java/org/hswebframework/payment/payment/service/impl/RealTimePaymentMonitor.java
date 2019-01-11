@@ -46,6 +46,7 @@ public class RealTimePaymentMonitor implements PaymentMonitor {
                     .and(request::getStatus)
                     .and(request::getMerchantId)
                     .and(request::getChannel)
+                    .and(request::getChannelProvider)
                     .and(request::getChannelId)
                     .and("merchantId$agent$children", request.getAgentId()) //代理下所有的商户数据(含子级代理)
                     .doPaging(0, request.getInterval()) //分页查询指定的间隔
@@ -72,6 +73,7 @@ public class RealTimePaymentMonitor implements PaymentMonitor {
                         query -> query.in(PaymentOrder::getTransType, TransType.GATEWAY, TransType.QUICK))
                 .and(request::getMerchantId)
                 .and(request::getChannel)
+                .and(request::getChannelProvider)
                 .and(request::getChannelId)
                 .and("merchantId$agent$children", request.getAgentId())
                 .between(PaymentOrder::getCompleteTime, timeInterval.getFrom(), timeInterval.getTo())
@@ -91,6 +93,7 @@ public class RealTimePaymentMonitor implements PaymentMonitor {
                 .and(request::getTransType)
                 .and(request::getMerchantId)
                 .and(request::getChannel)
+                .and(request::getChannelProvider)
                 .and(request::getChannelId)
                 .between(PaymentOrder::getCompleteTime, timeInterval.getFrom(), timeInterval.getTo())
                 .execute(orderDao::countGroupByChannel);
@@ -111,6 +114,7 @@ public class RealTimePaymentMonitor implements PaymentMonitor {
                 .and(request::getMerchantId)
                 .and(request::getChannel)
                 .and(request::getChannelId)
+                .and(request::getChannelProvider)
                 .between(PaymentOrder::getCompleteTime, timeInterval.getFrom(), timeInterval.getTo())
                 .execute(orderDao::sumAmountGroupByChannel);
     }
@@ -128,6 +132,7 @@ public class RealTimePaymentMonitor implements PaymentMonitor {
                 .and(request::getMerchantId)
                 .and(request::getChannel)
                 .and(request::getChannelId)
+                .and(request::getChannelProvider)
                 .between(PaymentOrder::getCompleteTime, timeInterval.getFrom(), timeInterval.getTo())
                 .execute(orderDao::count);
     }
