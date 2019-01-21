@@ -38,11 +38,6 @@ public class WxPayChannelConfig extends ChannelConfig {
     //服务商模式下的子商户号
     @ApiModelProperty(value = "子商户号")
     private String subMchId;
-    //p12证书的位置，可以指定绝对路径，也可以指定类路径（以classpath:开头）
-
-    @ToString.Ignore
-    @ApiModelProperty(value = "p12证书路径")
-    private String keyPath;
 
     @ApiModelProperty(value = "p12证书内容,base64格式")
     private String keyContentBase64;
@@ -59,8 +54,6 @@ public class WxPayChannelConfig extends ChannelConfig {
     @ApiModelProperty(value = "代理密码")
     private String proxyPassword;
 
-    private boolean sandboxEnv;
-
     public WxPayService createWxPayService() {
         WxPayConfig payConfig = new WxPayConfig();
         payConfig.setAppId(this.getAppId());
@@ -72,15 +65,9 @@ public class WxPayChannelConfig extends ChannelConfig {
         payConfig.setHttpProxyPort(this.proxyPort);
         payConfig.setHttpProxyUsername(this.proxyUsername);
         payConfig.setHttpProxyPassword(this.proxyPassword);
-        if (StringUtils.hasText(this.keyPath)) {
-            payConfig.setKeyPath(this.keyPath);
-        }
         if (StringUtils.hasText(this.keyContentBase64)) {
             payConfig.setKeyContent(Base64.decodeBase64(this.keyContentBase64));
         }
-        // 可以指定是否使用沙箱环境
-        payConfig.setUseSandboxEnv(sandboxEnv);
-
         WxPayService wxPayService = new WxPayServiceImpl();
         wxPayService.setConfig(payConfig);
 

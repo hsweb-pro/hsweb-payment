@@ -43,21 +43,7 @@ import java.net.URLEncoder;
 public class WxH5PaymentChannel extends AbstractPaymentChannel<WxPayChannelConfig, PaymentRequest, WxH5PaymentChannel.WeixinH5PaymentResponse>
         implements ActiveQuerySupportPaymentChannel {
 
-    @Override
-    public TransType getTransType() {
-        return TransType.GATEWAY;
-    }
-
-    @Override
-    public String getChannel() {
-        return "weixin-h5";
-    }
-
-    @Override
-    public String getChannelName() {
-        return "H5-微信支付";
-    }
-
+    //重定向到微信h5支付页面
     @GetMapping("/payment/weixin/redirect")
     @SneakyThrows
     public void redirectWeixinH5Page(@RequestParam String url,
@@ -82,6 +68,7 @@ public class WxH5PaymentChannel extends AbstractPaymentChannel<WxPayChannelConfi
 
     }
 
+    //定时查询未支付的订单时自动调用
     @Override
     @SneakyThrows
     public void doActiveQueryOrderResult(PaymentOrder order) {
@@ -106,6 +93,7 @@ public class WxH5PaymentChannel extends AbstractPaymentChannel<WxPayChannelConfi
         }
     }
 
+    //接收微信通知
     @PostMapping(value = "/notify/wx-h5/{channelId}", produces = MediaType.APPLICATION_XML_VALUE)
     @SneakyThrows
     @ResponseBody
@@ -128,6 +116,7 @@ public class WxH5PaymentChannel extends AbstractPaymentChannel<WxPayChannelConfi
         }
     }
 
+    //发起微信h5支付请求
     @Override
     @SneakyThrows
     protected WeixinH5PaymentResponse doRequestPay(WxPayChannelConfig config, PaymentRequest request) {
@@ -163,6 +152,27 @@ public class WxH5PaymentChannel extends AbstractPaymentChannel<WxPayChannelConfi
         }
     }
 
+    @Getter
+    @Setter
+    public static class WeixinH5PaymentResponse extends PaymentResponse {
+        private String payUrl;
+    }
+
+    @Override
+    public TransType getTransType() {
+        return TransType.GATEWAY;
+    }
+
+    @Override
+    public String getChannel() {
+        return "weixin-h5";
+    }
+
+    @Override
+    public String getChannelName() {
+        return "H5-微信支付";
+    }
+
     @Override
     public String getChannelProvider() {
         return officialWechat;
@@ -173,9 +183,4 @@ public class WxH5PaymentChannel extends AbstractPaymentChannel<WxPayChannelConfi
         return "官方微信支付";
     }
 
-    @Getter
-    @Setter
-    public static class WeixinH5PaymentResponse extends PaymentResponse {
-        private String payUrl;
-    }
 }
