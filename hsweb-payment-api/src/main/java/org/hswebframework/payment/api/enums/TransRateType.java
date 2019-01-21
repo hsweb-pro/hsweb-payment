@@ -35,7 +35,17 @@ import java.util.stream.Collectors;
 @Slf4j
 public enum TransRateType implements EnumDict<String> {
 
+    NONE("不收费") {
+        @Override
+        public String getDescription(String rate) {
+            return "不收费";
+        }
 
+        @Override
+        public TransCharge calculate(long amount, Supplier<Long> sumAmount, String rate) {
+            return TransCharge.none;
+        }
+    },
     FIXED("固定费率") {
         @Override
         public TransCharge calculate(long amount, Supplier<Long> sumAmount, String rate) {

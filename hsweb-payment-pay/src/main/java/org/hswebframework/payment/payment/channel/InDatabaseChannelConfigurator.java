@@ -198,7 +198,7 @@ public class InDatabaseChannelConfigurator<T extends ChannelConfig> implements P
                     if (limit.getTimeUnit() == TimeUnit.SINGLE) {
                         //单笔限额
                         if (limit.getInterval() == 1) {
-                            boolean outOfLimit = limit.getLimit() <= amount;
+                            boolean outOfLimit = limit.getLimit() < amount;
                             if (outOfLimit) {
                                 log.warn("交易超过限额:{},本次交易额:{}", limit, Money.cent(amount));
                             }
@@ -211,8 +211,8 @@ public class InDatabaseChannelConfigurator<T extends ChannelConfig> implements P
                     long tradAmount = getPaymentMonitor().sumTradingAmount(request);
                     log.info("本次交易额:{},交易总额:{},限额:{}", Money.cent(amount), Money.cent(tradAmount), Money.cent(limit.getLimit()));
                     //当前交易额+历史交易额 >= 限额
-                    boolean outOfLimit = amount + tradAmount >= limit.getLimit();
-                    boolean doWarnLimit = limit.getWarnLimit() > 0 && amount + tradAmount >= limit.getWarnLimit();
+                    boolean outOfLimit = amount + tradAmount > limit.getLimit();
+                    boolean doWarnLimit = limit.getWarnLimit() > 0 && amount + tradAmount > limit.getWarnLimit();
 
                     if (outOfLimit) {
                         log.warn("交易超过限额:{},历史交易额:{},本次交易额:{}"

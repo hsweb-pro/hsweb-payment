@@ -133,7 +133,12 @@ importMiniui(function () {
                 channel: nowSelectedChannel.channel,
                 transType: nowSelectedChannel.transType,
                 channelProvider: nowSelectedChannel.channelProvider,
-                channelProviderName: nowSelectedChannel.channelProviderName
+                channelProviderName: nowSelectedChannel.channelProviderName,
+                //渠道默认费率:千6
+                rateType: 'PERCENT',
+                rate: "0.6",
+                status: 1
+
             })
         };
         loadAllChannel();
@@ -145,10 +150,13 @@ importMiniui(function () {
                     if (acc && acc.accountNo) {
                         e.record.accountNo = acc.accountNo;
                         e.sender.updateRow(e.record);
+                        if (e.record.id) {
+                            doSave(e.record);
+                        }
                     }
                 })
             })
-        }
+        };
 
         function loadAllChannel() {
             request.get("payment/channels", function (response) {
@@ -335,11 +343,17 @@ importMiniui(function () {
                 return tools.createActionButton("点击禁用", "icon-ok", function () {
                     e.record.status = 0;
                     e.sender.updateRow(e.record, e.record);
+                    if (e.record.id) {
+                        doSave(e.record);
+                    }
                 })
             } else {
                 return tools.createActionButton("点击启用", "icon-remove", function () {
                     e.record.status = 1;
                     e.sender.updateRow(e.record, e.record);
+                    if (e.record.id) {
+                        doSave(e.record);
+                    }
                 })
             }
         };
@@ -356,7 +370,7 @@ importMiniui(function () {
 
             });
             //加载平台收费
-            if (rateType) {
+            if (rateType && rateType !== 'none') {
                 mini.getbyName("rate-" + rateType).setChecked(true);
                 mini.getbyName("rate-" + rateType).setValue("true");
                 mini.getbyName("rate-" + rateType).fire("checkedchanged");
@@ -412,12 +426,21 @@ importMiniui(function () {
                 }
             });
             var rate = rateType ? rateConfigGetter[rateType].getConfig() : {};
-            return {rate: rate.rate, rateType: rateType};
+            return {rate: rate.rate || '', rateType: rateType || 'NONE'};
         }
 
         configGrid.getColumn("rateConfig").renderer = function (e) {
             var row = e.record;
-            return tools.createActionButton("编辑", "icon-edit", function () {
+            var rate = (row.rate || '');
+            var rateType = row.rateType ? row.rateType.value ? row.rateType.value : row.rateType : null;
+            if (rate && rateType) {
+                if (rateType === 'PERCENT') {
+                    rate = rate + "%";
+                } else if (rateType === 'FIXED') {
+                    rate = mini.formatNumber((parseFloat(rate) / 100),'#,0.00元');
+                }
+            }
+            return rate + tools.createActionButton("编辑", "icon-edit", function () {
                 var win = mini.get('rateWindow');
                 loadRate({
                     rateType: row.rateType ? row.rateType.value ? row.rateType.value : row.rateType : null,
@@ -427,8 +450,13 @@ importMiniui(function () {
                 $(".save-rate").unbind("click")
                     .on("click", function () {
                         var conf = getRateConfig();
-                        console.log(conf)
+
                         e.sender.updateNode(row, conf);
+                        row.rate = conf.rate;
+                        row.rateType = conf.rateType;
+                        if (row.id) {
+                            doSave(row);
+                        }
                         win.hide();
                     })
             })
@@ -461,6 +489,9 @@ importMiniui(function () {
                     .unbind('click')
                     .on('click', function () {
                         row.properties = getPropertiesConfig();
+                        if (row.id) {
+                            doSave(row);
+                        }
                         mini.get('propertiesWindow').hide();
                     })
             }
@@ -500,10 +531,13 @@ importMiniui(function () {
                     var list = mini.clone(limitGrid.getData());
                     $(list).each(function () {
                         this.limit = (this.limit * 100).toFixed(0);
-                        this.warnLimit = ((this.warnLimit||0) * 100).toFixed(0);
+                        this.warnLimit = ((this.warnLimit || 0) * 100).toFixed(0);
                     });
                     row.tradingLimits = list;
                     limitGrid.updateRow(row, row);
+                    if (row.id) {
+                        doSave(row);
+                    }
                     mini.get('limitWindow').hide();
                 });
             mini.get('limitWindow').show();
