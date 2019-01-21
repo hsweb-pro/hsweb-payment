@@ -249,6 +249,7 @@ public class OpenApiRequestResponseResolver
                         throw OpenApiException.of(ErrorCode.MERCHANT_NOT_EXISTS);
                     }
                     MDC.put("userId", merchant.getUserId());
+                    MDC.put("sessionId",apiRequest.getRequestId());
                     AuthenticationHolder.setCurrentUserId(merchant.getUserId());
 
                     if (merchant.getStatus() != MerchantStatus.ACTIVE) {

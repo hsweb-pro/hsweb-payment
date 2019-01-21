@@ -62,10 +62,11 @@ public class LogbackSystemLoggerAppender extends UnsynchronizedAppenderBase<ILog
     }
 
     private String getCurrentSessionId() {
-        return Authentication.current()
-                .flatMap(autz -> autz.getAttribute("sessionId"))
-                .map(String.class::cast)
-                .orElseGet(this::getCurrentRequestId);
+        return Optional.ofNullable(MDC.get("sessionId"))
+                .orElseGet(() -> Authentication.current()
+                        .flatMap(autz -> autz.getAttribute("sessionId"))
+                        .map(String.class::cast)
+                        .orElseGet(this::getCurrentRequestId));
     }
 
 
