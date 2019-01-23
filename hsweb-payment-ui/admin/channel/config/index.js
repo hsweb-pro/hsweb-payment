@@ -434,9 +434,9 @@ importMiniui(function () {
             var rate = (row.rate || '');
             var rateType = row.rateType ? row.rateType.value ? row.rateType.value : row.rateType : null;
             if (rate && rateType) {
-                if (rateType === 'PERCENT') {
+                if (rateType.toUpperCase() === 'PERCENT') {
                     rate = rate + "%";
-                } else if (rateType === 'FIXED') {
+                } else if (rateType.toUpperCase() === 'FIXED') {
                     rate = mini.formatNumber((parseFloat(rate) / 100),'#,0.00元');
                 }
             }
