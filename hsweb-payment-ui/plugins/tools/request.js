@@ -355,7 +355,14 @@ define(["jquery", "storejs"], function ($, storejs) {
                 return me;
             };
 
-
+            me.select = function (columns) {
+                me.param.includes = columns + "";
+                return me;
+            };
+            me.excludes = function (columns) {
+                me.param.excludes = columns + "";
+                return me;
+            };
             me.orderByAsc = function (f) {
                 me.sorts.push({"name": f, "order": "asc"});
                 return me;
