@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+payment:
+  # 商户ID
+  merchant-id: ""
+  # 密钥
+  secret-key: ""
+  # 接口根地址
+  api-base-url: "http://localhost:8080/open-api/"
+  # 通知根地址
+  notify-base-url: "http://localhost:8081/"
+logging:
+  level:
+    com.zmcsoft: debug

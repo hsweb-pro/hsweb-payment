@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+    <title>支付测试</title>
+    <script src="jquery-1.12.4.min.js"></script>
+    <script src="jquery.qrcode.min.js"></script>
+
+</head>
+<body>
+支付渠道:<select id="channel" onchange="changeChannel(this)" name="channel">
+    <option value="weixin-native">微信扫码支付</option>
+    <option value="weixin-h5">微信H5支付</option>
+    <option value="alipay-WEB">支付宝电脑网页支付</option>
+    <option value="alipay-WAP">支付宝H5支付</option>
+
+    <option value="quick">快捷支付</option>
+    <option value="bank">网银支付</option>
+
+</select><br/>
+<div class="channel-conf weixin-h5 weixin-native">
+    当前客户端公网ip: <input id="spbillCreateIp" name="spbillCreateIp"/>
+</div>
+
+产品名称:<input id="productName"/><br/>
+价<span style="margin-left: 2em"></span>格:<input id="amount"/>(单位:分)
+<div class="channel-conf quick" style="display: none">
+    银行卡号:<input id="accountNumber" name="accountNumber"/>
+    <br>
+    户<span style="margin-left: 2em"></span>名:<input id="accountName" name="accountName"/>
+    <br>
+    身份证号:<input id="idNumber" name="idNumber"/>
+    <br>
+    手机号码:<input id="phoneNumber" name="phoneNumber"/>
+    <br>
+    <span style="margin-left: 1em"></span>验证码:<input id="smsCode" name="smsCode"/>
+    <button onclick="doRequestPay('/request-quick')">发送验证码</button>
+</div>
+
+<div class="channel-conf bank" style="display: none">
+    <span style="margin-left: 1em"></span>
+    付款人:<input id="payerName" name="payerName"/>
+    <br/>手机号码:<input id="payerPhone" name="payerPhone"/>
+    <br>
+    银行代码:<input id="bankPayBankId" name="bankPayBankId"/>
+    <br>
+    账户类型:<input id="bankPayAccountType" value="PERSON" name="bankPayAccountType"/>
+    <br>
+</div>
+<br>
+<button onclick="doRequestPay()">支付</button>
+<div class="response" style="width: 500px;height: 500px"></div>
+</body>
+</html>
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+<script type="text/javascript">
+    $("#spbillCreateIp").val(returnCitySN['cip']);
+    var paymentId;
+    var channelMapping = {
+        quick: {
+            preRequest: function (param) {
+                param.accountNumber = $("#accountNumber").val();
+                param.accountName = $("#accountName").val();
+                param.idNumber = $("#idNumber").val();
+                param.phoneNumber = $("#phoneNumber").val();
+                param.smsCode = $("#smsCode").val();
+                param.paymentId = paymentId;
+            },
+            getApi: function (param) {
+                if (param.smsCode) {
+                    return "/confirm-quick";
+                }
+                paymentId = null;
+                return "/request-quick";
+            },
+            afterRequest: function (response) {
+                if (response.success) {
+                    if (!paymentId) {
+                        paymentId = response.paymentId;
+                        $('.response').html("成功,输入验证码点击支付." + JSON.stringify(response))
+                    } else {
+                        paymentId = null;
+                        $('.response').html(JSON.stringify(response))
+                    }
+                } else {
+                    paymentId = null;
+                    $('.response').html(JSON.stringify(response))
+                }
+            }
+        },
+        "weixin-h5": {
+            preRequest: function (param) {
+                param.extraParam = JSON.stringify({spbillCreateIp: $("#spbillCreateIp").val()})
+            }
+        },
+        "weixin-native": {
+            preRequest: function (param) {
+                param.extraParam = JSON.stringify({spbillCreateIp: $("#spbillCreateIp").val()})
+            },
+            afterRequest: function (response) {
+                $('.response').html('').qrcode({
+                    text: response.qrCode
+                });
+            }
+        },
+        "alipay-WEB": {
+            preRequest: function (param) {
+                param.channel = "alipay-web";
+            }
+        },
+        "alipay-WAP": {
+            preRequest: function (param) {
+                param.channel = "alipay-h5";
+            }
+        },
+        "bank": {
+            preRequest: function (param) {
+                param.channel = "bank-pay";
+                param.extraParam = JSON.stringify({
+                    payerName: $("#payerName").val(),
+                    payerPhone: $("#payerPhone").val(),
+                    accountType: $("#bankPayAccountType").val(),
+                    bankId: $("#bankPayBankId").val()
+                })
+            }
+        }
+    };
+
+    var processing = false;
+
+    function doRequestPay(api) {
+        if (processing) {
+            alert("正在请求");
+            return;
+        }
+        processing = true;
+        var channel = $("#channel").val();
+        var param = {
+            channel: channel,
+            productName: $("#productName").val(),
+            amount: $("#amount").val()
+        };
+        var channelMap = channelMapping[channel];
+
+        if (channelMap) {
+            channelMap.preRequest(param);
+        }
+        $('.response').text("请求中..");
+        api = api || (channelMap.getApi ? channelMap.getApi(param) : "/request");
+        $.ajax({
+            type: 'POST',
+            url: "/payment" + api,
+            data: param,
+            success: function (e) {
+                processing = false;
+                if (e.success) {
+                    if (channelMap && channelMap.afterRequest) {
+                        channelMap.afterRequest(e);
+                    } else if (e.payUrl) {
+                        window.location = e.payUrl;
+                    } else {
+                        $('.response').text(JSON.stringify(e));
+                    }
+                } else {
+                    $('.response').text(JSON.stringify(e));
+                }
+            }, error: function (e) {
+                processing = false;
+                $('.response').text(e.responseText);
+            },
+            dataType: "json"
+        });
+    }
+
+    function changeChannel(e) {
+        var value = $(e).val();
+        $(".channel-conf").hide();
+        $("." + value).show();
+
+    }
+</script>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>批量代付</title>
+    <script src="jquery-1.12.4.min.js"></script>
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+</head>
+<body>
+
+<div>
+    <button type="button" class="add-trans-form">增加</button>
+</div>
+<br>
+<span class="logging"> </span>
+<hr>
+<div class="trans-form">
+    <div class="trans-form-item" style="margin-right:2px;margin-top:2px;width: 400px;height: 250px;float: left;border:1px black solid">
+        收款人帐号：<input name="payee" type="text"><br/>
+        收款人姓名：<input name="payeeName" type="text"><br/>
+        金额：<input name="amount" type="text"><br/>
+        备注：<input name="remark" type="text"><br/>
+    </div>
+</div>
+
+<button type="button" class="submit-trans">提交代付</button>
+
+</body>
+<script>
+$(".add-trans-form").on('click',function () {
+    $(".trans-form").append(" <div class=\"trans-form-item\" style=\"margin-right:2px;margin-top:2px;width: 400px;height: 250px;float: left;border:1px black solid\">" +
+        " 收款人帐号：<input name=\"payee\" type=\"text\"><br/>\n" +
+        "        收款人姓名：<input name=\"payeeName\" type=\"text\"><br/>\n" +
+        "        金额：<input name=\"amount\" type=\"text\"><br/>\n" +
+        "        备注：<input name=\"remark\" type=\"text\"><br/></div>");
+});
+$(".submit-trans").on('click',function () {
+    var params = [];
+    $(".trans-form-item").each(function () {
+        var payee = $(this).find("[name=payee]").val();
+        var payeeName = $(this).find("[name=payeeName]").val();
+        var amount = $(this).find("[name=amount]").val();
+        var remark = $(this).find("[name=remark]").val();
+        var param = {
+            payee:payee,
+            payeeName:payeeName,
+            amount:amount,
+            transNo: new Date().getTime()+""+Math.round(Math.random()*100000),
+            remark:remark
+        }
+        params.push(param);
+    });
+    $('.logging').text("请求中...");
+    console.log(params);
+    $.ajax({
+        type: 'POST',
+        url: "/payment/request-substitute",
+        data: {
+            details:JSON.stringify(params),
+            remark:"测试",
+            payeeType:"ALIPAY"
+        },
+        success: function (e) {
+            $('.logging').text(JSON.stringify(e))
+            console.log(e);
+        }, error: function (e) {
+            $('.logging').text(e.responseText);
+            console.log(e);
+        },
+        dataType: "json"
+    });
+
+})
+</script>
+</html>
