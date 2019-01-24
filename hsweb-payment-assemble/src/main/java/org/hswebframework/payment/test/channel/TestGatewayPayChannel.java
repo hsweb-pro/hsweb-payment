@@ -26,9 +26,10 @@ public class TestGatewayPayChannel extends AbstractPaymentChannel<TestChannelCon
         response.setSuccess(true);
         runLater(() -> {
             Random random = new Random();
-
+            //随机成功
             boolean success = random.nextInt(100) > config.getFailureRate();
 
+            //自动发送支付结果
             afterHandleChannelNotify(ChannelNotificationResult.builder()
                     .success(success)
                     .amount(request.getAmount())

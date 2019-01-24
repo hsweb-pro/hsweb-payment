@@ -1,5 +1,7 @@
 package org.hswebframework.payment.payment.channel.alipay;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.AlipayRequest;
@@ -90,6 +92,8 @@ public abstract class AbstractOfficialAlipayChannel extends AbstractPaymentChann
         request.setBizModel(model);
 
         AlipayTradeQueryResponse response = client.execute(request);
+        log.info("发起支付宝交易主动查询,结果:\n{}", JSON.toJSONString(response, SerializerFeature.PrettyFormat));
+
         String transStatus = response.getTradeStatus();
         String amount = response.getTotalAmount();
         if (transStatus == null) {
