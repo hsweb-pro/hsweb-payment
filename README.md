@@ -13,6 +13,7 @@
 ----------hsweb-payment-openapi     #开放平台
 ----------hsweb-payment-pay         #支付模块
 ----------hsweb-payment-ui          #前端UI模块
+----------open-api-demo             #OpenApi 例子
 ```
 
 # 环境
