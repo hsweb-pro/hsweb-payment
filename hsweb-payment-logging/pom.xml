@@ -11,6 +11,25 @@
 
     <artifactId>hsweb-payment-logging</artifactId>
 
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>hsweb-module.json</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+
+        </resources>
+
+    </build>
+
 
     <dependencies>
         <dependency>
@@ -28,6 +47,11 @@
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
             <version>1.0.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hswebframework.web</groupId>
+            <artifactId>hsweb-commons-utils</artifactId>
+            <version>${hsweb.framework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hswebframework.web</groupId>

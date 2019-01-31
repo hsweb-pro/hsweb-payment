@@ -25,7 +25,7 @@
         <java.version>1.8</java.version>
         <project.build.jdk>${java.version}</project.build.jdk>
 
-        <hsweb.framework.version>3.0.4</hsweb.framework.version>
+        <hsweb.framework.version>3.0.7-SNAPSHOT</hsweb.framework.version>
         <hsweb.expands.version>3.0.2</hsweb.expands.version>
 
         <docker.image.baseName>hsweb</docker.image.baseName>
@@ -194,16 +194,6 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.40</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hswebframework</groupId>
-            <artifactId>hsweb-easy-orm-rdb</artifactId>
-            <version>3.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hswebframework</groupId>
-            <artifactId>hsweb-easy-orm-core</artifactId>
-            <version>3.0.2</version>
         </dependency>
     </dependencies>
 

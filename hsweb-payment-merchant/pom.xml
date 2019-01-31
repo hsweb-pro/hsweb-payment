@@ -12,19 +12,22 @@
 
     <artifactId>hsweb-payment-merchant</artifactId>
     <build>
-        <testSourceDirectory>src/test/groovy</testSourceDirectory>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <filtering>false</filtering>
             </resource>
+
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
-                    <include>hsweb-starter.js</include>
+                    <include>hsweb-module.json</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
+
         </resources>
+
     </build>
     <dependencies>
         <dependency>

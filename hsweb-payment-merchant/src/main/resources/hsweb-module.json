@@ -1,0 +1,9 @@
+{
+  "groupId": "${project.groupId}",
+  "artifactId": "${project.artifactId}",
+  "path": "${project.artifactId}",
+  "gitCommitHash": "${git.commit.hash}",
+  "gitRepository": "http://github.com/hsweb-pro/hsweb-payment",
+  "version": "${project.version}",
+  "comment": "商户模块"
+}

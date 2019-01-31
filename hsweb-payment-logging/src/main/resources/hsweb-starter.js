@@ -2,14 +2,26 @@
 var info = {
     groupId: "org.hswebframework.pro",
     artifactId: "hsweb-payment-logging",
-    version: "1.0.0",
-    website: "hsweb.pro",
+    version: "1.0.1",
+    website: "payment.hsweb.pro",
     author: "zhouhao",
     comment: "日志模块"
 };
 
 //版本更新信息
-var versions = [];
+var versions = [
+    {
+        version: "1.0.1",
+        upgrade: function (context) {
+            var database = context.database;
+            database.createOrAlter("log_sys_logger")
+                .addColumn().name("git_location").varchar(512).comment("git代码地址").commit()
+                .addColumn().name("module_info").varchar(1024).comment("模块信息").commit()
+                .comment("系统日志表").commit();
+        }
+    }
+    ];
+
 var JDBCType = java.sql.JDBCType;
 
 function install(context) {

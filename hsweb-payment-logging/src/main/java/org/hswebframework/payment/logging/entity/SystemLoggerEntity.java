@@ -22,6 +22,9 @@ public class SystemLoggerEntity extends SimpleGenericEntity<String> {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "module_info")
+    private String moduleInfo;
+
     @Column(name = "thread_name")
     private String threadName;
 
@@ -42,6 +45,9 @@ public class SystemLoggerEntity extends SimpleGenericEntity<String> {
 
     @Column(name = "git_hash")
     private String gitHash;
+
+    @Column(name = "git_location")
+    private String gitLocation;
 
     @Column(name = "level")
     private String level;

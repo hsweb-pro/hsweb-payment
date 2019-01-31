@@ -1,20 +1,25 @@
 package org.hswebframework.payment.logging;
 
 import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.spi.*;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.classic.spi.IThrowableProxy;
+import ch.qos.logback.classic.spi.StackTraceElementProxy;
+import ch.qos.logback.classic.spi.ThrowableProxyUtil;
 import ch.qos.logback.core.CoreConstants;
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import com.alibaba.fastjson.JSON;
-import org.hswebframework.payment.logging.entity.SystemLoggerEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.hswebframework.payment.logging.entity.SystemLoggerEntity;
+import org.hswebframework.web.ModuleUtils;
 import org.hswebframework.web.ThreadLocalUtils;
 import org.hswebframework.web.authorization.Authentication;
 import org.hswebframework.web.authorization.User;
 import org.hswebframework.web.id.IDGenerator;
 import org.slf4j.MDC;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.Optional;
@@ -104,6 +109,7 @@ public class LogbackSystemLoggerAppender extends UnsynchronizedAppenderBase<ILog
             }
         }
 
+
         SystemLoggerEntity info = SystemLoggerEntity.builder()
                 .userId(getCurrentUserId())
                 .userName(getCurrentUserName())
@@ -122,6 +128,23 @@ public class LogbackSystemLoggerAppender extends UnsynchronizedAppenderBase<ILog
                 .threadName(event.getThreadName())
                 .createTime(new Date(event.getTimeStamp()))
                 .build();
+        try {
+            Class targetClass = Class.forName(element.getClassName());
+            ModuleUtils.ModuleInfo moduleInfo = ModuleUtils.getModuleByClass(targetClass);
+            if (!moduleInfo.isNone()) {
+                String gitLocation = moduleInfo.getGitClassLocation(targetClass, element.getLineNumber(), element.getLineNumber());
+                info.setGitLocation(gitLocation);
+                if (StringUtils.isEmpty(moduleInfo.getGitCommitHash()) || moduleInfo.getGitCommitHash().contains("$")) {
+                    info.setGitHash("master");
+                } else {
+                    info.setGitHash(moduleInfo.getGitCommitHash());
+                }
+
+                info.setModuleInfo(moduleInfo.getGroupId() + "/" + moduleInfo.getArtifactId() + "(" + moduleInfo.getComment() + ")");
+            }
+        } catch (Exception e) {
+            log.debug("获取模块信息失败!", e);
+        }
         info.setId(IDGenerator.MD5.generate());
         publisher.publishEvent(info);
     }

@@ -3,7 +3,7 @@ var info = {
     groupId: "org.hswebframework.pro",
     artifactId: "hsweb-payment-pay",
     version: "1.0.8",
-    website: "",
+    website: "payment.hsweb.pro",
     author: "zhouhao",
     comment: "支付模块"
 };

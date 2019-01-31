@@ -71,6 +71,10 @@ importMiniui(function () {
                         });
                     }));
 
+                }if (row.gitLocation) {
+                    html.push(tools.createActionButton("查看代码", "icon-page-white-code", function () {
+                        window.open(row.gitLocation);
+                    }));
                 }
                 return html.join("");
             };
