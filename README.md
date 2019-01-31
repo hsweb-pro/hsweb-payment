@@ -32,7 +32,7 @@
 最新版本已经上传到docker公共仓库:
 
 ```bash
-$ docker run -d -p 8080:8080 -v data:/data hsweb/hsweb-payment
+$ docker run -d -p 8080:8080 -v ${PWD}/data/:/data/ hsweb/hsweb-payment
 ```
 
 自己构建镜像:
